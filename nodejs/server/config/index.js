@@ -35,19 +35,11 @@ var config = {
 		imgPath    : configData.go.ImgPath, /*上传后的图片请求地址前缀*/
 		apiPath    : configData.api.Prefix
 	},
-	software: {
-		name        : configData.software.name,
-		version     : configData.software.version,
-		officialURL : configData.software.officialURL
-	},
 	api: {
 		todayOrderCount : "/admin/order/todaycount",
 		todayOrderSale  : "/admin/order/todaysale",
 		totalOrderCount : "/admin/order/totalcount",
 		totalSale       : "/admin/order/totalsale"
-	},
-	docs: {
-		github: configData.docs.github
 	}
 };
 

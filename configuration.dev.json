@@ -52,16 +52,8 @@
 		"AppID"    : "", /*小程序ID*/
 		"Secret"   : ""  /*小程序密钥*/
 	},
-	"software": {
-		"name"        : "wemall", /*软件名称*/
-		"version"     : "1.0.0",       /*软件版本*/
-		"officialURL" : "" /*官网地址*/
-	},
 	"api": {
 		"Prefix" : "/api",                     /*api服务请求前缀*/
 		"URL"    : "http://127.0.0.1:8012/api" /*api服务请求地址(给node.js调用)*/
-	},
-	"docs": {
-		"github": "https://github.com/shen100/wemall" /*wemall项目github地址*/
 	}
 }

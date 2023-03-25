@@ -1,0 +1,61 @@
+version: "3.5"
+
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    restart: always
+  golang:
+    build:
+      context: ./
+      dockerfile: golang.Dockerfile
+    ports:
+      - "8012:8012"
+    volumes:
+      - .:/usr/src/wemall
+    depends_on:
+      - db
+    command: go run ./main.go
+    restart: always
+  nodejs-start:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+    command: npm start
+    volumes:
+      - ./nodejs/:/usr/src/wemall/nodejs
+      - /usr/src/wemall/node_modules
+    ports:
+      - "8010:8010"
+      - "8881:8881"
+    depends_on:
+      - db
+  nodejs-staic:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+    command: npm run staticServ
+    ports:
+      - "8011:8011"
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=wmall
+      - MYSQL_PASSWORD=pEP5c8ekwYMsPY7N
+      - MYSQL_DATABASE=wmall
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    restart: always
+    volumes:
+      - db:/var/lib/mysql
+    depends_on:
+      - nginx    
+
+volumes:
+  db:

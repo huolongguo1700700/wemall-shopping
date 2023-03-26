@@ -7,15 +7,18 @@ services:
       dockerfile: nginx.Dockerfile
     ports:
       - "8088:80"
+    container_name: wemall-nginx
     restart: always
     networks:
       - wemall-network
+
   golang:
     build:
       context: ./
       dockerfile: golang.Dockerfile
     ports:
       - "8012:8012"
+    container_name: wemall-golang
     volumes:
       - .:/usr/src/wemall
     depends_on:
@@ -24,6 +27,7 @@ services:
     restart: always
     networks:
       - wemall-network
+
   nodejs-start:
     build:
       context: ./
@@ -34,10 +38,12 @@ services:
     ports:
       - "8010:8010"
       - "8881:8881"
+    container_name: wemall-nodejs-start
     depends_on:
       - db
     networks:
       - wemall-network
+
   nodejs-staic:
     build:
       context: ./
@@ -45,16 +51,21 @@ services:
     command: npm run staticServ
     ports:
       - "8011:8011"
+    container_name: wemall-nodejs-static
     volumes:
       - ./nodejs/:/usr/src/wemall/nodejs    
     depends_on:
       - db
     networks:
       - wemall-network
+
   db:
-    image: mysql:5.7
+    build:
+      context: ./
+      dockerfile: mysql.Dockerfile
     ports:
       - "3306:3306"
+    container_name: wemall-mysql
     environment:
       - MYSQL_USER=wmall
       - MYSQL_PASSWORD=pEP5c8ekwYMsPY7N

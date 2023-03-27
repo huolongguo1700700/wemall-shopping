@@ -63,7 +63,7 @@ var sidebarData = [
         children: [
             {
                 id    : getId(),
-                title : 'Product Category Management',
+                title : 'Category Management',
                 url   : ['/category/manage', /^\/category\/edit\/[0-9]+$/]
             },
             {

@@ -43,3 +43,40 @@ func Create(ctx iris.Context) {
 	return
 }
 
+func List(ctx iris.Context) {
+	SendErrJSON := common.SendErrJSON
+	var cart []model.Cart
+
+
+	//cart.OpenID = openID
+	//cart.OpenID = ""
+	if model.DB.Find(&cart).Error != nil {
+		SendErrJSON("error", ctx)
+		return
+	}
+	var cartList []model.CartInfo
+	for _,v := range cart{
+		var product model.Product
+		if model.DB.First(&product, v.ProductID).Error != nil {
+			SendErrJSON("错误的商品id", ctx)
+			return
+		}
+		_ = model.DB.First(&product.Image, product.ImageID).Error
+		cartList = append(cartList, model.CartInfo{
+			ID:          v.ID,
+			OpenID:      v.OpenID,
+			ProductID:   v.ProductID,
+			ProductInfo: product,
+			Count:       v.Count,
+			CreatedAt:   v.CreatedAt,
+			UpdatedAt:   v.UpdatedAt,
+			DeletedAt:   v.DeletedAt,
+		})
+	}
+	utils.Res(ctx, iris.StatusOK, iris.Map{
+		"errNo" : model.ErrorCode.SUCCESS,
+		"msg"   : "success",
+		"data"  : cartList,
+	})
+	return
+}

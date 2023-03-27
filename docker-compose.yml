@@ -9,6 +9,8 @@ services:
       - "8088:80"
     container_name: wemall-nginx
     restart: always
+    depends_on:
+      - golang
     networks:
       - wemall-network
 
@@ -74,8 +76,6 @@ services:
     restart: always
     volumes:
       - db:/var/lib/mysql
-    depends_on:
-      - nginx
     networks:
       - wemall-network
 

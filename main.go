@@ -38,7 +38,7 @@ func init() {
 	config.Sess = sess
 
 	config.Rdb = redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     config.ServerConfig.RedisHost,
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})

@@ -1,6 +1,75 @@
-version: "3.5"
-
+version: "3"
 services:
+  wemall-mysql:
+    build:
+      context: ./
+      dockerfile: mysql.Dockerfile
+    ports:
+      - "3306:3306"
+    container_name: wemall-mysql
+    privileged: true
+    environment:
+      - MYSQL_USER=wmall
+      - MYSQL_PASSWORD=pEP5c8ekwYMsPY7N
+      - MYSQL_DATABASE=wmall
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    restart: always
+  wemall-redis:
+    restart: always
+    container_name: wemall-redis
+    image: redis:6.2.6
+    ports:
+      - 6379:6379
+    command: redis-server
+  wemall-nodejs-static:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+    command: npm run staticServ
+    privileged: true
+    ports:
+      - 8011:8011
+    container_name: wemall-nodejs-static
+    volumes:
+      - ./nodejs/:/usr/src/wemall/nodejs  
+    depends_on:
+      - wemall-golang
+    links:
+      - wemall-golang
+  wemall-golang:
+    build:
+      context: ./
+      dockerfile: golang.Dockerfile
+    ports:
+      - 8012:8012
+    container_name: wemall-golang
+    privileged: true
+    volumes:
+      - .:/usr/src/wemall
+    depends_on:
+      - wemall-redis
+      - wemall-mysql
+    links:
+      - wemall-redis
+      - wemall-mysql
+    command: go run main.go
+    restart: always
+  wemall-nodejs-start:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+    command: npm start
+    privileged: true
+    volumes:
+      - ./nodejs/:/usr/src/wemall/nodejs
+    ports:
+      - "8010:8010"
+      - "8881:8881"
+    container_name: wemall-nodejs-start
+    depends_on:
+      - wemall-golang
+    links:
+      - wemall-golang
   nginx:
     build:
       context: ./
@@ -9,79 +78,14 @@ services:
       - "8088:80"
     container_name: wemall-nginx
     restart: always
+    privileged: true
+    links:
+      - wemall-nodejs-static
+      - wemall-golang
+      - wemall-nodejs-start
     depends_on:
-      - golang
-    networks:
-      - wemall-network
-
-  golang:
-    build:
-      context: ./
-      dockerfile: golang.Dockerfile
-    ports:
-      - "8012:8012"
-    container_name: wemall-golang
+      - wemall-nodejs-static
+      - wemall-golang
+      - wemall-nodejs-start
     volumes:
-      - .:/usr/src/wemall
-    depends_on:
-      - db
-    command: go run ./main.go
-    restart: always
-    networks:
-      - wemall-network
-
-  nodejs-start:
-    build:
-      context: ./
-      dockerfile: nodejs.Dockerfile
-    command: npm start
-    volumes:
-      - ./nodejs/:/usr/src/wemall/nodejs
-    ports:
-      - "8010:8010"
-      - "8881:8881"
-    container_name: wemall-nodejs-start
-    depends_on:
-      - db
-    networks:
-      - wemall-network
-
-  nodejs-staic:
-    build:
-      context: ./
-      dockerfile: nodejs.Dockerfile
-    command: npm run staticServ
-    ports:
-      - "8011:8011"
-    container_name: wemall-nodejs-static
-    volumes:
-      - ./nodejs/:/usr/src/wemall/nodejs    
-    depends_on:
-      - db
-    networks:
-      - wemall-network
-
-  db:
-    build:
-      context: ./
-      dockerfile: mysql.Dockerfile
-    ports:
-      - "3306:3306"
-    container_name: wemall-mysql
-    environment:
-      - MYSQL_USER=wmall
-      - MYSQL_PASSWORD=pEP5c8ekwYMsPY7N
-      - MYSQL_DATABASE=wmall
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    restart: always
-    volumes:
-      - db:/var/lib/mysql
-    networks:
-      - wemall-network
-
-volumes:
-  db:
-
-networks:
-  wemall-network:
-    driver: bridge
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf

@@ -80,6 +80,7 @@ type serverConfig struct {
 	MaxContentLen       int
 	MaxProductCateCount int
 	MaxProductImgCount  int
+	RedisHost           string
 }
 
 // ServerConfig 服务器相关配置

@@ -76,6 +76,7 @@ services:
       dockerfile: nginx.Dockerfile
     ports:
       - "8088:80"
+      - "1443:443"
     container_name: wemall-nginx
     restart: always
     privileged: true

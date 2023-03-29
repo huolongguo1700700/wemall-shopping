@@ -16,6 +16,7 @@ module.exports = {
       ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       bounce: 'bounce 1s infinite',
+      scroll: 'scrolling  12s linear infinite',
     },
     aria: {
       checked: 'checked="true"',
@@ -548,6 +549,16 @@ module.exports = {
         '50%': {
           transform: 'none',
           animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
+        },
+      },
+      scrolling: {
+        from: {
+          width:'300%',
+          left: '0%',
+        },
+        to: {
+          width:'300%',
+          left: '-150%',
         },
       },
     },

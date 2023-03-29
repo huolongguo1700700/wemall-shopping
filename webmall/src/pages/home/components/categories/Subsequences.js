@@ -5,7 +5,6 @@
  */
 
 import React, { Fragment } from 'react'
-import tw from 'tailwind-styled-components'
 import { Link } from 'react-router-dom'
 
 const Subsequences = (props) => {
@@ -14,8 +13,9 @@ const Subsequences = (props) => {
             {props.sequence.length !==0 &&
                 <div className="absolute py-6 w-full bg-white scale-0 group-hover/category:scale-100 z-50 transition-all duration-100 origin-top ease-linear">
                     {props.sequence.map((s, i) =>
-                        <div className="p-1 flex flex-col justify-center items-center cursor-pointer">
-                            <Link className="hover:scale-[1.01] hover:border-b-2 hover:text-lime-600 border-lime-600 w-full md:w-1/3">
+                        <div key={i}
+                             className="py-1 h-10 flex flex-col justify-center items-center cursor-pointer">
+                            <Link className="hover:border-b-2 hover:text-lime-600 border-lime-600 w-full md:w-1/3">
                                 {s.name}
                             </Link>
                         </div>

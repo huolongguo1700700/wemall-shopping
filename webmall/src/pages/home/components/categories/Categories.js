@@ -35,7 +35,6 @@ const Categories = () => {
                                 <div>{c.name}</div>
                             </div>
                             <Subsequences sequence={c.subsequence} />
-                            
                         </div>
                     )
                 })}

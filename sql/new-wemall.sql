@@ -202,14 +202,16 @@ create table wemail.users
 INSERT INTO wemail.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, orders_id) VALUES (7, 50, 1, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:12:58', '2017-06-11 17:12:58', null, 1);
 INSERT INTO wemail.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, orders_id) VALUES (8, 48, 2, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:21:53', '2017-06-11 17:21:53', null, 1);
 
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (1, 'Cookie', 1, 13, 2, '', '2017-02-07 21:34:50', '2017-05-24 18:21:19', null);
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (2, 'Chocolate', 1, 13, 1, 'Chocolate', '2017-02-07 21:34:50', '2017-05-24 22:41:29', null);
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (3, 'Chips', 1, 13, 1, '', '2017-02-07 21:34:50', '2017-05-24 22:44:51', null);
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (4, 'Fruit', 0, 0, 1, 'Cola', '2017-02-07 21:34:50', '2017-05-29 00:44:54', null);
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (8, 'Tea', 1, 12, 1, 'Bubble tee', '2017-02-07 23:11:58', '2017-05-28 10:35:53', null);
-INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (9, 'Cake', 1, 13, 0, '', '0000-00-00 00:00:00', '2017-05-28 13:12:47', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (1, 'Cookie', 1, 13, 1, '', '2022-02-07 21:34:50', '2022-05-24 18:21:19', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (2, 'Chocolate', 1, 13, 1, 'Chocolate', '2022-02-07 21:34:50', '2022-05-24 22:41:29', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (3, 'Chips', 1, 13, 1, '', '2022-02-07 21:34:50', '2022-05-24 22:44:51', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (4, 'Fresh Fruit', 0, 0, 1, 'Cola', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (8, 'Tea', 1, 12, 1, 'Bubble tee', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (9, 'Cake', 1, 13, 1, '', '2023-03-30 08:54:04', '2022-05-28 13:12:47', null);
 INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (12, 'Drinks', 0, 0, 1, null, '2023-03-29 13:07:14', '2023-03-29 13:07:16', null);
 INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (13, 'Snacks', 0, 0, 1, null, '2023-03-29 13:18:41', '2023-03-29 13:18:42', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (14, 'Fresh Vegetables', 0, 0, 1, null, '2023-03-30 08:53:52', '2023-03-30 08:53:54', null);
+INSERT INTO wemail.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (15, 'Others', 0, 0, 1, null, '2023-03-30 08:53:53', '2023-03-30 08:53:57', null);
 
 INSERT INTO wemail.contact (id, name, phone, province, city, street, address, zipcode, created_at, updated_at) VALUES (1, 'user', '13412345678', 1, 2, 3, 'Hubei Province', '432799', '2017-01-10 12:05:34', '2017-01-10 12:05:34');
 
@@ -3338,3 +3340,4 @@ INSERT INTO wemail.users (id, contact_id, open_id, nickname, username, email, ph
 INSERT INTO wemail.users (id, contact_id, open_id, nickname, username, email, phone, password, token, avatar, sex, subscribe, status, lastip, created_at, updated_at, deleted_at) VALUES (6, 1, 'adsfsadadfafaf', 'shen100', 'Jack', null, '23489843', 'adfafdadfasf', 'asfsafaf', null, 1, null, null, null, '2017-04-02 01:00:00', '2017-02-05 01:00:00', null);
 INSERT INTO wemail.users (id, contact_id, open_id, nickname, username, email, phone, password, token, avatar, sex, subscribe, status, lastip, created_at, updated_at, deleted_at) VALUES (7, 1, 'sadfaafsafs', 'shen', 'MK', null, '33320485', 'bbbbb', 'NULLasfdsafaf', null, 1, null, null, null, '2017-04-02 01:00:00', '2017-02-05 01:00:00', null);
 INSERT INTO wemail.users (id, contact_id, open_id, nickname, username, email, phone, password, token, avatar, sex, subscribe, status, lastip, created_at, updated_at, deleted_at) VALUES (8, 1, 'adfasfdafa', 'kk', 'aa', null, '00305030', 'adaf', 'asdfaf', null, 0, null, null, null, '2017-04-02 01:00:00', '2017-02-07 01:00:00', null);
+

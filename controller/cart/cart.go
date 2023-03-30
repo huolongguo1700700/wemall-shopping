@@ -24,7 +24,13 @@ func Create(ctx iris.Context) {
 
 	var product model.Product
 	if model.DB.First(&product, cart.ProductID).Error != nil {
-		SendErrJSON("Wrong item Id.", ctx)
+		SendErrJSON("Wrong product Id.", ctx)
+		return
+	}
+
+	var order model.Order
+	if model.DB.First(&order, cart.OrderID).Error != nil {
+		SendErrJSON("Wrong order Id.", ctx)
 		return
 	}
 

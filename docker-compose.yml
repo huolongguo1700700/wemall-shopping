@@ -12,6 +12,7 @@ services:
       - MYSQL_USER=wmall
       - MYSQL_PASSWORD=pEP5c8ekwYMsPY7N
       - MYSQL_DATABASE=wmall
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
     restart: always
   wemall_redis:

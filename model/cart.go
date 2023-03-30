@@ -11,7 +11,7 @@ type Cart struct {
 	CreatedAt time.Time  `json:"createdAt"`
 	UpdatedAt time.Time  `json:"updatedAt"`
 	DeletedAt *time.Time `sql:"index" json:"deletedAt"`
-	OrderID uint       `json:"orderId"`
+	OrderID   uint       `json:"orderId"`
 }
 
 // CartInfo 购物车
@@ -24,4 +24,5 @@ type CartInfo struct {
 	CreatedAt   time.Time  `json:"createdAt"`
 	UpdatedAt   time.Time  `json:"updatedAt"`
 	DeletedAt   *time.Time `sql:"index" json:"deletedAt"`
+	OrderID     uint       `json:"orderId"`
 }

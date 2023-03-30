@@ -25,6 +25,7 @@ func Route(app *iris.Application) {
 		router.Get("/categories", category.List)
 		router.Get("/products", product.List)
 		router.Get("/product/:id", product.Info)
+		router.Get("/cart", cart.List)
 		router.Post("/cart/create", cart.Create)
 		router.Get("/cart/list", cart.List)
 		router.Get("/visit", visit.PV)

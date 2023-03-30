@@ -8,17 +8,25 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from '../../App'
 import Error from '../../pages/error-page/Error'
 import Product from '../../pages/product-info/Product'
+import Main from '../../pages/home/components/main/Main'
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        errorElement: <Error />
+        errorElement: <Error />,
+        children:[
+            {
+                path: "/",
+                element: <Main />,
+            },
+            {
+                path: "/product/:productID",
+                element: <Product />,
+            }
+        ]
     },
-    {
-        path: "product/:productID",
-        element: <Product />,
-    }
+    
 ])
 
 /* End of Router Settings */

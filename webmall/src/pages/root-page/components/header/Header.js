@@ -6,7 +6,7 @@
 
 import React from 'react'
 import Marquee from './Marquee'
-import Cartshow from './Cartshow'
+import Navigation from './Navigation'
 
 const Header = () => {
     return (
@@ -14,7 +14,7 @@ const Header = () => {
             <div className="relative left-0 w-full md:w-2/3 overflow-hidden ">
                 <Marquee />
             </div>
-            <Cartshow />
+            <Navigation />
         </div>
     )
 }

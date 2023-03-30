@@ -4,30 +4,31 @@
  * @date 2023/3/28
  */
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { fetchProducts } from '../../../../api/client'
+import getProducts from '../../../../api/getProducts'
 
 const Main = () => {
-    /* Using the query hooks */
-    const products = useQuery({queryKey:['products'], queryFn: fetchProducts})
+    /* initialize products */
+    const [products, setProducts] = useState(null)
+    /* Get Products hook(fake) */
+    const {data, isLoading, error, isError} = getProducts()
+    
+    /* Avoid too many requests */
+    useEffect(()=>{
+        setProducts(data && data)
+    }, [data])
     
     /* Error and Loading states */
-    // States for the entire products and categories
-    if (products.isError) return <div>Error! {products.error}</div>
-    if (products.isLoading) return <div>Loading...</div>
-    
-    /* Print out all info in string */
-    const productsInfo = products.data.products
+    if (isLoading) return <span>Products Loading...</span>
+    if (isError) return {error}
     
     return (
         <>
-            <hr/>
-            {productsInfo.map(p => {
+            {products && products.products.map(p => {
                 return (
                     <div key={p.id}
-                         className="flex gap-2 w-full bg-sky-100">
+                         className="flex gap-2 w-full h-full bg-sky-100">
                         <Link to={`product/${p.id}`}
                               className="flex gap-2 w-fit bg-sky-100">
                             <p>{p.name}</p>

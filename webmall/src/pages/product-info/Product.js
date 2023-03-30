@@ -4,29 +4,36 @@
  * @date 27.03.2023
  */
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-
-import { fetchSingleProduct } from '../../api/client'
+import useGetProduct from '../../api/getProduct'
 
 const Product = () => {
+    /* initialize a product */
+    const [product, setProduct] = useState(null)
+    
     /* Fetch parameter from link */
     const { productID } = useParams()
     
-    /* Using the query hook to fetch single Product info from API */
-    const product = useQuery({queryKey:['product'], queryFn: () => fetchSingleProduct(productID)})
+    const { data, isLoading, error, isError } = useGetProduct(productID)
     
-    /* Error and Loading states */
-    if (product.isLoading) return <span>Single Loading...</span>
-    if (product.isError) return <span>Error: {product.error}</span>
+    /* Avoid too many requests */
+    useEffect(()=>{
+        setProduct(data && data)
+    }, [data])
     
     //Print out all info in string
-    const info = product.data.data.product
+    
+    const info = product && product.product
     
     return (
-        <div>
-            <p>{JSON.stringify(info)}</p>
+        <div className="overflow-x-auto">
+            {   /* Error and Loading states */
+                isLoading ? <span>Categories Loading...</span> : isError && <span>Error: {error}</span>
+            }
+            {product &&
+                <p>{JSON.stringify(info)}</p>
+            }
         </div>
     )
 }

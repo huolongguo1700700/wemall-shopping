@@ -15,7 +15,9 @@ const Subsequences = (props) => {
                     {props.sequence.map((s, i) =>
                         <div key={i}
                              className="h-10 w-fit flex flex-col justify-center items-center cursor-pointer ">
-                            <NavLink className={`group w-full ${(isActive) => isActive && ""}`}>
+                            <NavLink className={`group w-full ${(isActive) => isActive && ""}`}
+                                     to={`/collections/${s.name}/${s.id}`}
+                            >
                                 <span className="group-hover:underline group-hover:underline-offset-2 group-hover:text-lime-600">{s.name}</span>
                             </NavLink>
                         </div>

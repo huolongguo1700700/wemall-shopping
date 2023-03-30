@@ -52,6 +52,8 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/product/inventory/save", product.SaveInventory)
 		adminRouter.Post("/product/inventory/total", product.UpdateTotalInventory)
 		
+		adminRouter.Get("/category-products", product.GetByCategoryID)
+		
 		adminRouter.Get("/order/analyze", order.Analyze)
 		adminRouter.Get("/order/todaycount", order.TodayCount)
 		adminRouter.Get("/order/totalcount", order.TotalCount)

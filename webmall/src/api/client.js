@@ -38,3 +38,11 @@ export async function fetchSingleCategory(id) {
         throw new Error(e.message)
     })
 }
+
+export const fetchProductsByCategory = async (categoryId) => {
+    return await axios.get(
+        `/api/products?category_id=${categoryId}`
+    ).then((res) => res.data.data).catch(e => {
+        throw new Error(e.message)
+    })
+}

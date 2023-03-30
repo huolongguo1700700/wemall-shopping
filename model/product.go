@@ -39,3 +39,14 @@ const (
 	// ProductPending 商品未上架
 	ProductPending = 3
 )
+
+// Get Products By category_id
+
+func GetProductsByCategoryID(categoryID int) ([]Product, error) {
+	var products []Product
+	queryErr := DB.Where("category_id = ?", categoryID).Find(&products).Error
+	if queryErr != nil {
+		return nil, queryErr
+	}
+	return products, nil
+}

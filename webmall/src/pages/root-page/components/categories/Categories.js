@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-import useGetCategories from '../../../../api/getCategories'
+import useFetchCategories from '../../../../api/fetchCategories'
 import Classify from './classify'
 import Subsequences from './Subsequences'
 import OpenContext from '../../Context'
@@ -20,7 +20,7 @@ export const Categories = () => {
     
     /* Using the query hooks */
     // const category = useQuery({queryKey: ['category'], queryFn: () => fetchSingleCategory(4)})
-    const {data, isLoading, isError, error} = useGetCategories()
+    const {data, isLoading, isError, error} = useFetchCategories()
     
     /* Avoid too many requests */
     useEffect(() => {
@@ -46,7 +46,9 @@ export const Categories = () => {
                                     return (
                                         <div key={i}
                                              className="md:relative md-max:w-2/3 w-full md:h-full group/category ">
-                                            <NavLink className={`md-max:p-4 w-full h-full flex md-max:text-lime-50 md-max:group-hover/category:text-lime-300 group-hover/category:text-white md:group-hover/category:bg-lime-500 cursor-pointer md:justify-center md:items-center ${(isActive) => isActive && "text-lime-500"} `}>
+                                            <NavLink className={`md-max:p-4 w-full h-full flex md-max:text-lime-50 md-max:group-hover/category:text-lime-300 group-hover/category:text-white md:group-hover/category:bg-lime-500 cursor-pointer md:justify-center md:items-center ${(isActive) => isActive && "text-lime-500"} `}
+                                                     to={`/collections/${c.name}/${c.id}`}
+                                            >
                                                 <div className="">{c.name} </div>
                                                 {/*{c.id}*/}
                                             </NavLink>

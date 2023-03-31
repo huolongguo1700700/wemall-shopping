@@ -216,6 +216,16 @@ INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, cre
 INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (17, 'Computers', 1, 16, 1, 'Electronics', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
 INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (18, 'Mobile phone', 1, 16, 1, 'Electronics', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
 INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (19, 'Coffee', 1, 12, 1, null, '2023-03-29 13:07:14', '2023-03-29 13:07:16', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (20, 'Fruit Juice', 1, 12, 1, null, '2023-03-29 13:07:14', '2023-03-29 13:07:16', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (21, 'Functional drinks', 1, 12, 1, null, '2023-03-29 13:07:14', '2023-03-29 13:07:16', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (22, 'Bananas', 1, 4, 1, 'Fruit', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (23, 'Berries', 1, 4, 1, 'Fruit', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (24, 'Apples', 1, 4, 1, 'Fruit', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (25, 'Pears', 1, 4, 1, 'Fruit', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (26, 'Potatoes', 1, 8, 1, 'Vegetables', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (27, 'Onions', 1, 8, 1, 'Vegetables', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (28, 'Mushrooms', 1, 8, 1, 'Vegetables', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (29, 'Beans', 1, 8, 1, 'Vegetables', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
 
 
 INSERT INTO wmall.contact (id, name, phone, province, city, street, address, zipcode, created_at, updated_at) VALUES (1, 'user', '13412345678', 1, 2, 3, 'Hubei Province', '432799', '2017-01-10 12:05:34', '2017-01-10 12:05:34');

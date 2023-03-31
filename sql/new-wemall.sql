@@ -1,4 +1,4 @@
-create table carts
+create table if not exists carts
 (
     id         int unsigned auto_increment
         primary key,
@@ -12,7 +12,7 @@ create table carts
 )
     charset = utf8mb3;
 
-create table categories
+create table if not exists categories
 (
     id         int unsigned auto_increment
         primary key,
@@ -21,13 +21,13 @@ create table categories
     parent_id  int          default 0  not null,
     status     int                     not null,
     remark     varchar(1000)           null,
-    created_at datetime                not null,
-    updated_at datetime                not null,
+    created_at datetime                null,
+    updated_at datetime                null,
     deleted_at datetime                null
 )
     charset = utf8mb3;
 
-create table contact
+create table if not exists contact
 (
     id         int unsigned auto_increment
         primary key,
@@ -43,7 +43,7 @@ create table contact
 )
     charset = utf8mb3;
 
-create table images
+create table if not exists images
 (
     id            int unsigned auto_increment
         primary key,
@@ -56,7 +56,7 @@ create table images
 )
     charset = utf8mb3;
 
-create table inventories
+create table if not exists inventories
 (
     id         int unsigned auto_increment
         primary key,
@@ -68,7 +68,7 @@ create table inventories
 )
     charset = utf8mb3;
 
-create table inventory_property_value
+create table if not exists inventory_property_value
 (
     id                int unsigned auto_increment
         primary key,
@@ -77,7 +77,7 @@ create table inventory_property_value
 )
     charset = utf8mb3;
 
-create table orders
+create table if not exists orders
 (
     id            int unsigned auto_increment
         primary key,
@@ -97,7 +97,7 @@ create table orders
 )
     charset = utf8mb3;
 
-create table product_category
+create table if not exists product_category
 (
     id          int unsigned auto_increment
         primary key,
@@ -106,29 +106,29 @@ create table product_category
 )
     charset = utf8mb3;
 
-create table products
+create table if not exists products
 (
     id             int unsigned auto_increment
         primary key,
     name           varchar(200)  default '' not null,
-    browse_count   int           default 0  not null,
-    buy_count      int           default 0  not null,
-    total_sale     double        default 0  not null,
-    price          double                   not null,
-    original_price double                   not null,
+    category_id    int                      not null,
     status         int                      not null,
-    image_id       int unsigned             not null comment '商品封面图片',
-    image_ids      varchar(200)  default '' not null comment '商品图片集',
-    remark         varchar(1000) default '' null,
+    price          double                   not null,
     detail         longtext                 not null,
-    created_at     datetime                 not null,
-    updated_at     datetime                 not null,
+    buy_count      int           default 0  null,
+    total_sale     double        default 0  null,
+    image_id       int unsigned             null comment '商品封面图片',
+    image_ids      varchar(200)  default '' null comment '商品图片集',
+    remark         varchar(1000) default '' null,
+    original_price double                   null,
+    created_at     datetime                 null,
+    updated_at     datetime                 null,
     deleted_at     datetime                 null,
-    category_id    int                      null
+    browse_count   int           default 0  null
 )
     charset = utf8mb3;
 
-create table properties
+create table if not exists properties
 (
     id         int unsigned auto_increment
         primary key,
@@ -140,7 +140,7 @@ create table properties
 )
     charset = utf8mb3;
 
-create table property_values
+create table if not exists property_values
 (
     id          int unsigned auto_increment
         primary key,
@@ -154,7 +154,7 @@ create table property_values
 )
     charset = utf8mb3;
 
-create table user_visits
+create table if not exists user_visits
 (
     id              int unsigned auto_increment
         primary key,
@@ -176,7 +176,7 @@ create table user_visits
 )
     charset = utf8mb3;
 
-create table users
+create table if not exists users
 (
     id         int unsigned auto_increment
         primary key,
@@ -199,19 +199,50 @@ create table users
 )
     charset = utf8mb3;
 
+
+
 INSERT INTO wmall.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, order_id) VALUES (7, 50, 1, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:12:58', '2017-06-11 17:12:58', null, 1);
 INSERT INTO wmall.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, order_id) VALUES (8, 48, 2, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:21:53', '2017-06-11 17:21:53', null, 1);
 
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (1, 'Others', 0, 0, 1, '', '2022-02-07 21:34:50', '2022-05-24 18:21:19', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (2, 'Chocolate', 1, 13, 1, 'Chocolate', '2022-02-07 21:34:50', '2022-05-24 22:41:29', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (3, 'Chips', 1, 13, 1, '', '2022-02-07 21:34:50', '2022-05-24 22:44:51', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (4, 'Fresh Fruit', 0, 0, 1, 'Fruit', '2022-02-07 21:34:50', '2022-05-29 00:44:54', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (8, 'Fresh Vegetables', 0, 0, 1, 'Vegetables', '2022-02-07 23:11:58', '2022-05-28 10:35:53', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (9, 'Cake', 1, 13, 1, '', '2023-03-30 08:54:04', '2022-05-28 13:12:47', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (12, 'Drinks', 0, 0, 1, null, '2023-03-29 13:07:14', '2023-03-29 13:07:16', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (13, 'Snacks', 0, 0, 1, null, '2023-03-29 13:18:41', '2023-03-29 13:18:42', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (14, 'Tea', 1, 12, 1, null, '2023-03-30 08:53:52', '2023-03-30 08:53:54', null);
-INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (15, 'Cookies', 1, 13, 1, null, '2023-03-30 08:53:53', '2023-03-30 08:53:57', null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (1, 'Fresh Fruit', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (2, 'Fresh Vegetables', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (3, 'Meat', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (4, 'Beef', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (5, 'Bakery', 1, 11, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (6, 'Dairy Products', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (7, 'Beverages', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (8, 'Pork', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (9, 'Oils & Seasoning', 1, 11, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (10, 'Sweets & Snacks', 1, 11, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (11, 'Others', 0, 0, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (12, 'Milk & Eggs', 1, 6, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (13, 'Yogurts', 1, 6, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (14, 'Creams', 1, 6, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (15, 'Butter', 1, 6, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (16, 'Sparkling Waters', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (17, 'Soft Drinks', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (18, 'Juices', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (19, 'Energy Drinks', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (20, 'Coffees and Tea', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (21, 'Apples', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (22, 'Bananas', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (23, 'Pears', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (24, 'Citrus', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (25, 'Berries', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (26, 'Chicken', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (27, 'Fish & Seafood', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (28, 'Minced Meat', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (29, 'Tropical Fruits', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (30, 'Other Fruit', 1, 1, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (31, 'Other Meat', 1, 3, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (32, 'Cheese', 1, 6, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (33, 'Other Drinks', 1, 7, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (34, 'Others', 1, 11, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (35, 'Cucumbers', 1, 2, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (36, 'Tomatoes', 1, 2, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (37, 'Onions', 1, 2, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (38, 'Cabbage', 1, 2, 1, null, null, null, null);
+INSERT INTO wmall.categories (id, name, sequence, parent_id, status, remark, created_at, updated_at, deleted_at) VALUES (39, 'Root Vegetables', 1, 2, 1, null, null, null, null);
 
 INSERT INTO wmall.contact (id, name, phone, province, city, street, address, zipcode, created_at, updated_at) VALUES (1, 'user', '13412345678', 1, 2, 3, 'Hubei Province', '432799', '2017-01-10 12:05:34', '2017-01-10 12:05:34');
 
@@ -356,11 +387,27 @@ INSERT INTO wmall.product_category (id, product_id, category_id) VALUES (291, 47
 INSERT INTO wmall.product_category (id, product_id, category_id) VALUES (292, 48, 4);
 INSERT INTO wmall.product_category (id, product_id, category_id) VALUES (305, 50, 4);
 
-INSERT INTO wmall.products (id, name, browse_count, buy_count, total_sale, price, original_price, status, image_id, image_ids, remark, detail, created_at, updated_at, deleted_at, category_id) VALUES (45, 'Lemon', 0, 0, 0, 178, 178, 1, 42, '[40,41]', '', '', '2017-05-15 14:29:37', '2017-05-28 10:48:18', null, 4);
-INSERT INTO wmall.products (id, name, browse_count, buy_count, total_sale, price, original_price, status, image_id, image_ids, remark, detail, created_at, updated_at, deleted_at, category_id) VALUES (46, 'Peach', 0, 0, 0, 1044, 1044, 1, 54, '[55,56,57]', '', '', '2017-05-28 13:12:47', '2017-05-28 13:58:49', null, 4);
-INSERT INTO wmall.products (id, name, browse_count, buy_count, total_sale, price, original_price, status, image_id, image_ids, remark, detail, created_at, updated_at, deleted_at, category_id) VALUES (47, 'Apple', 0, 0, 0, 178, 178, 1, 58, '[59,60,61]', '', '', '2017-05-28 15:01:35', '2017-05-28 15:03:11', null, 4);
-INSERT INTO wmall.products (id, name, browse_count, buy_count, total_sale, price, original_price, status, image_id, image_ids, remark, detail, created_at, updated_at, deleted_at, category_id) VALUES (48, 'Pineapple', 0, 0, 0, 218, 218, 3, 66, '[67]', '', '', '2017-05-28 15:09:37', '2017-05-28 15:09:37', null, 4);
-INSERT INTO wmall.products (id, name, browse_count, buy_count, total_sale, price, original_price, status, image_id, image_ids, remark, detail, created_at, updated_at, deleted_at, category_id) VALUES (50, 'Coconut', 0, 0, 0, 198, 198, 1, 75, '[92,93,94]', '', '', '2017-05-28 16:55:43', '2017-05-29 00:44:54', null, 4);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (45, 'Lemon', 24, 1, 3.38, '', 0, 0, 42, '[40,41]', '', 3.38, '2017-05-15 14:29:37', '2017-05-28 10:48:18', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (46, 'Belgian Pears', 23, 1, 2.98, '', 0, 0, 54, '[55,56,57]', '', 2.98, '2017-05-28 13:12:47', '2017-05-28 13:58:49', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (47, 'Omena Apple', 21, 1, 2.28, '', 0, 0, 58, '[59,60,61]', '', 2.28, '2017-05-28 15:01:35', '2017-05-28 15:03:11', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (48, 'Pineapple', 29, 3, 4.68, '', 0, 0, 66, '[67]', '', 4.68, '2017-05-28 15:09:37', '2017-05-28 15:09:37', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (50, 'Coconut', 29, 1, 1.98, '', 0, 0, 75, '[92,93,94]', '', 1.98, '2017-05-28 16:55:43', '2017-05-29 00:44:54', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (51, 'Organic Eggs', 12, 1, 3.99, '', 0, 0, 23, '', '', 3.99, '2023-03-31 02:42:42', '2023-03-31 02:42:44', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (52, 'Valio Luomu Lactose-free Milk', 12, 1, 2.25, '', 0, 0, 0, '0', '', 2.25, '2023-04-01 01:10:20', '2023-04-01 01:10:21', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (53, 'Cucumber Finland', 35, 1, 1.99, '150g Organic Cucumber', 0, 0, null, '', '', null, '2023-04-01 01:33:17', '2023-04-01 01:33:18', null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (54, 'Pickled Cucumber', 35, 1, 2.79, '€2.79/kg', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (55, 'Cherry Tomato 180g', 36, 1, 3.19, 'Nams-Piccolo cherry tomato', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (56, 'Spring Onion 100g', 37, 1, 2.49, 'Finnish spring onion.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (57, 'Red Onion 500g', 37, 1, 0.99, 'Homegrown red onions are Finnish and packed in a mesh bag. Due to its beautiful color, red onion is well suited to salads. Marinated red onions make a tasty addition to meat dishes. Red onions are great for casseroles, pizzas and pies.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (58, '
+Rainbow Broccoli Packed 300 g', 38, 1, 0.99, 'Packaged Spanish Broccoli. Beautiful green broccoli is a superfood from stem to bud. In addition to vitamins A and C, it contains minerals and protein. Broccoli is best when it''s crunchy, so scramble it raw and roast it or just lightly boil it. It is also suitable for many baked dishes. Peel and chop the stem into food as well.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (59, 'Rainbow Cauliflower packed', 38, 1, 2.38, 'Packaged Spanish Cauliflower.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (60, 'Broccoli Packed Organic 300g', 38, 1, 1.39, 'Spanish packaged organic broccoli.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (61, 'Carrot 2kg', 39, 1, 2.19, 'Finnish carrot in a 2 kg bag. The roaring carrot can be used in Christmas dishes as well - it is suitable for a carrot box', null, null, null, '', '', null, null, null, null, null);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (62, 'General potato washed', 39, 1, 0.89, 'Washed Finnish general potato.', 0, 0, null, '', '', null, null, null, null, 0);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (63, 'Domestic Colomba potato 1kg', 39, 1, 0.99, 'A round-oval potato', null, 0, null, '', '', null, null, null, null, null);
+INSERT INTO wmall.products (id, name, category_id, status, price, detail, buy_count, total_sale, image_id, image_ids, remark, original_price, created_at, updated_at, deleted_at, browse_count) VALUES (64, 'Parsnip', 39, 1, 3.09, 'Domestic first-class parsnip. The fine aromas of parsnip are accentuated in the oven. It gives a rich spicy flavor to stews', null, 0, null, '', '', null, null, null, null, null);
+
 
 insert into wmall.properties (id, created_at, updated_at, deleted_at, name, product_id)
 values  (43, '2017-07-13 17:01:39', '2017-07-13 17:01:39', null, '尺寸', 50),

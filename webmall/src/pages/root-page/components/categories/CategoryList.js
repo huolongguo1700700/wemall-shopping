@@ -58,6 +58,7 @@ export const HoverStyles = `
 `
 
 const InnerItemContainerStyles = tw.div`
+    md:relative
     md-max:w-2/3 w-full md:h-full
     group/category
 `

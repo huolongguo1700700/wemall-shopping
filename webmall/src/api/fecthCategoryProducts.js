@@ -10,5 +10,5 @@ import { fetchProductsByCategory } from './client'
 /* Using the query hooks */
 export default function useFetchCategoryProducts (categoryID) {
     /* Calling request API function and keep data by useQuery */
-    return useQuery({queryKey:['products', categoryID], queryFn: () => fetchProductsByCategory(categoryID)})
+    return useQuery({queryKey:['cate-products', categoryID], queryFn: () => fetchProductsByCategory(categoryID)})
 }

@@ -53,6 +53,8 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/product/inventory/total", product.UpdateTotalInventory)
 		
 		adminRouter.Get("/category-products", product.GetByCategoryID)
+		// http://localhost:8012/api/admin/categoryProducts?categoryId=:categoryId
+		adminRouter.Get("/categoryProducts", category.GetProductsByCategory)
 		
 		adminRouter.Get("/order/analyze", order.Analyze)
 		adminRouter.Get("/order/todaycount", order.TodayCount)

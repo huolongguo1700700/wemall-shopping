@@ -8,7 +8,7 @@ import React from 'react'
 
 const Marquee = () => {
     return (
-        <div className="flex flex-col w-full h-6 md:h-8 bg-lime-100 md:bg-lime-300">
+        <div className="flex flex-col w-full h-6 lg:h-8 bg-lime-100 lg:bg-lime-300">
             <div className="h-full animate-scroll absolute top-0 w-full flex justify-around z-0 items-center">
                 <h2 className="ml-2">Free delivery on all orders over €60</h2>
                 <h2 className="ml-2">Free delivery on all orders over €60</h2>

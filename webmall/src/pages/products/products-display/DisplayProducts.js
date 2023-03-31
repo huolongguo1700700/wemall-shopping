@@ -15,7 +15,7 @@ const DisplayProducts = ({products}) => {
             <Link to={`/product/${products.id}`}
                   className="flex gap-2 w-fit bg-sky-100">
                 <p>{products.name}</p>
-                <p>{products.price} $</p>
+                <p>{products.price} €</p>
                 <p>{products.categories}</p>
             </Link>
         </div>

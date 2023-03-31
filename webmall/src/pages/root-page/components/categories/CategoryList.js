@@ -12,7 +12,7 @@ import DeviceSubsequences from './DeviceSubsequences'
 import Subsequences from './Subsequences'
 import tw from 'tailwind-styled-components'
 
-export const CategoryList = ({ category, toggle, setSelectedCategory }) => {
+export const CategoryList = ({ category, toggle, setSelectedCategory, closeCategories }) => {
     
     const handleClick = () => setSelectedCategory(toggle ? null : category.id);
     
@@ -35,12 +35,14 @@ export const CategoryList = ({ category, toggle, setSelectedCategory }) => {
                     <SubOuterContainerStyles className={`${!toggle && "hidden"}`}>
                         <NavLink className={({ isActive }) => isActive ? `${ActiveLinkStyles} ${HoverStyles}` : `${HoverStyles}`}
                                  to={`/collections/${category.name}/${category.id}`}
+                                 onClick={closeCategories}
                         >
                             Overview
                         </NavLink>
     
                         <DeviceSubsequences
                             sequence={category.subsequence}
+                            closeCategories={closeCategories}
                         />
                     </SubOuterContainerStyles>
                 </div>
@@ -58,8 +60,8 @@ export const HoverStyles = `
 `
 
 const InnerItemContainerStyles = tw.div`
-    md:relative
-    md-max:w-2/3 w-full md:h-full
+    lg:relative
+    md:w-2/5 w-full lg:h-full
     group/category
 `
 
@@ -67,15 +69,15 @@ const NavLinkStyles = `
     flex
     w-full h-full
     group-hover/category:text-white
-    md:group-hover/category:bg-lime-500
+    lg:group-hover/category:bg-lime-500
     cursor-pointer
-    md:justify-center md:items-center
-    md-max:hidden
+    lg:justify-center lg:items-center
+    lg-max:hidden
 `
 export const ActiveLinkStyles = `
     underline underline-offset-2
     text-lime-600
-    md-max:text-lime-500
+    lg-max:text-lime-500
 `
 
 const LetterStyles =tw.div`
@@ -98,7 +100,7 @@ const DeviceNavLinkStyles = `
     w-full h-full
     cursor-pointer
     text-lime-50
-    md:hidden
+    lg:hidden
 `
 
 /**

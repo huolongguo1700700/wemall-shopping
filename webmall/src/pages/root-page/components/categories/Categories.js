@@ -48,51 +48,54 @@ export const Categories = () => {
     
     return (
         categories &&
-        <ContainerStyles className={`${isOpen && "md-max:left-0"}`}>
-            <MiddleContainerStyles className={`${!isOpen && ""}`}>
+        <ContainerStyles className={`${isOpen && "lg-max:left-0"}`}>
+            <MiddleContainerStyles>
+                <div className="lg-max:hidden w-1/5 h-full" onClick={toggleOpen}></div>
                 <ItemContainerStyles>
                     {navCategory.map((c, i) => {
                         return (
-                            <CategoryList key={i}
+                            <CategoryList key= {i}
                                           category={c}
                                           toggle={selectedCategory === c.id}
+                                          closeCategories={toggleOpen}
                                           setSelectedCategory={setSelectedCategory}
                             />
                         )
                     })}
                 </ItemContainerStyles>
-                <div className="md:hidden h-full" onClick={toggleOpen}></div>
+                <div className="lg:hidden h-full" onClick={toggleOpen}></div>
             </MiddleContainerStyles>
         </ContainerStyles>
     )
 }
 const ContainerStyles = tw.div`
     flex items-center justify-center
-    md-max:fixed
-    md-max:top-0 md-max:-left-full
-    md-max:w-full md-max:h-full
-    md-max:transition-all md-max:duration-300 md-max:ease-in-out
-    md-max:z-30
+    lg-max:fixed
+    lg-max:top-0 lg-max:-left-full
+    lg-max:w-full lg-max:h-full
+    lg-max:transition-all lg-max:duration-300 lg-max:ease-in-out
+    lg-max:z-30
     select-none
 `
 
 const MiddleContainerStyles = tw.div`
-    md-max:mt-28
-    md-max:bg-stone-700/80
+    lg-max:mt-28
+    lg-max:bg-stone-700/80
     backdrop-blur-sm
-    flex flex-col w-full h-full
-    md:h-12 md:px-8 xl:px-0
-    md:items-center
+    flex flex-col lg:flex-row w-full h-full
+    lg:h-12 xl:px-0
+    lg:items-center
     justify-center
 `
 
 const ItemContainerStyles = tw.div`
-    flex md-max:flex-col
-    w-full 2xl:w-2/3 h-full
-    md:px-6 2xl:px-12
+    flex lg-max:flex-col
+    w-full 2xl:w-4/5 h-full
+    lg-max:py-12
+    
     items-center
     justify-center
-    md-max:justify-start
+    lg-max:justify-start
 `
 /**
  * End of Navigation Component

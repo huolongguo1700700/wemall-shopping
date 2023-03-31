@@ -10,8 +10,8 @@ import Navigation from './Navigation'
 
 const Header = () => {
     return (
-        <div className="flex flex-col md:flex-row h-14 md:h-8 justify-between text-slate-800">
-            <div className="relative left-0 w-full md:w-2/3 overflow-hidden ">
+        <div className="flex flex-col lg:flex-row h-14 lg:h-8 justify-between text-slate-800">
+            <div className="relative left-0 w-full lg:w-2/3 overflow-hidden ">
                 <Marquee />
             </div>
             <Navigation />

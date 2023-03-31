@@ -43,7 +43,7 @@ export async function fetchSingleCategory(id) {
 
 export const fetchProductsByCategory = async (categoryId) => {
     return await axios.get(
-        `${ADMIN_URL}/category-products?category_id=${categoryId}`
+        `${ADMIN_URL}/categoryProducts?categoryId=${categoryId}`
     ).then((res) => res.data.data).catch(e => {
         throw new Error(e.message)
     })

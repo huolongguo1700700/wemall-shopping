@@ -155,8 +155,10 @@ func AllList(ctx iris.Context) {
 		orderStr += " desc"
 	}
 	
-	offset := (pageNo - 1) * config.ServerConfig.PageSize
-	queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&categories).Error
+	// 去你粮的分页，尼玛的类别还分页是吧！傻逼！害老子弄半天！
+	// offset := (pageNo - 1) * config.ServerConfig.PageSize
+	// queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&categories).Error
+	queryErr := model.DB.Order(orderStr).Find(&categories).Error
 	
 	if queryErr != nil {
 		SendErrJSON("error.", ctx)
@@ -231,6 +233,71 @@ func UpdateStatus(ctx iris.Context) {
 		"data": iris.Map{
 			"id":     id,
 			"status": status,
+		},
+	})
+}
+
+func GetProductsByCategory(ctx iris.Context) {
+	SendErrJSON := common.SendErrJSON
+	
+	// Get categoryID
+	categoryIDStr := ctx.URLParam("categoryId")
+	if categoryIDStr == "" {
+		SendErrJSON("Missing category ID", ctx)
+		return
+	}
+	
+	categoryID, err := strconv.Atoi(categoryIDStr)
+	if err != nil {
+		SendErrJSON("Invalid category ID", ctx)
+		return
+	}
+	
+	// Check if the category is a top-level category or a subcategory
+	var requestedCategory model.Category
+	queryErr := model.DB.Where("id = ?", categoryID).First(&requestedCategory).Error
+	if queryErr != nil {
+		SendErrJSON("Error while fetching category.", ctx)
+		return
+	}
+	
+	var products []model.Product
+	
+	if requestedCategory.ParentID == 0 { // Top-level category
+		// Find all subcategories belonging to the top category
+		var subCategories []model.Category
+		queryErr = model.DB.Where("parent_id = ?", categoryID).Find(&subCategories).Error
+		if queryErr != nil {
+			SendErrJSON("Error while fetching subcategories.", ctx)
+			return
+		}
+		
+		// Get all subcategory IDs
+		var subCategoryIDs []int
+		for _, subCategory := range subCategories {
+			subCategoryIDs = append(subCategoryIDs, int(subCategory.ID))
+		}
+		
+		// Find all products related to the subcategories
+		queryErr = model.DB.Where("category_id IN (?)", subCategoryIDs).Find(&products).Error
+		if queryErr != nil {
+			SendErrJSON("Error while fetching products.", ctx)
+			return
+		}
+	} else { // Subcategory
+		// Find all products related to the subcategory
+		queryErr = model.DB.Where("category_id = ?", categoryID).Find(&products).Error
+		if queryErr != nil {
+			SendErrJSON("Error while fetching products.", ctx)
+			return
+		}
+	}
+	
+	utils.Res(ctx, iris.StatusOK, iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
+			"products": products,
 		},
 	})
 }

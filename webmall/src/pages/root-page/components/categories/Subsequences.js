@@ -28,7 +28,7 @@ const Subsequences = (props) => {
     )
 }
 const OuterContainerStyles = tw.div`
-    md-max:hidden
+    lg-max:hidden
     absolute
     flex flex-col
     justify-center

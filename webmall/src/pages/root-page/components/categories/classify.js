@@ -32,8 +32,7 @@ export default function Classify (categoriesInfo) {
         /* Sorting by category name and locking "Others" to the end of the list */
         const specialString = "Others"
         return acc
-        .sort((a, b) =>
-            (a.name.toUpperCase() < b.name.toUpperCase()) ? -1 : ((a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : 0))
+        .sort((a, b) => (a.id > b.id ? 1 : -1))
         .sort((a, b) =>
             (a.name.includes(specialString) && !b.name.includes(specialString)) ?
                 1

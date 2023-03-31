@@ -8,7 +8,7 @@ import React, { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ActiveLinkStyles, HoverStyles } from './CategoryList'
 
-const DeviceSubsequences = ({ sequence }) => {
+const DeviceSubsequences = ({ sequence, closeCategories }) => {
     return (
         sequence && sequence.length !== 0 &&
         <Fragment>
@@ -16,6 +16,7 @@ const DeviceSubsequences = ({ sequence }) => {
                 <NavLink
                     key={i}
                     className={({isActive}) => isActive ? ` ${ActiveLinkStyles} ${HoverStyles} origin-top overflow-hidden` : `${HoverStyles}`}
+                    onClick={closeCategories}
                     to={`/collections/${s.name}/${s.id}`}
                 >
                     <div className="">{s.name}</div>

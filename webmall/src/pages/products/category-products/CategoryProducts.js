@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
 import DisplayProducts from '../products-display/DisplayProducts'
+import useFetchCategory from '../../../api/fetchCategory'
 
 const CategoryProducts = () => {
     /* Use Router to transfer parameters and navigate to Error page */
@@ -26,7 +27,7 @@ const CategoryProducts = () => {
     useEffect(()=>{
         setCateProducts(data && data)
     }, [data])
-    
+    console.log(data)
     /* Error and Loading states */
     if (isLoading) return <span>Products Loading...</span>
     if (isError) {

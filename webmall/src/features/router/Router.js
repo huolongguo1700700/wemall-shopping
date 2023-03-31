@@ -1,5 +1,5 @@
 /**
- * @Description Router Component
+ * @Description Router configuration
  * @author GYX xiao sb
  * @date 28.03.2023
  */
@@ -10,6 +10,7 @@ import Error from '../../pages/error-page/Error'
 import Product from '../../pages/products/product-info/Product'
 import Products from '../../pages/products/all-product/Products'
 import CategoryProducts from '../../pages/products/category-products/CategoryProducts'
+import Collections from '../../pages/home/components/main/Collections'
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/collections",
-                element: <Products />,
+                element: <Collections />,
             },
             {
                 path: "/collections/:categoryName/:categoryID",

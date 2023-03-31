@@ -1,3 +1,5 @@
+// noinspection ES6CheckImport
+
 /**
  * @Description Error Component
  * @author GYX xiao sb
@@ -7,7 +9,6 @@ import { useRouteError } from "react-router-dom"
 
 export default function Error() {
     const error = useRouteError()
-    console.error(error)
     
     return (
         <div className="flex flex-col h-screen w-full justify-center items-center">

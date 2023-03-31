@@ -5,16 +5,18 @@
  */
 
 import axios from 'axios'
+import { ADMIN_URL } from './api'
+
 
 export async function fetchProducts() {
     return await axios.get(
-        'http://localhost:8012/api/admin/products'
+        `${ADMIN_URL}/products`
     ).then((res)=>res.data.data)
 }
 
 export async function fetchCategories() {
     return await axios.get(
-        'http://localhost:8012/api/admin/categories'
+        `${ADMIN_URL}/categories`
     ).then((res)=>res.data.data)
     .catch(e => {
         throw new Error(e.message)
@@ -23,7 +25,7 @@ export async function fetchCategories() {
 
 export async function fetchSingleProduct(id) {
     return await axios.get(
-        `http://localhost:8012/api/admin/product/${id}`
+        `${ADMIN_URL}/product/${id}`
     ).then((res)=>res.data.data)
     .catch(e => {
         throw new Error(e.message)
@@ -32,7 +34,7 @@ export async function fetchSingleProduct(id) {
 
 export async function fetchSingleCategory(id) {
     return await axios.get(
-        `http://localhost:8012/api/admin/category/${id}`
+        `${ADMIN_URL}/category/${id}`
     ).then((res)=>res.data.data)
     .catch(e => {
         throw new Error(e.message)
@@ -41,7 +43,7 @@ export async function fetchSingleCategory(id) {
 
 export const fetchProductsByCategory = async (categoryId) => {
     return await axios.get(
-        `/api/products?category_id=${categoryId}`
+        `${ADMIN_URL}/category-products?category_id=${categoryId}`
     ).then((res) => res.data.data).catch(e => {
         throw new Error(e.message)
     })

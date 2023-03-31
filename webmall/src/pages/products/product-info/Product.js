@@ -5,10 +5,13 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useFetchProduct from '../../../api/fetchProduct'
 
 const Product = () => {
+    /* Use Router to transfer parameters and navigate to Error page */
+    const navigate = useNavigate()
+    
     /* initialize a product */
     const [product, setProduct] = useState(null)
     
@@ -24,7 +27,10 @@ const Product = () => {
     
     /* Error and Loading states */
     if (isLoading) return <span>Products Loading...</span>
-    if (isError) return {error}
+    if (isError) {
+        console.log(error)
+        navigate(`/Error`)
+    }
     
     const info = product && product.product
     

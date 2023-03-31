@@ -5,17 +5,14 @@
  */
 
 import React from 'react'
+import Products from '../../../products/all-product/Products'
 
-const Main = () => {
-    
-    
+const Collections = () => {
     return (
-        <>
-        
-        </>
+        <Products />
     )
 }
 /**
  * End of Main Component
  */
-export default Main
+export default Collections

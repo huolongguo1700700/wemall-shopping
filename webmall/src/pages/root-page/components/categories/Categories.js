@@ -73,6 +73,7 @@ const ContainerStyles = tw.div`
     md-max:w-full md-max:h-full
     md-max:transition-all md-max:duration-300 md-max:ease-in-out
     md-max:z-30
+    select-none
 `
 
 const MiddleContainerStyles = tw.div`

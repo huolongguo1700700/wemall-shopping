@@ -1,3 +1,5 @@
+// noinspection ES6CheckImport
+
 /**
  * @Description Navigation Component
  * @author GYX xiao sb
@@ -5,22 +7,29 @@
  */
 
 import React, { useState, useEffect, useContext } from 'react'
-import { NavLink } from 'react-router-dom'
-import useGetCategories from '../../../../api/getCategories'
+import { useNavigate } from 'react-router-dom'
+import tw from 'tailwind-styled-components'
+import useFetchCategories from '../../../../api/fetchCategories'
 import Classify from './classify'
-import Subsequences from './Subsequences'
 import OpenContext from '../../Context'
+import { CategoryList } from './CategoryList'
 
 export const Categories = () => {
+    /* Use Router to transfer parameters and navigate to Error page */
+    const navigate = useNavigate()
+    
     /* initialize categories */
     const [categories, setCategories] = useState(null)
+    
+    /* Mobile device 2-level catalogue switch toggle */
+    const [selectedCategory, setSelectedCategory] = useState(null)
     
     /* Fetch Context from Burger Component for open the category lists for responsive design */
     const {isOpen, toggleOpen} = useContext(OpenContext)
     
     /* Using the query hooks */
     // const category = useQuery({queryKey: ['category'], queryFn: () => fetchSingleCategory(4)})
-    const {data, isLoading, isError, error} = useGetCategories()
+    const {data, isLoading, isError, error} = useFetchCategories()
     
     /* Avoid too many requests */
     useEffect(() => {
@@ -32,38 +41,59 @@ export const Categories = () => {
     
     /* Error and Loading states */
     if (isLoading) return <span>Categories Loading...</span>
-    if (isError) return <span>Error: {error}</span>
-    
+    if (isError) {
+        console.log(error)
+        navigate(`/Error`)
+    }
     
     return (
-        <>
-            {categories &&
-                <>
-                    <div className={` ${!isOpen && "md-max:hidden"} flex items-center justify-center md-max:fixed md-max:top-0 md-max:right-0 md-max:w-full md-max:h-full md-max:transition-all md-max:duration-300 md-max:ease-in-out md-max:z-30`}>
-                        <div className="md-max:mt-20 md-max:bg-stone-900/80 backdrop-blur-sm flex flex-col w-full h-full md:h-12 md:px-8 xl:px-0 md:items-center justify-center">
-                            <div className="flex md-max:flex-col w-full md:px-6 2xl:px-12 2xl:w-2/3 h-full items-center justify-center">
-                                {navCategory.map((c, i) => {
-                                    return (
-                                        <div key={i}
-                                             className="md:relative md-max:w-2/3 w-full md:h-full group/category ">
-                                            <NavLink className={`md-max:p-4 w-full h-full flex md-max:text-lime-50 md-max:group-hover/category:text-lime-300 group-hover/category:text-white md:group-hover/category:bg-lime-500 cursor-pointer md:justify-center md:items-center ${(isActive) => isActive && "text-lime-500"} `}>
-                                                <div className="">{c.name} </div>
-                                                {/*{c.id}*/}
-                                            </NavLink>
-                                            <Subsequences sequence={c.subsequence}/>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                            <div className="md:hidden h-full" onClick={toggleOpen}></div>
-                        </div>
-                    </div>
-                </>
-            }
-        </>
-    
+        categories &&
+        <ContainerStyles className={`${isOpen && "md-max:left-0"}`}>
+            <MiddleContainerStyles className={`${!isOpen && ""}`}>
+                <ItemContainerStyles>
+                    {navCategory.map((c, i) => {
+                        return (
+                            <CategoryList key={i}
+                                          category={c}
+                                          toggle={selectedCategory === c.id}
+                                          setSelectedCategory={setSelectedCategory}
+                            />
+                        )
+                    })}
+                </ItemContainerStyles>
+                <div className="md:hidden h-full" onClick={toggleOpen}></div>
+            </MiddleContainerStyles>
+        </ContainerStyles>
     )
 }
+const ContainerStyles = tw.div`
+    flex items-center justify-center
+    md-max:fixed
+    md-max:top-0 md-max:-left-full
+    md-max:w-full md-max:h-full
+    md-max:transition-all md-max:duration-300 md-max:ease-in-out
+    md-max:z-30
+    select-none
+`
+
+const MiddleContainerStyles = tw.div`
+    md-max:mt-28
+    md-max:bg-stone-700/80
+    backdrop-blur-sm
+    flex flex-col w-full h-full
+    md:h-12 md:px-8 xl:px-0
+    md:items-center
+    justify-center
+`
+
+const ItemContainerStyles = tw.div`
+    flex md-max:flex-col
+    w-full 2xl:w-2/3 h-full
+    md:px-6 2xl:px-12
+    items-center
+    justify-center
+    md-max:justify-start
+`
 /**
  * End of Navigation Component
  */

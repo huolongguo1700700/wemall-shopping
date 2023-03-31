@@ -3,11 +3,12 @@ package product
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kataras/iris/v12"
 	"strconv"
 	"strings"
 	"time"
 	"unicode/utf8"
+	
+	"github.com/kataras/iris/v12"
 	"wemall/config"
 	"wemall/controller/common"
 	"wemall/model"
@@ -19,14 +20,14 @@ func List(ctx iris.Context) {
 	SendErrJSON := common.SendErrJSON
 	var products []model.Product
 	pageNo, err := strconv.Atoi(ctx.FormValue("pageNo"))
- 
+	
 	if err != nil || pageNo < 1 {
 		pageNo = 1
 	}
-
+	
 	offset := (pageNo - 1) * config.ServerConfig.PageSize
-
-	//默认按创建时间，降序来排序
+	
+	// 默认按创建时间，降序来排序
 	var orderStr = "created_at"
 	if ctx.FormValue("order") == "1" {
 		orderStr = "total_sale"
@@ -36,45 +37,79 @@ func List(ctx iris.Context) {
 	if ctx.FormValue("asc") == "1" {
 		orderStr += " asc"
 	} else {
-		orderStr += " desc"	
+		orderStr += " desc"
 	}
-
+	
 	cateID, err := strconv.Atoi(ctx.FormValue("cateId"))
-
+	
 	if err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("Invalid category Id.", ctx)
 		return
 	}
-
+	
 	var category model.Category
-
+	
 	if model.DB.First(&category, cateID).Error != nil {
 		SendErrJSON("Invalid category Id.", ctx)
 		return
 	}
-
+	
 	pageSize := config.ServerConfig.PageSize
 	queryErr := model.DB.Offset(offset).Limit(pageSize).Order(orderStr).Find(&products).Error
-
+	
 	if queryErr != nil {
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	for i := 0; i < len(products); i++ {
 		err := model.DB.First(&products[i].Image, products[i].ImageID).Error
 		if err != nil {
 			fmt.Println(err.Error())
 			SendErrJSON("error", ctx)
 			return
-		}	
+		}
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
+			"products": products,
+		},
+	})
+}
+
+// GetByCategoryID
+func GetByCategoryID(ctx iris.Context) {
+	SendErrJSON := common.SendErrJSON
+	
+	// Get category_id
+	categoryIDStr := ctx.URLParam("category_id")
+	if categoryIDStr == "" {
+		SendErrJSON("Missing category ID", ctx)
+		return
+	}
+	
+	categoryID, err := strconv.Atoi(categoryIDStr)
+	if err != nil {
+		SendErrJSON("Invalid category ID", ctx)
+		return
+	}
+	
+	// Search products by category_id
+	products, err := model.GetProductsByCategoryID(categoryID)
+	if err != nil {
+		SendErrJSON("Error fetching products", ctx)
+		return
+	}
+	
+	// Fetch products
+	utils.Res(ctx, iris.StatusOK, iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
 			"products": products,
 		},
 	})
@@ -85,14 +120,14 @@ func AdminList(ctx iris.Context) {
 	SendErrJSON := common.SendErrJSON
 	var products []model.Product
 	pageNo, err := strconv.Atoi(ctx.FormValue("pageNo"))
- 
+	
 	if err != nil || pageNo < 1 {
 		pageNo = 1
 	}
-
-	offset   := (pageNo - 1) * config.ServerConfig.PageSize
-
-	//默认按创建时间，降序来排序
+	
+	offset := (pageNo - 1) * config.ServerConfig.PageSize
+	
+	// 默认按创建时间，降序来排序
 	var orderStr = "created_at"
 	if ctx.FormValue("order") == "1" {
 		orderStr = "total_sale"
@@ -102,19 +137,19 @@ func AdminList(ctx iris.Context) {
 	if ctx.FormValue("asc") == "1" {
 		orderStr += " asc"
 	} else {
-		orderStr += " desc"	
+		orderStr += " desc"
 	}
 	queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&products).Error
-
+	
 	if queryErr != nil {
 		SendErrJSON("error.", ctx)
 		return
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
 			"products": products,
 		},
 	})
@@ -123,13 +158,13 @@ func AdminList(ctx iris.Context) {
 func save(ctx iris.Context, isEdit bool) {
 	SendErrJSON := common.SendErrJSON
 	var product model.Product
-
+	
 	if err := ctx.ReadJSON(&product); err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("Invalid parameters.", ctx)
 		return
 	}
-
+	
 	var queryProduct model.Product
 	if isEdit {
 		if model.DB.First(&queryProduct, product.ID).Error != nil {
@@ -137,27 +172,27 @@ func save(ctx iris.Context, isEdit bool) {
 			return
 		}
 	}
-
+	
 	if isEdit {
-		product.BrowseCount  = queryProduct.BrowseCount
-		product.BuyCount     = queryProduct.BuyCount
-		product.TotalSale    = queryProduct.TotalSale
-		product.CreatedAt    = queryProduct.CreatedAt
-		product.UpdatedAt    = time.Now()
+		product.BrowseCount = queryProduct.BrowseCount
+		product.BuyCount = queryProduct.BuyCount
+		product.TotalSale = queryProduct.TotalSale
+		product.CreatedAt = queryProduct.CreatedAt
+		product.UpdatedAt = time.Now()
 	} else {
 		product.BrowseCount = 0
-		product.BuyCount    = 0
-		product.TotalSale   = 0
-		if (product.Status != model.ProductUpShelf && product.Status != model.ProductDownShelf && product.Status != model.ProductPending) {
+		product.BuyCount = 0
+		product.TotalSale = 0
+		if product.Status != model.ProductUpShelf && product.Status != model.ProductDownShelf && product.Status != model.ProductPending {
 			product.Status = model.ProductPending
 		}
 	}
-
-	product.Name   = strings.TrimSpace(product.Name)
+	
+	product.Name = strings.TrimSpace(product.Name)
 	product.Detail = strings.TrimSpace(product.Detail)
 	product.Remark = strings.TrimSpace(product.Remark)
-
-	if (product.Name == "") {
+	
+	if product.Name == "" {
 		SendErrJSON("Product name can't be empty", ctx)
 		return
 	}
@@ -179,7 +214,7 @@ func save(ctx iris.Context, isEdit bool) {
 	}
 	
 	if product.Remark != "" && utf8.RuneCountInString(product.Remark) > config.ServerConfig.MaxRemarkLen {
-		msg := "Remark length can't exceed " + strconv.Itoa(config.ServerConfig.MaxRemarkLen) + "."	
+		msg := "Remark length can't exceed " + strconv.Itoa(config.ServerConfig.MaxRemarkLen) + "."
 		SendErrJSON(msg, ctx)
 		return
 	}
@@ -189,13 +224,13 @@ func save(ctx iris.Context, isEdit bool) {
 		return
 	}
 	
-	if utf8.RuneCountInString(product.Detail) > config.ServerConfig.MaxContentLen {	
-		msg := "Prodcut detail can't exceed " + strconv.Itoa(config.ServerConfig.MaxContentLen) + "."	
+	if utf8.RuneCountInString(product.Detail) > config.ServerConfig.MaxContentLen {
+		msg := "Prodcut detail can't exceed " + strconv.Itoa(config.ServerConfig.MaxContentLen) + "."
 		SendErrJSON(msg, ctx)
 		return
 	}
 	
-	if product.Categories == nil || len(product.Categories) <= 0  {
+	if product.Categories == nil || len(product.Categories) <= 0 {
 		SendErrJSON("Product category should more than one.", ctx)
 		return
 	}
@@ -215,13 +250,13 @@ func save(ctx iris.Context, isEdit bool) {
 		SendErrJSON("Invalid original product.", ctx)
 		return
 	}
-
+	
 	var images []uint
 	if err := json.Unmarshal([]byte(product.ImageIDs), &images); err != nil {
 		SendErrJSON("Invlid product images.", ctx)
 		return
 	}
-
+	
 	if images == nil || len(images) <= 0 {
 		SendErrJSON("Product images can't be empty.", ctx)
 		return
@@ -232,53 +267,53 @@ func save(ctx iris.Context, isEdit bool) {
 		SendErrJSON(msg, ctx)
 		return
 	}
-
+	
 	for i := 0; i < len(product.Categories); i++ {
 		var category model.Category
 		queryErr := model.DB.First(&category, product.Categories[i].ID).Error
 		if queryErr != nil {
 			SendErrJSON("Invalid category Id.", ctx)
-			return	
+			return
 		}
 		product.Categories[i] = category
 	}
-
-	var saveErr = false;
-
+	
+	var saveErr = false
+	
 	if isEdit {
 		var sql = "DELETE FROM product_category WHERE product_id = ?"
 		if model.DB.Exec(sql, product.ID).Error != nil {
-			saveErr = true;
+			saveErr = true
 		}
 		if model.DB.Save(&product).Error != nil {
-			saveErr = true;
+			saveErr = true
 		}
 	} else {
 		if model.DB.Create(&product).Error != nil {
-			saveErr = true;
+			saveErr = true
 		}
 	}
-
+	
 	if saveErr {
 		SendErrJSON("error.", ctx)
-		return	
+		return
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : product,
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data":  product,
 	})
 }
 
 // Create 创建产品
 func Create(ctx iris.Context) {
-	save(ctx, false);	
+	save(ctx, false)
 }
 
 // Update 更新产品
 func Update(ctx iris.Context) {
-	save(ctx, true);	
+	save(ctx, true)
 }
 
 // Info 获取商品信息
@@ -287,41 +322,41 @@ func Info(ctx iris.Context) {
 	reqStartTime := time.Now()
 	id := ctx.Params().Get("id")
 	var product model.Product
-
+	
 	if model.DB.First(&product, id).Error != nil {
 		SendErrJSON("Wrong product Id.", ctx)
 		return
 	}
-
+	
 	if model.DB.First(&product.Image, product.ImageID).Error != nil {
 		product.Image = model.Image{}
 	}
-
+	
 	var imagesSQL []uint
 	if err := json.Unmarshal([]byte(product.ImageIDs), &imagesSQL); err == nil {
 		var images []model.Image
-		if model.DB.Where("id in (?)",  imagesSQL).Find(&images).Error != nil {
+		if model.DB.Where("id in (?)", imagesSQL).Find(&images).Error != nil {
 			product.Images = nil
 		} else {
 			product.Images = images
 		}
 	} else {
-		product.Images = nil	
+		product.Images = nil
 	}
-
+	
 	if err := model.DB.Model(&product).Related(&product.Categories, "categories").Error; err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	if product.HasProperty {
 		if err := model.DB.Model(&product).Related(&product.Properties).Error; err != nil {
 			fmt.Println(err.Error())
 			SendErrJSON("error", ctx)
 			return
 		}
-
+		
 		for i := 0; i < len(product.Properties); i++ {
 			property := product.Properties[i]
 			if err := model.DB.Model(&property).Related(&property.PropertyValues).Error; err != nil {
@@ -331,13 +366,13 @@ func Info(ctx iris.Context) {
 			}
 			product.Properties[i] = property
 		}
-
+		
 		if err := model.DB.Model(&product).Related(&product.Inventories).Error; err != nil {
 			fmt.Println(err.Error())
 			SendErrJSON("error", ctx)
 			return
 		}
-
+		
 		for i := 0; i < len(product.Inventories); i++ {
 			inventory := product.Inventories[i]
 			if err := model.DB.Model(&inventory).Related(&inventory.PropertyValues, "property_values").Error; err != nil {
@@ -348,12 +383,12 @@ func Info(ctx iris.Context) {
 			product.Inventories[i] = inventory
 		}
 	}
-
+	
 	fmt.Println("duration: ", time.Now().Sub(reqStartTime).Seconds())
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
 			"product": product,
 		},
 	})
@@ -363,16 +398,16 @@ func Info(ctx iris.Context) {
 func UpdateStatus(ctx iris.Context) {
 	SendErrJSON := common.SendErrJSON
 	var tmpProduct model.Product
-	tmpErr    := ctx.ReadJSON(&tmpProduct)
-
+	tmpErr := ctx.ReadJSON(&tmpProduct)
+	
 	if tmpErr != nil {
 		SendErrJSON("Invalid Id or status.", ctx)
 		return
 	}
-
+	
 	productID := tmpProduct.ID
-	status    := tmpProduct.Status
-
+	status := tmpProduct.Status
+	
 	var product model.Product
 	if err := model.DB.First(&product, productID).Error; err != nil {
 		SendErrJSON("Invlaid product Id.", ctx)
@@ -383,20 +418,20 @@ func UpdateStatus(ctx iris.Context) {
 		SendErrJSON("Invlid product status.", ctx)
 		return
 	}
-
+	
 	product.Status = status
-
+	
 	if err := model.DB.Save(&product).Error; err != nil {
 		SendErrJSON("error.", ctx)
 		return
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{
-			"id"     : product.ID,
-			"status" : product.Status,
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data": iris.Map{
+			"id":     product.ID,
+			"status": product.Status,
 		},
 	})
 }
@@ -413,14 +448,14 @@ func UpdateHasProperty(ctx iris.Context) {
 		SendErrJSON("Invalid parameters.", ctx)
 		return
 	}
-
+	
 	var product model.Product
 	if err := model.DB.First(&product, data.ProductID).Error; err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("Wrong product Id.", ctx)
 		return
 	}
-
+	
 	if (data.HasProperty && !product.HasProperty) || (!data.HasProperty && product.HasProperty) {
 		tx := model.DB.Begin()
 		var sql = "DELETE FROM properties WHERE product_id = ?"
@@ -429,28 +464,28 @@ func UpdateHasProperty(ctx iris.Context) {
 			SendErrJSON("error", ctx)
 			return
 		}
-
+		
 		sql = "DELETE FROM inventories WHERE product_id = ?"
 		if err := tx.Exec(sql, product.ID).Error; err != nil {
 			tx.Rollback()
 			SendErrJSON("error", ctx)
 			return
 		}
-
-		product.HasProperty    = data.HasProperty
+		
+		product.HasProperty = data.HasProperty
 		product.TotalInventory = 0
 		if err := model.DB.Save(&product).Error; err != nil {
 			tx.Rollback()
 			SendErrJSON("error", ctx)
-			return	
+			return
 		}
 		tx.Commit()
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{},
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data":  iris.Map{},
 	})
 }
 
@@ -466,29 +501,29 @@ func UpdateTotalInventory(ctx iris.Context) {
 		SendErrJSON("Invalid parameter.", ctx)
 		return
 	}
-
+	
 	var product model.Product
 	if err := model.DB.First(&product, data.ProductID).Error; err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("Wrong product Id.", ctx)
 		return
 	}
-
+	
 	if product.HasProperty {
 		SendErrJSON("Product has added property.", ctx)
-		return	
+		return
 	}
-
+	
 	product.TotalInventory = data.TotalInventory
-
+	
 	if err := model.DB.Save(&product).Error; err != nil {
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo" : model.ErrorCode.SUCCESS,
-		"msg"   : "success",
-		"data"  : iris.Map{},
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data":  iris.Map{},
 	})
 }

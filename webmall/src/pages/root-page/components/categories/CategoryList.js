@@ -19,7 +19,6 @@ export const CategoryList = ({ category, toggle, setSelectedCategory, closeCateg
     return (
         <Fragment>
             <InnerItemContainerStyles>
-                
                 {/* Larger Screen Display */}
                 <NavLink className={({ isActive }) => isActive ? `${NavLinkStyles} ${ActiveLinkStyles}` : `${NavLinkStyles}`}
                          to={`/collections/${category.name}/${category.id}`}
@@ -28,11 +27,11 @@ export const CategoryList = ({ category, toggle, setSelectedCategory, closeCateg
                 </NavLink>
                 
                 {/* Mobile devices or Small Screen Display */}
-                <div className={`flex flex-col h-full ${DeviceNavLinkStyles} `}>
+                <div className={`flex flex-col h-full select-none  ${DeviceNavLinkStyles} `}>
                     <LetterStyles className={` ${HoverStyles} `} onClick={handleClick} >
                         {category.name}
                     </LetterStyles>
-                    <SubOuterContainerStyles className={`${!toggle && "hidden"}`}>
+                    <DeviceOuterContainerStyles className={`${!toggle && "hidden"}`}>
                         <NavLink className={({ isActive }) => isActive ? `${ActiveLinkStyles} ${HoverStyles}` : `${HoverStyles}`}
                                  to={`/collections/${category.name}/${category.id}`}
                                  onClick={closeCategories}
@@ -44,7 +43,7 @@ export const CategoryList = ({ category, toggle, setSelectedCategory, closeCateg
                             sequence={category.subsequence}
                             closeCategories={closeCategories}
                         />
-                    </SubOuterContainerStyles>
+                    </DeviceOuterContainerStyles>
                 </div>
                 
                 {/* Sub-Categories for Browser */}
@@ -61,23 +60,26 @@ export const HoverStyles = `
 
 const InnerItemContainerStyles = tw.div`
     lg:relative
-    md:w-2/5 w-full lg:h-full
+    w-1/2 lg:w-2/5 lg:h-full
     group/category
+    
 `
 
 const NavLinkStyles = `
     flex
     w-full h-full
     group-hover/category:text-white
-    lg:group-hover/category:bg-lime-500
+    group-hover/category:bg-lime-500
     cursor-pointer
-    lg:justify-center lg:items-center
+    justify-center items-center
     lg-max:hidden
+    
 `
 export const ActiveLinkStyles = `
     underline underline-offset-2
     text-lime-600
     lg-max:text-lime-500
+    
 `
 
 const LetterStyles =tw.div`
@@ -87,9 +89,8 @@ const LetterStyles =tw.div`
     hover:bg-stone-500
 `
 
-const SubOuterContainerStyles = tw.div`
+const DeviceOuterContainerStyles = tw.div`
     flex flex-col
-    text-white
     gap-3
     pl-8
     py-3

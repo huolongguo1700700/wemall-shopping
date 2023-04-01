@@ -1,33 +1,24 @@
-// noinspection ES6CheckImport
-
 /**
  * @Description CategoryProducts Component
  * @author GYX xiao sb
  * @date 2023/3/31
  */
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
 import DisplayProducts from '../products-display/DisplayProducts'
-import useFetchCategory from '../../../api/fetchCategory'
+import TagsNavigation from '../../../features/category_navigation/TagsNavigation'
 
 const CategoryProducts = () => {
     /* Use Router to transfer parameters and navigate to Error page */
     const { categoryID  } = useParams()
     const navigate = useNavigate()
     
-    /* initialize products */
-    const [cateProducts, setCateProducts] = useState(null)
-    
     /* Get Products hook(fake) */
-    const {data, isLoading, error, isError} = useFetchCategoryProducts(categoryID)
+    const {data: cateProducts, isLoading, error, isError} = useFetchCategoryProducts(categoryID)
     
-    /* Avoid too many requests */
-    useEffect(()=>{
-        setCateProducts(data && data)
-    }, [data])
-    console.log(data)
+    console.log(cateProducts && cateProducts)
     /* Error and Loading states */
     if (isLoading) return <span>Products Loading...</span>
     if (isError) {
@@ -35,15 +26,12 @@ const CategoryProducts = () => {
         navigate(`/Error`)
     }
     
-    /* Filter all the products with same the category_id in front-end */
-    // const products = cateProducts && cateProducts.products.filter(product => product.category_id === parseInt(categoryID))
+    return cateProducts &&
+        <div className="flex flex-col">
+            <TagsNavigation tags={cateProducts.categorySequence}/>
+            <DisplayProducts products={cateProducts}/>
+        </div>
     
-    
-    return (
-        <>
-            {cateProducts && cateProducts.products.map((p, i) => <DisplayProducts key={i} products={p}/>)}
-        </>
-    )
 }
 /**
  * End of CategoryProducts Component

@@ -7,15 +7,20 @@
 import React from 'react'
 import Marquee from './Marquee'
 import Navigation from './Navigation'
+import { Categories } from '../categories/Categories'
 
 const Header = () => {
     return (
-        <div className="flex flex-col lg:flex-row h-14 lg:h-8 justify-between text-slate-800">
-            <div className="relative left-0 w-full lg:w-2/3 overflow-hidden ">
-                <Marquee />
+        <div className="fixed top-0 w-full">
+            <div className="flex flex-col lg:flex-row h-14 lg:h-8 justify-between text-slate-800">
+                <div className="relative left-0 w-full lg:w-2/3 overflow-hidden ">
+                    <Marquee />
+                </div>
+                <Navigation />
             </div>
-            <Navigation />
+            <Categories />
         </div>
+        
     )
 }
 /**

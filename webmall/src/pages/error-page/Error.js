@@ -1,5 +1,3 @@
-// noinspection ES6CheckImport
-
 /**
  * @Description Error Component
  * @author GYX xiao sb

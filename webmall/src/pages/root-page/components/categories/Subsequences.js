@@ -38,6 +38,7 @@ const OuterContainerStyles = tw.div`
     bg-white
     scale-0 group-hover/category:scale-100 transition-all duration-100 origin-top ease-linear
     z-30
+    border border-emerald-500 border-t-0
 `
 
 const InnerContainerStyles = tw.div`

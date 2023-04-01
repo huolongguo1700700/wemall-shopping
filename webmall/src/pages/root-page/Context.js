@@ -1,5 +1,5 @@
 /* Create a Context using for Category lists */
 import { createContext } from 'react'
 
-const OpenContext = createContext({})
-export default OpenContext
+const AppContext = createContext({})
+export default AppContext

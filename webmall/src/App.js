@@ -1,12 +1,8 @@
-import Home from './pages/home/Home'
+import React from 'react'
+import Root from './pages/root-page/Root'
 
 function App () {
-    return (
-        
-        <div className="">
-            <Home/>
-        </div>
-    );
+    return <Root />
 }
 
 export default App;

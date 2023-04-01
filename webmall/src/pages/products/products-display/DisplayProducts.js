@@ -9,18 +9,24 @@ import { Link } from 'react-router-dom'
 
 const DisplayProducts = ({products}) => {
     
-    return (
-        <div key={products.id}
-             className="flex gap-2 w-full h-full bg-sky-100">
-            <Link to={`/product/${products.id}`}
-                  className="flex gap-2 w-fit bg-sky-100">
-                <p>{products.name}</p>
-                <p>{products.price} €</p>
-                <p>{products.categories}</p>
-            </Link>
+    return (products &&
+        <div>
+            {products.products.map((p, i) => {
+                return (
+                    <div key={i}
+                        className="flex gap-2 w-full h-full bg-sky-100">
+                        <Link to={`/collections/product/${p.id}/${p.category_id}`}
+                              className="flex gap-2 w-fit bg-sky-100">
+                            <p>{p.name}</p>
+                            <p>{p.price} €</p>
+                        </Link>
+                    </div>
+                )
+            })}
         </div>
     )
 }
+
 /**
  * End of DisplayProducts Component
  */

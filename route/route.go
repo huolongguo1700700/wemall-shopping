@@ -41,6 +41,7 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/category/update", category.Update)
 		adminRouter.Post("/category/status/update", category.UpdateStatus)
 		
+		// /api/admin/products?pageNo=1&order=3&asc=1&all=true
 		adminRouter.Get("/products", product.AdminList)
 		adminRouter.Get("/product/:id", product.Info)
 		adminRouter.Post("/product/create", product.Create)

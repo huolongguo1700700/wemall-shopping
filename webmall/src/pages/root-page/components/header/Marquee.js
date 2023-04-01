@@ -13,7 +13,7 @@ const Marquee = () => {
                 <h2 className="ml-2">Free delivery on all orders over €60</h2>
                 <h2 className="ml-2">Free delivery on all orders over €60</h2>
             </div>
-            {/* Set a button to close the streamer */}
+            {/* Set a button to close the Component */}
             {/*<div className="flex flex-col cursor-pointer absolute right-3 z-10">
                 <span className="inline-block h-[1px] w-4 bg-black rotate-45 translate-y-[1px]"></span>
                 <span className="inline-block h-[1px] w-4 bg-black -rotate-45"></span>

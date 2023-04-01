@@ -10,13 +10,13 @@ import { ADMIN_URL } from './api'
 
 export async function fetchProducts() {
     return await axios.get(
-        `${ADMIN_URL}/products`
+        `${ADMIN_URL}/products?order=3&asc=1&all=true`
     ).then((res)=>res.data.data)
 }
 
 export async function fetchCategories() {
     return await axios.get(
-        `${ADMIN_URL}/categories`
+        `${ADMIN_URL}/categories?order=1&asc=1`
     ).then((res)=>res.data.data)
     .catch(e => {
         throw new Error(e.message)

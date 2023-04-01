@@ -7,10 +7,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../../App'
 import Error from '../../pages/error-page/Error'
-import Product from '../../pages/products/product-info/Product'
-import Products from '../../pages/products/all-product/Products'
 import CategoryProducts from '../../pages/products/category-products/CategoryProducts'
-import Collections from '../../pages/home/components/main/Collections'
+import Collections from '../../pages/root-page/components/main/Collections'
+import ProductDetail from '../../pages/products/product-info/ProductDetail'
 
 export const router = createBrowserRouter([
     {
@@ -20,7 +19,7 @@ export const router = createBrowserRouter([
         children:[
             {
                 path: "/",
-                element: <Products />,
+                element: <Collections />,
             },
             {
                 path: "/collections",
@@ -31,8 +30,8 @@ export const router = createBrowserRouter([
                 element: <CategoryProducts />,
             },
             {
-                path: "/product/:productID",
-                element: <Product />,
+                path: "collections/product/:productID/:categoryID",
+                element: <ProductDetail />,
             }
         ]
     },

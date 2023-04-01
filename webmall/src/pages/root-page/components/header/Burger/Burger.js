@@ -7,14 +7,14 @@
 import React, { useContext } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useWindowSize } from '../../../../../hooks'
-import OpenContext from '../../../Context'
+import AppContext from '../../../Context'
 
 const Burger = ({ color }) => {
     /* variables area */
     const { screenWidth } =  useWindowSize()                // get the window width
     
     /* Fetch Context from Burger Component for open the category lists for responsive design */
-    const { isOpen, toggleOpen } = useContext(OpenContext)
+    const { isOpen, toggleOpen } = useContext(AppContext)
     
     
     /* functions/methods area */

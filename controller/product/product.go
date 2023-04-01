@@ -99,17 +99,33 @@ func AdminList(ctx iris.Context) {
 		orderStr = "total_sale"
 	} else if ctx.FormValue("order") == "2" {
 		orderStr = "created_at"
+	} else if ctx.FormValue("order") == "3" {
+		// 根据id排序
+		orderStr = "id"
 	}
+	
 	if ctx.FormValue("asc") == "1" {
 		orderStr += " asc"
 	} else {
 		orderStr += " desc"
 	}
-	queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&products).Error
 	
-	if queryErr != nil {
-		SendErrJSON("error.", ctx)
-		return
+	all, _ := strconv.ParseBool(ctx.URLParamDefault("all", "false"))
+	
+	if all {
+		queryErr := model.DB.Order(orderStr).Find(&products).Error
+		
+		if queryErr != nil {
+			SendErrJSON("error.", ctx)
+			return
+		}
+	} else {
+		queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&products).Error
+		
+		if queryErr != nil {
+			SendErrJSON("error.", ctx)
+			return
+		}
 	}
 	
 	utils.Res(ctx, iris.StatusOK, iris.Map{

@@ -1,31 +1,38 @@
-// noinspection ES6CheckImport
-
 /**
  * @Description Root Component
  * @author GYX xiao sb
  * @date 2023/3/30
  */
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Outlet } from "react-router-dom"
+import tw from 'tailwind-styled-components'
 import Header from './components/header/Header'
-import { Categories } from './components/categories/Categories'
 import { useToggle } from '../../hooks'
-import OpenContext from './Context'
+import AppContext from './Context'
 
 const Root = () => {
     const [isOpen, setIsOpen, toggleOpen] = useToggle(false)      // if the nav button is a burger button
-    const values = { isOpen, setIsOpen, toggleOpen }
+    const values = useMemo(
+        () => ({ isOpen, setIsOpen, toggleOpen }),
+        [isOpen, setIsOpen, toggleOpen]
+    )
+    
     return (
-        <OpenContext.Provider  value={values}>
-            <div className="flex flex-col h-full">
+        <AppContext.Provider  value={values}>
+            <div className="">
                 <Header />
-                <Categories />
-                <Outlet />
+                <MainStyles>
+                    <Outlet />
+                </MainStyles>
             </div>
-        </OpenContext.Provider>
+        </AppContext.Provider>
     )
 }
+
+const MainStyles = tw.div`
+    mt-14 lg:mt-20
+`
 /**
  * End of Root Component
  */

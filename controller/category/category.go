@@ -149,6 +149,10 @@ func AllList(ctx iris.Context) {
 	
 	// 默认按创建时间，降序来排序
 	var orderStr = "created_at"
+	if ctx.FormValue("order") == "1" {
+		// 根据id排序
+		orderStr = "id"
+	}
 	if ctx.FormValue("asc") == "1" {
 		orderStr += " asc"
 	} else {
@@ -261,6 +265,30 @@ func GetProductsByCategory(ctx iris.Context) {
 		return
 	}
 	
+	// Fetch the category sequence for the products
+	categorySequence := make([]model.Category, 0)
+	
+	// If it's a top-level category, add it to the categorySequence
+	if requestedCategory.ParentID == 0 {
+		categorySequence = append(categorySequence, requestedCategory)
+	} else { // If it's a subcategory, fetch its parent category and add both to the categorySequence
+		var parentCategory model.Category
+		queryErr = model.DB.Where("id = ?", requestedCategory.ParentID).First(&parentCategory).Error
+		if queryErr != nil {
+			SendErrJSON("Error while fetching parent category.", ctx)
+			return
+		}
+		categorySequence = append(categorySequence, parentCategory, requestedCategory)
+	}
+	
+	// Pagination logic
+	pageNo, err := strconv.Atoi(ctx.URLParamDefault("pageNo", "1"))
+	if err != nil || pageNo < 1 {
+		pageNo = 1
+	}
+	offset := (pageNo - 1) * config.ServerConfig.PageSize
+	all, _ := strconv.ParseBool(ctx.URLParamDefault("all", "false"))
+	
 	var products []model.Product
 	
 	if requestedCategory.ParentID == 0 { // Top-level category
@@ -277,16 +305,23 @@ func GetProductsByCategory(ctx iris.Context) {
 		for _, subCategory := range subCategories {
 			subCategoryIDs = append(subCategoryIDs, int(subCategory.ID))
 		}
-		
-		// Find all products related to the subcategories
-		queryErr = model.DB.Where("category_id IN (?)", subCategoryIDs).Find(&products).Error
+		// Find all products related to the subcategories with pagination
+		if all {
+			queryErr = model.DB.Where("category_id IN (?)", subCategoryIDs).Find(&products).Error
+		} else {
+			queryErr = model.DB.Where("category_id IN (?)", subCategoryIDs).Offset(offset).Limit(config.ServerConfig.PageSize).Find(&products).Error
+		}
 		if queryErr != nil {
 			SendErrJSON("Error while fetching products.", ctx)
 			return
 		}
 	} else { // Subcategory
-		// Find all products related to the subcategory
-		queryErr = model.DB.Where("category_id = ?", categoryID).Find(&products).Error
+		// Find all products related to the subcategory with pagination
+		if all {
+			queryErr = model.DB.Where("category_id = ?", categoryID).Find(&products).Error
+		} else {
+			queryErr = model.DB.Where("category_id = ?", categoryID).Offset(offset).Limit(config.ServerConfig.PageSize).Find(&products).Error
+		}
 		if queryErr != nil {
 			SendErrJSON("Error while fetching products.", ctx)
 			return
@@ -297,7 +332,8 @@ func GetProductsByCategory(ctx iris.Context) {
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",
 		"data": iris.Map{
-			"products": products,
+			"products":         products,
+			"categorySequence": categorySequence,
 		},
 	})
 }

@@ -81,40 +81,6 @@ func List(ctx iris.Context) {
 	})
 }
 
-// GetByCategoryID
-func GetByCategoryID(ctx iris.Context) {
-	SendErrJSON := common.SendErrJSON
-	
-	// Get category_id
-	categoryIDStr := ctx.URLParam("category_id")
-	if categoryIDStr == "" {
-		SendErrJSON("Missing category ID", ctx)
-		return
-	}
-	
-	categoryID, err := strconv.Atoi(categoryIDStr)
-	if err != nil {
-		SendErrJSON("Invalid category ID", ctx)
-		return
-	}
-	
-	// Search products by category_id
-	products, err := model.GetProductsByCategoryID(categoryID)
-	if err != nil {
-		SendErrJSON("Error fetching products", ctx)
-		return
-	}
-	
-	// Fetch products
-	utils.Res(ctx, iris.StatusOK, iris.Map{
-		"errNo": model.ErrorCode.SUCCESS,
-		"msg":   "success",
-		"data": iris.Map{
-			"products": products,
-		},
-	})
-}
-
 // AdminList 商品列表，后台管理提供的接口
 func AdminList(ctx iris.Context) {
 	SendErrJSON := common.SendErrJSON

@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import tw from 'tailwind-styled-components'
 import useFetchCategories from '../../../../api/fetchCategories'
 import Classify from './classify'
@@ -50,7 +50,11 @@ export const Categories = () => {
         categories &&
         <ContainerStyles className={`${isOpen && "lg-max:left-0"}`}>
             <MiddleContainerStyles>
-                <div className="lg-max:hidden w-1/5 h-full" onClick={toggleOpen}></div>
+                <div className="w-1/5 xl:w-2/5 h-full flex flex-row justify-center items-center  ">
+                    <NavLink className="lg-max:hidden" to={"/collections"}>
+                            Logo Here
+                    </NavLink>
+                </div>
                 <ItemContainerStyles>
                     {navCategory.map((c, i) => {
                         return (

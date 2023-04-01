@@ -47,7 +47,7 @@ export const CategoryList = ({ category, toggle, setSelectedCategory, closeCateg
                     </SubOuterContainerStyles>
                 </div>
                 
-                {/* Sub-Categories */}
+                {/* Sub-Categories for Browser */}
                 <Subsequences sequence={category.subsequence} />
                 
             </InnerItemContainerStyles>

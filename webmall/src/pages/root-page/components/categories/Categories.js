@@ -11,6 +11,9 @@ import useFetchCategories from '../../../../api/fetchCategories'
 import Classify from './classify'
 import AppContext from '../../Context'
 import { CategoryList } from './CategoryList'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCategories } from '../../../../api/client'
+import LoadingSkeleton from '../../../skeletons/LoadingSkeleton'
 
 export const Categories = () => {
     /* Use Router to transfer parameters and navigate to Error page */
@@ -22,15 +25,16 @@ export const Categories = () => {
     /* Fetch Context from Burger Component for open the category lists for responsive design */
     const {isOpen, toggleOpen} = useContext(AppContext)
     
-    /* Using the query hooks */
-    // const category = useQuery({queryKey: ['category'], queryFn: () => fetchSingleCategory(4)})
-    const {data: categories, isLoading, isError, error} = useFetchCategories()
+    useFetchCategories()
+    
+    /* Using the query hook to fetch Categories info from API */
+    const {data: categories, isLoading, isError, error} = useQuery({queryKey: ['categories'], queryFn: fetchCategories, staleTime: Infinity})
     
     /* Categories drop-down navigation function */
     const navCategory = categories && Classify(categories.categories)
     
     /* Error and Loading states */
-    if (isLoading) return <span>Categories Loading...</span>
+    if (isLoading) return <LoadingSkeleton />
     if (isError) {
         console.log(error)
         navigate(`/Error`)

@@ -11,7 +11,7 @@ import { Categories } from '../categories/Categories'
 
 const Header = () => {
     return (
-        <div className="fixed top-0 w-full">
+        <div className="fixed top-0 w-full z-50">
             <div className="flex flex-col lg:flex-row h-14 lg:h-8 justify-between text-slate-800">
                 <div className="relative left-0 w-full lg:w-2/3 overflow-hidden ">
                     <Marquee />
@@ -19,6 +19,7 @@ const Header = () => {
                 <Navigation />
             </div>
             <Categories />
+            <hr/>
         </div>
         
     )

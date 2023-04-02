@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom'
 
 const TagsNavigation = ({ tags }) => {
     return (tags &&
-        <div className={`flex flex-row gap-3 h-12 justify-start items-center`}>
+        <div className={`flex flex-row gap-3 w-full h-12 justify-start items-center`}>
             <NavLink className={tags.length ===0 ? `${LinkStyles} ${ActiveStyles}` : `${LinkStyles}`}
                      to="/collections"
             >

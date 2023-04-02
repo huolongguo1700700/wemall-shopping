@@ -3,10 +3,11 @@ package user
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/kataras/iris/v12"
 	"net/http"
 	"strings"
 	"time"
+	
+	"github.com/kataras/iris/v12"
 	"wemall/config"
 	"wemall/controller/common"
 	"wemall/model"
@@ -28,21 +29,21 @@ func WeAppLogin(ctx iris.Context) {
 	CodeToSessURL = strings.Replace(CodeToSessURL, "{appid}", appID, -1)
 	CodeToSessURL = strings.Replace(CodeToSessURL, "{secret}", secret, -1)
 	CodeToSessURL = strings.Replace(CodeToSessURL, "{code}", code, -1)
-
+	
 	resp, err := http.Get(CodeToSessURL)
 	if err != nil {
 		fmt.Println(err.Error(), 1111111)
 		SendErrJSON(err.Error(), ctx)
 		return
 	}
-
+	
 	defer resp.Body.Close()
-
+	
 	if resp.StatusCode != 200 {
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	var data map[string]interface{}
 	err = json.NewDecoder(resp.Body).Decode(&data)
 	if err != nil {
@@ -58,14 +59,14 @@ func WeAppLogin(ctx iris.Context) {
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	var openID string
 	var sessionKey string
 	openID = data["openid"].(string)
 	sessionKey = data["session_key"].(string)
 	session.Set("weAppOpenID", openID)
 	session.Set("weAppSessionKey", sessionKey)
-
+	
 	resData := iris.Map{}
 	resData[config.ServerConfig.SessionID] = session.ID()
 	utils.Res(ctx, iris.StatusOK, iris.Map{
@@ -83,32 +84,32 @@ func SetWeAppUserInfo(ctx iris.Context) {
 		IV            string `json:"iv"`
 	}
 	var weAppUser EncryptedUser
-
+	
 	if ctx.ReadJSON(&weAppUser) != nil {
 		SendErrJSON("Invalid parameters.", ctx)
 		return
 	}
-	//sessionKey := session.GetString("weAppSessionKey")
+	// sessionKey := session.GetString("weAppSessionKey")
 	sessionKey, err := config.Rdb.Get("weAppSessionKey").Result()
 	if sessionKey == "" {
 		SendErrJSON("session error", ctx)
 		return
 	}
-
+	
 	userInfoStr, err := utils.DecodeWeAppUserInfo(weAppUser.EncryptedData, sessionKey, weAppUser.IV)
 	if err != nil {
 		fmt.Println(err.Error())
 		SendErrJSON("error", ctx)
 		return
 	}
-
+	
 	var user model.WeAppUser
 	if err := json.Unmarshal([]byte(userInfoStr), &user); err != nil {
 		SendErrJSON("error", ctx)
 		return
 	}
-
-	//session.Set("weAppUser", user)
+	
+	// session.Set("weAppUser", user)
 	config.Rdb.Set("weAppUser", user, 7200).Err()
 	if err != nil {
 		fmt.Println(err.Error())
@@ -174,10 +175,10 @@ func Latest30Day(ctx iris.Context) {
 func Analyze(ctx iris.Context) {
 	var user model.User
 	now := time.Now()
-	nowSec := now.Unix()              //秒
-	yesterdaySec := nowSec - 24*60*60 //秒
+	nowSec := now.Unix()              // 秒
+	yesterdaySec := nowSec - 24*60*60 // 秒
 	yesterday := time.Unix(yesterdaySec, 0)
-
+	
 	yesterdayCount := user.PurchaseUserByDate(yesterday)
 	todayCount := user.PurchaseUserByDate(now)
 	yesterdayRegisterCount := user.YesterdayRegisterUser()
@@ -188,7 +189,7 @@ func Analyze(ctx iris.Context) {
 		"todayPurchaseUser":     todayCount,
 		"yesterdayPurchaseUser": yesterdayCount,
 	}
-
+	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",

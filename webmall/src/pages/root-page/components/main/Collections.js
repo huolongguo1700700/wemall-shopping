@@ -7,8 +7,8 @@
 import React, { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useFetchProducts from '../../../../api/fetchProducts'
-import DisplayProducts from '../../../products/products-display/DisplayProducts'
-import TagsNavigation from '../../../../features/category_navigation/TagsNavigation'
+import ProductsContainer from '../../../products/products-display/ProductsContainer'
+import ProductLists from '../../../products/products-display/ProductLists'
 
 const Collections = () => {
     /* Use Router to transfer parameters and navigate to Error page */
@@ -23,11 +23,12 @@ const Collections = () => {
         console.log(error)
         navigate(`/Error`)
     }
-    console.log(products)
+    
     return products &&
         <Fragment>
-            <TagsNavigation tags={[]}/>
-            <DisplayProducts products={products}/>
+            <ProductsContainer tags={[]}>
+                <ProductLists products={products}/>
+            </ProductsContainer>
         </Fragment>
 }
 /**

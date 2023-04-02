@@ -41,7 +41,7 @@ export const Categories = () => {
         <ContainerStyles className={`${isOpen && "lg-max:left-0"}`}>
             <MiddleContainerStyles>
                 <div className="w-1/5 xl:w-2/5 h-full flex flex-row justify-center items-center lg-max:hidden">
-                    <NavLink className="" to={"/collections"}>
+                    <NavLink to={"/collections"}>
                             Logo Here
                     </NavLink>
                 </div>

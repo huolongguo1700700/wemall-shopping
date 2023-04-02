@@ -4,21 +4,20 @@
  * @date 2023/3/31
  */
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
-import DisplayProducts from '../products-display/DisplayProducts'
-import TagsNavigation from '../../../features/category_navigation/TagsNavigation'
+import ProductsContainer from '../products-display/ProductsContainer'
+import ProductLists from '../products-display/ProductLists'
 
 const CategoryProducts = () => {
     /* Use Router to transfer parameters and navigate to Error page */
-    const { categoryID  } = useParams()
+    const {categoryID} = useParams()
     const navigate = useNavigate()
     
     /* Get Products hook(fake) */
     const {data: cateProducts, isLoading, error, isError} = useFetchCategoryProducts(categoryID)
     
-    console.log(cateProducts && cateProducts)
     /* Error and Loading states */
     if (isLoading) return <span>Products Loading...</span>
     if (isError) {
@@ -27,11 +26,11 @@ const CategoryProducts = () => {
     }
     
     return cateProducts &&
-        <div className="flex flex-col">
-            <TagsNavigation tags={cateProducts.categorySequence}/>
-            <DisplayProducts products={cateProducts}/>
-        </div>
-    
+        <Fragment>
+            <ProductsContainer tags={cateProducts.categorySequence}>
+                <ProductLists products={cateProducts}/>
+            </ProductsContainer>
+        </Fragment>
 }
 /**
  * End of CategoryProducts Component

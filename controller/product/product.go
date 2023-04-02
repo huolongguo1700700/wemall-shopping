@@ -310,11 +310,34 @@ func Info(ctx iris.Context) {
 		return
 	}
 	
+	// Fetch main image
 	if model.DB.First(&product.Image, product.ImageID).Error != nil {
 		product.Image = model.Image{}
 	}
 	
-	var imagesSQL []uint
+	// Initialize product.Images with main image
+	if product.Image.ID != 0 {
+		product.Images = []model.Image{product.Image}
+	} else {
+		product.Images = []model.Image{}
+	}
+	
+	// Fetch additional images from product.ImageIDs
+	var imageIDs []uint
+	if err := json.Unmarshal([]byte(product.ImageIDs), &imageIDs); err == nil && len(imageIDs) > 0 {
+		var images []model.Image
+		if model.DB.Where("id in (?)", imageIDs).Find(&images).Error == nil {
+			// Append additional images to the product.Images slice
+			product.Images = append(product.Images, images...)
+		}
+	}
+	
+	// Fetch main image
+	/*if model.DB.First(&product.Image, product.ImageID).Error != nil {
+		product.Image = model.Image{}
+	}*/
+	
+	/*var imagesSQL []uint
 	if err := json.Unmarshal([]byte(product.ImageIDs), &imagesSQL); err == nil {
 		var images []model.Image
 		if model.DB.Where("id in (?)", imagesSQL).Find(&images).Error != nil {
@@ -324,7 +347,7 @@ func Info(ctx iris.Context) {
 		}
 	} else {
 		product.Images = nil
-	}
+	}*/
 	
 	if err := model.DB.Model(&product).Related(&product.Categories, "categories").Error; err != nil {
 		fmt.Println(err.Error())

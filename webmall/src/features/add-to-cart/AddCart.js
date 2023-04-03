@@ -4,50 +4,52 @@
  * @date 2023/4/2
  */
 
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import tw from 'tailwind-styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { BiPlus, BiMinus } from "react-icons/bi"
 import { setItemQty } from '../../stores/cart/cartSlice'
 
-const AddCart = ({ product, disabled }) => {
+const AddCart = ({ product, url, disabled:isDisabled }) => {
     /* Get info in Redux state */
     const dispatch = useDispatch()
-    const item = useSelector(state => state.cart.items.find(item => item.id === product.id))
+    const cart = useSelector((state) => state.cart.cart)
+    const cartItem = cart.find((item) => item.id === product.id)
     
-    const initialQuantity = useMemo(() => item?.quantity || 0, [item])
-    const [quantity, setQuantity] = useState(initialQuantity)
+    const [quantity, setQuantity] = useState(cartItem ? cartItem.quantity : 0)
     
-    const handleChange = (e) => {
-        const newQuantity = parseInt(e.target.value)
-        if (newQuantity >= 0) {
-            setQuantity(newQuantity)
-            dispatch(setItemQty({ id: product.id, quantity: newQuantity }))
-        }
+    const imageUrl = url ? url : '';
+    /* Initialize the product data for shopping cart */
+    const initProduct = {
+        id: product.id,
+        image: imageUrl,
+        name: product.name,
+        price: product.price,
     }
     
-    const handleIncrement  = () => {
-        const productInfo = item ? {} : {
-            name: product.name,
-            imageUrl: "",
-            price: product.price
-        }
-        console.log(productInfo, product.images )
+    const handleIncrement = () => {
         setQuantity(quantity + 1)
-        dispatch( setItemQty({ id: product.id, quantity: quantity + 1, productInfo }))
+        dispatch(setItemQty({ ...initProduct, quantity: quantity + 1 }))
     }
     
-    const decrement = () => {
+    const handleDecrement = () => {
         if (quantity > 0) {
             setQuantity(quantity - 1)
-            dispatch(setItemQty({ id: product.id, quantity: quantity - 1 }))
+            dispatch(setItemQty({ ...initProduct, quantity: quantity - 1 }))
         }
     }
     
+    const handleChange = (e) => {
+        const newQuantity = parseInt(e.target.value);
+        if (newQuantity >= 0 && newQuantity <= 100) {
+            setQuantity(newQuantity);
+            dispatch(setItemQty({ ...initProduct, quantity: newQuantity }));
+        }
+    }
     
     return (
         <div className="flex justify-center items-center gap-2">
-            <ButtonStyles onClick={decrement} disabled={!quantity} $q={!quantity}>
+            <ButtonStyles onClick={handleDecrement} disabled={!quantity} $q={!quantity}>
                 <BiMinus />
             </ButtonStyles>
             <NumberStyles
@@ -57,7 +59,8 @@ const AddCart = ({ product, disabled }) => {
                 value={quantity}
                 onChange={handleChange}
                 min="0"
-                disabled={disabled}
+                max="99"
+                disabled={isDisabled}
             />
             <ButtonStyles onClick={handleIncrement} $q={!quantity}>
                <BiPlus />

@@ -11,6 +11,7 @@ import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
 import ProductsContainer from '../products-display/ProductsContainer'
 import { useQuery } from '@tanstack/react-query'
 import { fetchProductsByCategory, fetchSingleProduct } from '../../../api/client'
+import AddCart from '../../../features/add-to-cart/AddCart'
 
 const ProductDetail = () => {
     
@@ -37,7 +38,7 @@ const ProductDetail = () => {
     })
     
     /* Error and Loading states */
-    if (isLoading || loading) return <span>Products Loading...</span>
+    if (isLoading || loading) return <span></span>
     if (isError || isCateError) {
         console.log(error || cateError)
         navigate(`/Error`)
@@ -56,6 +57,7 @@ const ProductDetail = () => {
                 <div>
                     {info.detail}
                 </div>
+                <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
             </div>
         </ProductsContainer>
         

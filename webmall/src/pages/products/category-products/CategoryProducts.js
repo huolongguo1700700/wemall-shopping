@@ -27,7 +27,7 @@ const CategoryProducts = () => {
     })
     
     /* Error and Loading states */
-    if (isLoading) return <span>Products Loading...</span>
+    if (isLoading) return <span></span>
     if (isError) {
         console.log(error)
         navigate(`/Error`)

@@ -10,6 +10,7 @@ import Error from '../../pages/error-page/Error'
 import CategoryProducts from '../../pages/products/category-products/CategoryProducts'
 import Collections from '../../pages/root-page/components/main/Collections'
 import ProductDetail from '../../pages/products/product-detail/ProductDetail'
+import Cart from '../../pages/shopping-cart/Cart'
 
 
 export const router = createBrowserRouter([
@@ -31,9 +32,13 @@ export const router = createBrowserRouter([
                 element: <CategoryProducts />,
             },
             {
-                path: "collections/product/:productID/:categoryID",
+                path: "/collections/product/:productID/:categoryID",
                 element: <ProductDetail />,
-            }
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
+            },
         ]
     },
 ])

@@ -1,36 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-    items: [],
-}
+/* Initialize the state, if already exits in localStorage, fetch it */
+const initialState = JSON.parse(localStorage.getItem('cart')) || { cart: [] }
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        /* Increase or decrease in shopping cart */
         setItemQty: (state, action) => {
-            /* Get product info and quantity to increase or decrease */
-            const { id, quantity, productInfo } = action.payload
-            const existingItemIndex = state.items.findIndex((item) => item.id === id)
-            if (existingItemIndex >= 0) {
-                quantity > 0 ?
-                    state.items[existingItemIndex].quantity = quantity
-                :
-                    state.items.splice(existingItemIndex, 1)
-            }
-            else quantity > 0 && state.items.push({ id, quantity, productInfo })
+            const product = state.cart.find((item) => item.id === action.payload.id)
+            /* Whether increase or decrease */
+            action.payload.quantity > 0
+                ? !product
+                    /* Check whether product was in the cart. If no product inside, insert the data into cart */
+                    ? state.cart.push({
+                        id: action.payload.id,
+                        name: action.payload.name,
+                        price: action.payload.price,
+                        image: action.payload.image,
+                        quantity: action.payload.quantity,
+                    })
+                    /* If product already inside, update quantity value */
+                    : product.quantity = action.payload.quantity
+                /* If decrease quantity to 0 and product still exits, then delete it  */
+                : product && (state.cart = state.cart.filter((item) => item.id !== action.payload.id))
+            /* Store the cart data into the localStorage */
+            localStorage.setItem('cart', JSON.stringify(state))
         },
-        
-        /* Remove one product */
         removeItem: (state, action) => {
-            const index = state.items.findIndex((item) => item.id === action.payload)
-            if (index >= 0) state.items.splice(index, 1)
+            state.cart = state.cart.filter((item) => item.id !== action.payload)
+            /* Delete the specific cart product in the localStorage */
+            localStorage.setItem('cart', JSON.stringify(state))
         },
-        
-        /* Delete all products in shopping cart */
         removeAllItems: (state) => {
-            state.items = []
+            state.cart = []
+            /* Delete all cart products in the localStorage */
+            localStorage.removeItem('cart')
         },
     },
 })

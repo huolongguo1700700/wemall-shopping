@@ -6,19 +6,22 @@
 
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectCartItems } from '../../stores/cart/cartSelectors'
 import { removeItem, removeAllItems } from '../../stores/cart/cartSlice'
 import AddCart from '../../features/add-to-cart/AddCart'
+import { NavLink } from 'react-router-dom'
 
 const Cart = () => {
-    const cartItems = useSelector(selectCartItems)
+    const cartItems = useSelector(state => state.cart.cart)
     const dispatch = useDispatch()
-    
     return (
         <div className="flex flex-col">
             <h1>Shopping Cart</h1>
             {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <div>
+                    <p>Your cart is empty. </p>
+                    <NavLink to={`/collections`}>Continue Shopping</NavLink>
+                </div>
+                
             ) : (
                 <div>
                     <div className="flex font-bold py-2">
@@ -27,12 +30,12 @@ const Cart = () => {
                         <div className="w-1/4">Quantity</div>
                         <div className="w-1/4">Total</div>
                     </div>
-                    {cartItems.map((item) => (
-                        <div key={item.id} className="flex py-2">
+                    {cartItems && cartItems.map((item, i) => (
+                        <div key={i} className="flex py-2">
                             <div className="w-1/3">{item.name}</div>
                             <div className="w-1/4">{item.price} €</div>
                             <div className="w-1/4 flex justify-center">
-                                <AddCart itemId={item.id} />
+                                <AddCart product={item} disabled={false} />
                             </div>
                             <div className="w-1/4">{(item.price * item.quantity).toFixed(2)} €</div>
                             <div>
@@ -47,7 +50,7 @@ const Cart = () => {
                         <button>Checkout</button>
                     </div>
                     <div>
-                        <button>Continue Shopping</button>
+                        <NavLink to={`/collections`}>Continue Shopping</NavLink>
                     </div>
                 </div>
             )}

@@ -33,15 +33,17 @@ const ProductShort = ({ p }) => {
         navigate(`/Error`)
     }
     
+    /* Fetch info and image URL */
     const info = product && product.product
+    const imageUrl = info.images && info.images.length !==0 ? info.images[0].url : ''
     
     return product &&
            <CubeContainerStyles className="">
                <Link to={`/collections/product/${p.id}/${p.category_id}`} className="flex flex-col gap-6 items-center text-center" >
                    <div className={`min-w-[14rem] min-h-[14rem] w-56 h-56`}>
-                       {info.images.length !==0 &&
-                           <img src={info.images[0].url} alt={info.name} className={`w-full h-full object-contain`}/>
-                       }
+                   {imageUrl &&
+                       <img src={imageUrl} alt={info.name} className={`w-full h-full object-contain`}/>
+                   }
                    </div>
                    <p className={` text-lg lg:text-xl `}>
                        {p.name}
@@ -53,7 +55,7 @@ const ProductShort = ({ p }) => {
                    </div>
                </div>
                <div className="gap-3 px-12 ">
-                   <AddCart product={p} disabled={false} />
+                   <AddCart product={info} url={imageUrl} disabled={false} />
                </div>
            </CubeContainerStyles>
 }

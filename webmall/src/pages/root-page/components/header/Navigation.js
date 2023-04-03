@@ -7,6 +7,7 @@
 import React, { Fragment } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import Burger from './Burger/Burger'
+import { NavLink } from 'react-router-dom'
 
 const Navigation = () => {
     return (
@@ -16,14 +17,17 @@ const Navigation = () => {
                     <Burger color={"bg-black"}/>
                 </div>
                 
-                <div className="flex flex-row absolute right-6 gap-3 h-8 px-1 lg:px-2 items-center cursor-pointer lg:rounded-sm group hover:text-white">
-                    <div className="text-black group-hover:text-white scale-150 ">
+                <NavLink className="flex flex-row absolute right-6 gap-3 h-8 px-1 lg:px-2 items-center cursor-pointer lg:rounded-sm group hover:text-white"
+                         to={`/cart`}
+                >
+                    
+                    <div className="text-black group-hover:text-white text-xl scale-125">
                         <AiOutlineShoppingCart />
                     </div>
                     <div className="text-sm w-6 text-right lg-max:hidden">2</div>
                     <div className="text-sm text-right lg-max:hidden">|</div>
                     <div className="text-sm text-right lg-max:hidden">1234 €</div>
-                </div>
+                </NavLink>
             </div>
         </Fragment>
     )

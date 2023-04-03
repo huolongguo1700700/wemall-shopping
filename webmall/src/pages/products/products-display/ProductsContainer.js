@@ -9,10 +9,10 @@ import TagsNavigation from '../category_navigation/TagsNavigation'
 
 const ProductsContainer = (props) => {
     return (
-        <div className="flex flex-col w-full h-full justify-center items-center lg:px-12 py-2">
-            <div className="w-full flex items-center justify-center  h-16 lg:h-28 text-xl lg:text-5xl font-bold">{props.title}</div>
+        <div className="flex flex-col w-full h-full justify-center items-center lg:px-12 py-12">
+            <div className="w-full flex items-center justify-center h-16 lg:h-28 text-3xl lg:text-5xl font-bold">{props.title}</div>
     
-            <div className="w-full lg-max:px-16">
+            <div className="w-full lg-max:px-6">
                 <TagsNavigation tags={props.tags}/>
             </div>
             

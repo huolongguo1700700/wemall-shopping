@@ -10,6 +10,7 @@ import tw from 'tailwind-styled-components'
 import Header from './components/header/Header'
 import { useToggle } from '../../hooks'
 import AppContext from './Context'
+import Footer from './components/footer/Footer'
 
 const Root = () => {
     const [isOpen, setIsOpen, toggleOpen] = useToggle(false)      // if the nav button is a burger button
@@ -20,11 +21,12 @@ const Root = () => {
     
     return (
         <AppContext.Provider  value={values}>
-            <div className="">
+            <div className="flex flex-col">
                 <Header />
                 <MainStyles>
                     <Outlet />
                 </MainStyles>
+                <Footer />
             </div>
         </AppContext.Provider>
     )

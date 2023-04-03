@@ -7,8 +7,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../../App'
 import Error from '../../pages/error-page/Error'
+import Products from '../../pages/products/all-products/Products'
 import CategoryProducts from '../../pages/products/category-products/CategoryProducts'
-import Collections from '../../pages/root-page/components/main/Collections'
 import ProductDetail from '../../pages/products/product-detail/ProductDetail'
 import Cart from '../../pages/shopping-cart/Cart'
 
@@ -21,11 +21,11 @@ export const router = createBrowserRouter([
         children:[
             {
                 path: "/",
-                element: <Collections />,
+                element: <Products />,
             },
             {
                 path: "/collections",
-                element: <Collections />,
+                element: <Products />,
             },
             {
                 path: "/collections/:categoryName/:categoryID",

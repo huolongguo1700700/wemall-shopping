@@ -5,7 +5,7 @@
  */
 
 import React, { Fragment } from 'react'
-import ProductShort from './ProductShort'
+import ProductShort from './ProductCard'
 import tw from 'tailwind-styled-components'
 
 const ProductLists = ({products}) => {

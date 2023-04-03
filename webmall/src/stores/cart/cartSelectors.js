@@ -1,14 +1,24 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-const selectCart = (state) => state.cart
+/* Select all products */
+export const selectAll = (state) => state.cart.cart
 
-export const selectCartItems = createSelector(selectCart, (cart) => cart.items)
+/* Select first 2 product items */
+export const selectForShowing = createSelector(selectAll, (product) => product.slice(0, 2))
 
-export const selectCartTotal = createSelector(selectCartItems, (items) =>
-    items.reduce((total, item) => total + item.price * item.quantity, 0)
+/* Select for shopping-cart display: how many types of products user picked */
+export const selectProductCount = createSelector(selectAll, (product) => product.length)
+
+/* Calculate the entire price for user */
+export const selectTotalPrice = createSelector(selectAll,
+    (products) => products.reduce((total, p) => total + p.price * p.quantity, 0)
 )
 
-export const selectItemQty = (itemId) => createSelector(selectCartItems, (cartItems) => {
-    const item = cartItems.find((i) => i.id === itemId)
-    return item ? item.quantity : 0
-})
+/* Select the specific product */
+export const selectProduct = (productId) => createSelector(selectAll,
+    (product) => product.find((p) => p.id === productId)
+)
+
+export const selectProductQty = (productId) => createSelector(selectProduct(productId),
+    (p) => (p ? p.quantity : 0)
+)

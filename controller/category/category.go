@@ -162,6 +162,7 @@ func AllList(ctx iris.Context) {
 	// 去你粮的分页，尼玛的类别还分页是吧！傻逼！害老子弄半天！
 	// offset := (pageNo - 1) * config.ServerConfig.PageSize
 	// queryErr := model.DB.Offset(offset).Limit(config.ServerConfig.PageSize).Order(orderStr).Find(&categories).Error
+	
 	queryErr := model.DB.Order(orderStr).Find(&categories).Error
 	
 	if queryErr != nil {
@@ -287,7 +288,7 @@ func GetProductsByCategory(ctx iris.Context) {
 		pageNo = 1
 	}
 	offset := (pageNo - 1) * config.ServerConfig.PageSize
-	all, _ := strconv.ParseBool(ctx.URLParamDefault("all", "false"))
+	all, _ := strconv.ParseBool(ctx.URLParamDefault("all", "true"))
 	
 	var products []model.Product
 	

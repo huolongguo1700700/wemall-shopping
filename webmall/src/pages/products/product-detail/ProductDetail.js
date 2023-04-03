@@ -47,21 +47,28 @@ const ProductDetail = () => {
     
     return product && cateProducts &&
         <ProductsContainer tags={cateProducts.categorySequence} title={info.name}>
-            <div className="flex flex-col justify-center items-center gap-5 ">
+            <div className="w-full bg-white flex flex-col justify-center items-center gap-5 ">
                 <div className={`min-w-[32rem]  min-h-[32rem] bg-white`}>
                     {info.images.length !==0 &&
                         <img src={info.images[1].url} alt={info.name}
                              className={`w-[32rem] h-[32rem] object-contain `}/>
                     }
                 </div>
-                <div>
+                <div>{info.price} €</div>
+                <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
+                <div className={`my-12`}>
                     {info.detail}
                 </div>
-                <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
+                
             </div>
+            
+            {/* To top button */}
+            {/*<svg className="rotate-180 w-6 h-6 border border-lime-800 rounded-full cursor-pointer" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>*/}
         </ProductsContainer>
-        
 }
+
 /**
  * End of Product Component
  */

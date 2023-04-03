@@ -7,11 +7,15 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeItem, removeAllItems } from '../../stores/cart/cartSlice'
+import { selectAll, selectTotalPrice } from '../../stores/cart/cartSelectors'
 import AddCart from '../../features/add-to-cart/AddCart'
 import { NavLink } from 'react-router-dom'
 
 const Cart = () => {
-    const cartItems = useSelector(state => state.cart.cart)
+    const cartItems = useSelector(selectAll)
+    
+    const totalPrice = useSelector(selectTotalPrice).toFixed(2)
+    
     const dispatch = useDispatch()
     return (
         <div className="flex flex-col">
@@ -43,6 +47,9 @@ const Cart = () => {
                             </div>
                         </div>
                     ))}
+                    <div>
+                        <p>Total Price: {totalPrice} €</p>
+                    </div>
                     <div>
                         <button onClick={() => dispatch(removeAllItems())}>Clear Cart</button>
                     </div>

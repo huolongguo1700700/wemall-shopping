@@ -40,12 +40,12 @@ const ProductCard = ({ p }) => {
     return product &&
            <CubeContainerStyles className="">
                <Link to={`/collections/product/${p.id}/${p.category_id}`} className="flex flex-col gap-6 items-center text-center" >
-                   <div className="min-w-[8rem] min-h-[8rem] w-32 h-32 sm:w-36 sm:h-36 md:w-56 md:h-56">
+                   <div className="flex justify-center items-center min-w-[8rem] min-h-[8rem] w-32 h-32 sm:w-36 sm:h-36 md:w-56 md:h-56">
                    {imageUrl &&
                        <img src={imageUrl} alt={info.name} className={`w-full h-full object-contain`}/>
                    }
                    </div>
-                   <p className={` sm:text-lg lg:text-xl `}>
+                   <p className={` sm:text-lg lg:text-xl`}>
                        {p.name}
                    </p>
                </Link>
@@ -64,7 +64,7 @@ const CubeContainerStyles = tw.div`
     flex flex-col justify-center items-center
     min-w-sm max-w-lg w-full h-full
     p-2 md:p-3 py-6 mx-auto
-    gap-8
+    gap-8 lg:gap-12
     bg-white
     drop-shadow-xl hover:shadow-2xl rounded-xl z-0
 `

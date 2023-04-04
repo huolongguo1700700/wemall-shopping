@@ -12,6 +12,7 @@ import ProductsContainer from '../products-display/ProductsContainer'
 import { useQuery } from '@tanstack/react-query'
 import { fetchProductsByCategory, fetchSingleProduct } from '../../../api/client'
 import AddCart from '../../../features/add-to-cart/AddCart'
+import ProductCard from '../products-display/ProductCard'
 
 const ProductDetail = () => {
     
@@ -36,36 +37,54 @@ const ProductDetail = () => {
         queryFn: () => fetchProductsByCategory(categoryID),
         staleTime: Infinity
     })
+    const recommendCategoryId = cateProducts && cateProducts.categorySequence[0].id
+    
+    const {data: recommend, isLoading:recLoading, error: recError, isError: isRecError} = useQuery({
+        queryKey:['cate-products', recommendCategoryId],
+        queryFn: () => fetchProductsByCategory(recommendCategoryId),
+        staleTime: Infinity
+    })
+    
+    console.log(recommend && recommend.products)
     
     /* Error and Loading states */
-    if (isLoading || loading) return <span></span>
-    if (isError || isCateError) {
-        console.log(error || cateError)
+    if (isLoading || loading || recLoading) return <span></span>
+    if (isError || isCateError || isRecError) {
+        console.log(error || cateError || recError)
         navigate(`/Error`)
     }
+    
     const info = product && product.product
     
+    
     return product && cateProducts &&
-        <ProductsContainer tags={cateProducts.categorySequence} title={info.name}>
+        <ProductsContainer className="" tags={cateProducts.categorySequence} title={info.name}>
             <div className="w-full bg-white flex flex-col justify-center items-center gap-5 ">
-                <div className={`min-w-[32rem]  min-h-[32rem] bg-white`}>
+                <div className={`flex justify-center items-center lg-max:m-3 lg:min-w-[24rem] lg:min-h-[24rem] `}>
                     {info.images.length !==0 &&
                         <img src={info.images[1].url} alt={info.name}
-                             className={`w-[32rem] h-[32rem] object-contain `}/>
+                             className={`lg:w-96 lg:h-96 object-contain `}/>
                     }
                 </div>
-                <div>{info.price} €</div>
+                <div className="text-2xl">{info.price} €</div>
                 <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
                 <div className={`my-12`}>
                     {info.detail}
                 </div>
                 
             </div>
-            
-            {/* To top button */}
-            {/*<svg className="rotate-180 w-6 h-6 border border-lime-800 rounded-full cursor-pointer" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>*/}
+            <div className="flex flex-col my-16 justify-center items-center lg-max:hidden">
+                <div className="mb-16 flex justify-center items-center text-4xl"><i>You May Also Like</i></div>
+                <div className="flex flex-row  gap-5">
+                    {recommend && recommend.products.filter(p => p.id !== parseInt(productID)).slice(0,3).map((p, i)=>{
+                        return (
+                            <div className="lg:w-72">
+                                <ProductCard key={i} p={p}/>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
         </ProductsContainer>
 }
 

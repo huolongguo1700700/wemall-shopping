@@ -5,8 +5,8 @@
  */
 
 import React, { Fragment } from 'react'
-import ProductShort from './ProductCard'
 import tw from 'tailwind-styled-components'
+import ProductCard from './ProductCard'
 
 const ProductLists = ({products}) => {
     return (products &&
@@ -14,7 +14,7 @@ const ProductLists = ({products}) => {
             <Fragment>
                 {products.products.map((p, i) => {
                     return (
-                        <ProductShort key={i} p={p}/>
+                        <ProductCard key={i} p={p}/>
                     )}
                 )}
             </Fragment>

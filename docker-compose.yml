@@ -71,6 +71,21 @@ services:
       - wemall_golang
     links:
       - wemall_golang
+  wemall_nodejs_webmall:
+    build:
+      context: ./
+      dockerfile: webmall.Dockerfile
+    privileged: true
+    volumes:
+      - ./webmall/:/usr/src/wemall/webmall
+    command: "npm start"
+    ports:
+      - "3000:3000"
+    container_name: wemall_nodejs_webmall
+    depends_on:
+      - wemall_golang
+    links:
+      - wemall_golang
   nginx:
     build:
       context: ./

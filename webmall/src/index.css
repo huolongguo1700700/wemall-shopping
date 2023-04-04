@@ -3,10 +3,36 @@
 @tailwind utilities;
 
 body{
-    @apply bg-gray-50
+    @apply bg-gray-100
 }
 
-/* Custom styles */
+/* 在需要添加滚动条的容器上设置 overflow 属性 */
+html {
+
+    overflow-y: scroll; /* 垂直滚动 */
+    overflow-x: hidden; /* 防止水平滚动 */
+}
+
+/* 针对 WebKit 浏览器（如 Chrome、Safari、Opera） */
+html::-webkit-scrollbar {
+    width: 12px; /* 滚动条宽度 */
+}
+
+html::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* 滚动条轨道的背景颜色 */
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0; /* 滚动条滑块的背景颜色 */
+}
+
+/* 针对 Firefox 浏览器 */
+html {
+    scrollbar-width: thin; /* 设置滚动条宽度为细 */
+    scrollbar-color: #c0c0c0 #f0f0f0; /* 设置滚动条滑块和轨道的颜色 */
+}
+
+/* Custom input styles */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;

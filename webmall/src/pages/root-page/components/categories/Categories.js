@@ -44,7 +44,7 @@ export const Categories = () => {
         categories &&
         <ContainerStyles className={`${isOpen && "lg-max:left-0"}`}>
             <MiddleContainerStyles>
-                <div className="w-1/5 xl:w-2/5 h-full flex flex-row justify-center items-center lg-max:hidden">
+                <div className="w-1/5 h-full flex flex-row justify-center items-center lg-max:hidden">
                     <NavLink to={"/collections"}>
                             Logo Here
                     </NavLink>
@@ -67,6 +67,7 @@ export const Categories = () => {
     )
 }
 const ContainerStyles = tw.div`
+    lg:h-12
     lg-max:px-0 lg:px-3
     lg:bg-white
     flex items-center justify-center
@@ -81,10 +82,10 @@ const ContainerStyles = tw.div`
 const MiddleContainerStyles = tw.div`
     lg-max:mt-28
     lg-max:bg-stone-700/80
-    
+    max-w-[1920px]
     lg-max:backdrop-blur-sm
     flex flex-col lg:flex-row w-full h-full
-    lg:h-12 xl:px-0
+    xl:px-0
     lg:items-center
     justify-center
     
@@ -92,7 +93,7 @@ const MiddleContainerStyles = tw.div`
 
 const ItemContainerStyles = tw.div`
     flex lg-max:flex-col
-    w-full 2xl:w-4/5 h-full
+    w-full h-full
     lg-max:py-12
     items-center
     justify-start

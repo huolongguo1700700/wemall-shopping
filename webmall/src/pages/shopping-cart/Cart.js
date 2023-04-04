@@ -5,62 +5,37 @@
  */
 
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { removeItem, removeAllItems } from '../../stores/cart/cartSlice'
+import { useSelector } from 'react-redux'
 import { selectAll, selectTotalPrice } from '../../stores/cart/cartSelectors'
-import AddCart from '../../features/add-to-cart/AddCart'
-import { NavLink } from 'react-router-dom'
+import Header from '../root-page/components/header/Header'
+import Footer from '../root-page/components/footer/Footer'
+import Sidebar from './Sidebar'
+import CartItem from './CartItem'
+import CartTitle from './CartTitle'
 
 const Cart = () => {
     const cartItems = useSelector(selectAll)
     
     const totalPrice = useSelector(selectTotalPrice).toFixed(2)
     
-    const dispatch = useDispatch()
     return (
-        <div className="flex flex-col">
-            <h1>Shopping Cart</h1>
-            {cartItems.length === 0 ? (
-                <div>
-                    <p>Your cart is empty. </p>
-                    <NavLink to={`/collections`}>Continue Shopping</NavLink>
-                </div>
-                
-            ) : (
-                <div>
-                    <div className="flex font-bold py-2">
-                        <div className="w-1/3">Product</div>
-                        <div className="w-1/4">Price</div>
-                        <div className="w-1/4">Quantity</div>
-                        <div className="w-1/4">Total</div>
-                    </div>
-                    {cartItems && cartItems.map((item, i) => (
-                        <div key={i} className="flex py-2">
-                            <div className="w-1/3">{item.name}</div>
-                            <div className="w-1/4">{item.price} €</div>
-                            <div className="w-1/4 flex justify-center">
-                                <AddCart product={item} disabled={false} />
-                            </div>
-                            <div className="w-1/4">{(item.price * item.quantity).toFixed(2)} €</div>
-                            <div>
-                                <button onClick={() => dispatch(removeItem(item.id))}>Remove</button>
-                            </div>
+        <div className="flex flex-col justify-center items-center">
+            <Header />
+            <div className="flex flex-row w-full max-w-[1920px] h-full mt-14 lg:mt-20">
+                <div className="flex flex-col h-full w-full m-5 gap-5">
+                    <div className="flex w-full h-full bg-white p-3 justify-center items-start">
+                        <div className="flex-col w-full h-full min-h-[80vh] max-w-7xl">
+                            <CartTitle />
+                            
+                            {cartItems && cartItems.map((p, i) => (
+                                <CartItem key={i} p={p} />
+                            ))}
                         </div>
-                    ))}
-                    <div>
-                        <p>Total Price: {totalPrice} €</p>
                     </div>
-                    <div>
-                        <button onClick={() => dispatch(removeAllItems())}>Clear Cart</button>
-                    </div>
-                    <div>
-                        <button>Checkout</button>
-                    </div>
-                    <div>
-                        <NavLink to={`/collections`}>Continue Shopping</NavLink>
-                    </div>
+                    <Footer />
                 </div>
-            )}
+                <Sidebar totalPrice={totalPrice} />
+            </div>
         </div>
     )
 }

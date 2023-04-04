@@ -8,10 +8,10 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useFetchProduct from '../../../api/fetchProduct'
 import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
-import ProductsContainer from '../products-display/ProductsContainer'
 import { useQuery } from '@tanstack/react-query'
 import { fetchProductsByCategory, fetchSingleProduct } from '../../../api/client'
 import AddCart from '../../../features/add-to-cart/AddCart'
+import ProductsContainer from '../products-display/ProductsContainer'
 import ProductCard from '../products-display/ProductCard'
 
 const ProductDetail = () => {

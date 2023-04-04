@@ -12,43 +12,62 @@ import DeviceSubsequences from './DeviceSubsequences'
 import Subsequences from './Subsequences'
 import tw from 'tailwind-styled-components'
 
-export const CategoryList = ({ category, toggle, setSelectedCategory, closeCategories }) => {
-    
+export const CategoryList = ({category, toggle, setSelectedCategory, closeCategories}) => {
     const handleClick = () => setSelectedCategory(toggle ? null : category.id);
     
     return (
         <Fragment>
-            <InnerItemContainerStyles>
+            <InnerItemContainerStyles $id={category.id}>
                 {/* Larger Screen Display */}
-                <NavLink className={({ isActive }) => isActive ? `${NavLinkStyles} ${ActiveLinkStyles}` : `${NavLinkStyles}`}
-                         to={`/collections/${category.name}/${category.id}`}
+                <NavLink
+                    className={({isActive}) => {
+                        const baseClasses = `${NavLinkStyles}`
+                        const activeClasses = isActive ? `${ActiveLinkStyles}` : ""
+                        return `${baseClasses} ${activeClasses}`
+                    }}
+                    to={`/collections/${category.name}/${category.id}`}
                 >
                     <div className="">{category.name}</div>
                 </NavLink>
                 
                 {/* Mobile devices or Small Screen Display */}
                 <div className={`flex flex-col h-full select-none  ${DeviceNavLinkStyles} `}>
-                    <LetterStyles className={` ${HoverStyles} `} onClick={handleClick} >
-                        {category.name}
-                    </LetterStyles>
-                    <DeviceOuterContainerStyles className={`${!toggle && "hidden"}`}>
-                        <NavLink className={({ isActive }) => isActive ? `${ActiveLinkStyles} ${HoverStyles}` : `${HoverStyles}`}
-                                 to={`/collections/${category.name}/${category.id}`}
-                                 onClick={closeCategories}
+                    {!category.id ?
+                        <NavLink className={`text-lime-400 p-3 m-2 hover:bg-stone-500 ${HoverStyles}`}
+                                 onClick={() => {
+                                     handleClick()
+                                     closeCategories()
+                                 }}
+                                 to="/collections"
                         >
-                            Overview
+                            {category.name}
                         </NavLink>
-    
-                        <DeviceSubsequences
-                            sequence={category.subsequence}
-                            closeCategories={closeCategories}
-                        />
-                    </DeviceOuterContainerStyles>
+                        :
+                        <Fragment>
+                            <LetterStyles className={` ${HoverStyles} `} onClick={handleClick}>
+                                {category.name}
+                            </LetterStyles>
+                            <DeviceOuterContainerStyles className={`${!toggle && "hidden"}`}>
+                                <NavLink
+                                    className={({isActive}) => isActive ? `${ActiveLinkStyles} ${HoverStyles}` : `${HoverStyles}`}
+                                    to={`/collections/${category.name}/${category.id}`}
+                                    onClick={closeCategories}
+                                >
+                                    Overview
+                                </NavLink>
+                                
+                                <DeviceSubsequences
+                                    sequence={category.subsequence}
+                                    closeCategories={closeCategories}
+                                />
+                            </DeviceOuterContainerStyles>
+                        </Fragment>
+                    }
                 </div>
                 
                 {/* Sub-Categories for Browser */}
-                <Subsequences sequence={category.subsequence} />
-                
+                <Subsequences sequence={category.subsequence}/>
+            
             </InnerItemContainerStyles>
         </Fragment>
     )
@@ -59,10 +78,10 @@ export const HoverStyles = `
 `
 
 const InnerItemContainerStyles = tw.div`
+    ${(p) => (p.$id === 0 && "lg:hidden")}
     lg:relative
-    w-1/2 lg:w-2/5 lg:h-full
+    w-1/2 lg:w-full lg:h-full
     group/category
-    
 `
 
 const NavLinkStyles = `
@@ -82,7 +101,7 @@ export const ActiveLinkStyles = `
     
 `
 
-const LetterStyles =tw.div`
+const LetterStyles = tw.div`
     text-lime-400
     p-3
     m-2
@@ -91,7 +110,7 @@ const LetterStyles =tw.div`
 
 const DeviceOuterContainerStyles = tw.div`
     flex flex-col
-    gap-3
+    gap-5
     pl-8
     py-3
 `

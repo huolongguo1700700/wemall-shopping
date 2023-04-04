@@ -4,7 +4,7 @@
  * @date 2023/4/2
  */
 
-import React, { useState } from 'react'
+import React from 'react'
 import tw from 'tailwind-styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { BiPlus, BiMinus } from "react-icons/bi"
@@ -18,8 +18,6 @@ const AddCart = ({ product, url, disabled:isDisabled, background }) => {
     /* Fetch the quantity of this product */
     const fetchQty = useSelector(selectProductQty(product.id))
     
-    const [quantity, setQuantity] = useState(fetchQty)
-    
     const imageUrl = url ? url : '';
     /* Initialize the product data for shopping cart */
     const initProduct = {
@@ -30,41 +28,38 @@ const AddCart = ({ product, url, disabled:isDisabled, background }) => {
     }
     
     const handleIncrement = () => {
-        setQuantity(quantity + 1)
-        dispatch(setItemQty({ ...initProduct, quantity: quantity + 1 }))
+        dispatch(setItemQty({ ...initProduct, quantity: fetchQty + 1 }))
     }
     
     const handleDecrement = () => {
-        if (quantity > 0) {
-            setQuantity(quantity - 1)
-            dispatch(setItemQty({ ...initProduct, quantity: quantity - 1 }))
+        if (fetchQty > 0) {
+            dispatch(setItemQty({ ...initProduct, quantity: fetchQty - 1 }))
         }
     }
     
     const handleChange = (e) => {
         const newQuantity = parseInt(e.target.value);
         if (newQuantity >= 0 && newQuantity < 100) {
-            setQuantity(newQuantity);
             dispatch(setItemQty({ ...initProduct, quantity: newQuantity }));
         }
     }
     
     return (
         <div className="flex flex-row w-full justify-center items-center gap-2">
-            <ButtonStyles onClick={handleDecrement} disabled={!quantity} $q={!quantity}>
+            <ButtonStyles onClick={handleDecrement} disabled={!fetchQty} $q={!fetchQty}>
                 <BiMinus />
             </ButtonStyles>
             <NumberStyles
                 type="number"
                 placeholder=""
-                value={quantity}
+                value={fetchQty && fetchQty}
                 onChange={handleChange}
                 min="0"
                 max="99"
                 disabled={isDisabled}
                 $bg={background}
             />
-            <ButtonStyles onClick={handleIncrement} $q={!quantity}>
+            <ButtonStyles onClick={handleIncrement} $q={!fetchQty}>
                <BiPlus />
             </ButtonStyles>
         </div>

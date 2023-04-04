@@ -11,11 +11,12 @@ import { Provider } from 'react-redux'
 const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <Provider store={store}>
-            <RouterProvider router={router} />
+                <RouterProvider router={router} />
             </Provider>
         </QueryClientProvider>
     </React.StrictMode>

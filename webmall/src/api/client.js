@@ -5,8 +5,10 @@
  */
 
 import axios from 'axios'
-import { ADMIN_URL } from './api'
 
+const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
+
+console.log(process.env.REACT_APP_ADMIN_URL)
 
 export async function fetchProducts() {
     return await axios.get(

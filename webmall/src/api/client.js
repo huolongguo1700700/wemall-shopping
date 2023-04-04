@@ -8,8 +8,6 @@ import axios from 'axios'
 
 const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
 
-console.log(process.env.REACT_APP_ADMIN_URL)
-
 export async function fetchProducts() {
     return await axios.get(
         `${ADMIN_URL}/products?order=3&asc=1&all=true`

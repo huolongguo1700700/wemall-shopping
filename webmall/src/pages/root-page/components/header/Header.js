@@ -6,8 +6,8 @@
 
 import React from 'react'
 import Marquee from './Marquee'
-import Navigation from './Navigation'
 import { Categories } from '../categories/Categories'
+import Corner from './Corner'
 
 const Header = () => {
     return (
@@ -16,7 +16,7 @@ const Header = () => {
                 <div className="relative left-0 w-full lg:w-2/3 overflow-hidden ">
                     <Marquee />
                 </div>
-                <Navigation />
+                <Corner />
             </div>
             <Categories />
             <hr/>

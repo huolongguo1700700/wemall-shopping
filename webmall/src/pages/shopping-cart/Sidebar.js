@@ -20,9 +20,11 @@ const Sidebar = ({ totalPrice }) => {
                         <div>€{totalPrice}</div>
                     </div>
                 </div>
-                <ButtonBox className="w-full">
-                    <NavLink className={ButtonStyles} to={`/collections`}>Continue Shopping</NavLink>
+                <ButtonBox>
+                    <NavLink className={`${ButtonStyles} bg-green-500`} to={`/collections`}>Continue Shopping</NavLink>
+                    <NavLink className={`${ButtonStyles} bg-green-700`} to={``}>Checkout</NavLink>
                 </ButtonBox>
+                
             </div>
         </div>
     )
@@ -30,14 +32,14 @@ const Sidebar = ({ totalPrice }) => {
 const ButtonStyles = `
     w-full h-12
     flex justify-center items-center
-    bg-lime-500
-    hover:bg-green-700
+    hover:bg-green-600
     text-white
     
 `
 
 const ButtonBox = tw.div`
-
+    w-full flex flex-col
+    gap-5
 `
 /**
  * End of Sidebar Component

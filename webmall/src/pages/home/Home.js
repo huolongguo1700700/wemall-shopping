@@ -5,11 +5,12 @@
  */
 
 import React from 'react'
-import Root from '../root-page/Root'
 
 const Home = () => {
     return (
-        <Root />
+        <div className="min-h-[calc(100vh-5rem)]">
+        
+        </div>
     )
 }
 /**

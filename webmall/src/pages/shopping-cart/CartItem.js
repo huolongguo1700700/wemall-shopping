@@ -14,14 +14,14 @@ const CartItem = ({ p }) => {
     const dispatch = useDispatch()
     return (
         <div className="grid grid-cols-4 w-full h-full items-center justify-items-start border-b my-3 border-gray-100 group-hover/item:bg-lime-200">
-            <div className="w-full h-full flex gap-2 col-span-2">
-                <div className="">
+            <div className="w-full h-full flex gap-3 lg:gap-5 col-span-2">
+                <div className="min-h-[5rem] min-w-[5rem]">
                     {p.image &&
                         <img src={p.image} alt={p.name} className={`w-20 h-20 object-contain`}/>
                     }
                 </div>
                 <div>
-                    <div className="">{p.name}</div>
+                    <div className="truncate lg-max:text-sm">{p.name}</div>
                     <div className="">€{p.price}</div>
                 </div>
         
@@ -36,11 +36,11 @@ const CartItem = ({ p }) => {
                     <div className="w-12">{(p.price * p.quantity).toFixed(2)}</div>
                 </div>
             
-                <div className=" h-full flex justify-center items-center cursor-pointer gap-1">
-                    <div className="text-xl">
+                <div className=" h-full flex justify-center items-center  gap-1">
+                    <div className="text-xl cursor-pointer hover:text-lime-400" onClick={() => dispatch(removeItem(p.id))}>
                         <BiTrash />
                     </div>
-                    <div className="lg-max:hidden" onClick={() => dispatch(removeItem(p.id))}>Remove</div>
+                    <div className="lg-max:hidden" >Remove</div>
                 </div>
             </div>
         </div>

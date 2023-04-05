@@ -14,8 +14,7 @@ import AddCart from '../../../features/add-to-cart/AddCart'
 import ProductsContainer from '../products-display/ProductsContainer'
 import ProductCard from '../products-display/ProductCard'
 
-const ProductDetail = () => {
-    
+const ProductInfo = () => {
     /* Use Router to transfer parameters and navigate to Error page */
     const navigate = useNavigate()
     
@@ -59,20 +58,28 @@ const ProductDetail = () => {
     
     return product && cateProducts &&
         <ProductsContainer className="" tags={cateProducts.categorySequence} title={info.name}>
-            <div className="w-full bg-white flex flex-col justify-center items-center gap-5 ">
-                <div className={`flex justify-center items-center lg-max:m-3 lg:min-w-[24rem] lg:min-h-[24rem] `}>
-                    {info.images.length !==0 &&
-                        <img src={info.images[1].url} alt={info.name}
-                             className={`lg:w-96 lg:h-96 object-contain `}/>
-                    }
-                </div>
-                <div className="text-2xl">{info.price} €</div>
-                <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
-                <div className={`my-12`}>
-                    {info.detail}
+            <div className="w-full h-full bg-white flex flex-col justify-center items-center ">
+                <div className="flex flex-col lg:flex-row w-full h-full justify-center items-center px-12 pt-12 gap-5">
+                    <div className={`flex w-full h-full justify-center items-center lg-max:m-3 lg:min-w-[24rem] lg:min-h-[24rem]`}>
+                        {info.images.length !==0 &&
+                            <img src={info.images[1].url} alt={info.name}
+                                 className={`w-72 h-72 lg:w-96 lg:h-96 object-contain `}/>
+                        }
+                    </div>
+                    <div className="h-full w-full flex flex-col justify-center items-center gap-12 lg:gap-20">
+                        <div className="text-2xl lg:text-4xl">{info.price} €</div>
+                        <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
+                    </div>
                 </div>
                 
+                
+                <div className={`flex flex-col w-full p-6 lg:p-12 leading-6`}>
+                    <div className="text-2xl border-y-2 border-gray-100 py-6 my-6  lg-max:text-center">Product information</div>
+                    {info.detail}
+                </div>
             </div>
+            
+            {/* Recommend something more */}
             <div className="flex flex-col my-16 justify-center items-center lg-max:hidden">
                 <div className="mb-16 flex justify-center items-center text-4xl"><i>You May Also Like</i></div>
                 <div className="flex flex-row  gap-5">
@@ -91,4 +98,4 @@ const ProductDetail = () => {
 /**
  * End of Product Component
  */
-export default ProductDetail
+export default ProductInfo

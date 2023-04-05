@@ -12,7 +12,7 @@ const ProductLists = ({products}) => {
     return (products &&
         <DisplayedProductsContainerStyles className="">
             <Fragment>
-                {products.products.map((p, i) => {
+                {products.map((p, i) => {
                     return (
                         <ProductCard key={i} p={p}/>
                     )}

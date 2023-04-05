@@ -9,10 +9,10 @@ import App from '../../App'
 import Error from '../../pages/error-page/Error'
 import Home from '../../pages/home/Home'
 import Products from '../../pages/products/all-products/Products'
-import CategoryProducts from '../../pages/products/category-products/CategoryProducts'
-import ProductDetail from '../../pages/products/product-detail/ProductDetail'
 import Cart from '../../pages/shopping-cart/Cart'
 import Root from '../../pages/root-page/Root'
+import ProductsByCategory from '../../pages/products/products-by-category/ProductsByCategory'
+import ProductInfo from '../../pages/products/product-info/ProductInfo'
 
 export const router = createBrowserRouter([
     {
@@ -32,11 +32,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "/collections/:categoryName/:categoryID",
-                        element: <CategoryProducts />,
+                        element: <ProductsByCategory />,
                     },
                     {
-                        path: "/collections/product/:productID/:categoryID",
-                        element: <ProductDetail />,
+                        path: "/collections/product-info/:productID/:categoryID",
+                        element: <ProductInfo />,
                     },
                 ]
             },

@@ -17,11 +17,13 @@ const CartTitle = () => {
                 <div className="text-2xl lg:text-3xl">
                     Shopping Cart
                 </div>
-                <div className="flex justify-between items-center gap-1 cursor-pointer">
+                <div className="flex justify-between items-center gap-1">
                     <div className="text-xl lg:text-2xl">
-                        <BiTrash />
+                        <div className="hover:text-lime-500 cursor-pointer" onClick={() => dispatch(removeAllItems())}>
+                            <BiTrash />
+                        </div>
                     </div>
-                    <div className="text-lg lg:text-xl" onClick={() => dispatch(removeAllItems())}>Empty</div>
+                    <div className="text-lg lg:text-xl" >Empty</div>
                 </div>
             </div>
         </div>

@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	
 	"github.com/go-redis/redis"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -9,8 +12,7 @@ import (
 	"github.com/kataras/iris/v12/middleware/logger"
 	"github.com/kataras/iris/v12/middleware/recover"
 	"github.com/kataras/iris/v12/sessions"
-	"os"
-	"strconv"
+	"github.com/rs/cors"
 	"wemall/config"
 	"wemall/model"
 	"wemall/route"
@@ -26,17 +28,17 @@ func init() {
 		fmt.Println(err.Error())
 		os.Exit(-1)
 	}
-
+	
 	if config.DBConfig.SQLLog {
 		db.LogMode(true)
 	}
-
+	
 	db.DB().SetMaxIdleConns(config.DBConfig.MaxIdleConns)
 	db.DB().SetMaxOpenConns(config.DBConfig.MaxOpenConns)
-
+	
 	model.DB = db
 	config.Sess = sess
-
+	
 	config.Rdb = redis.NewClient(&redis.Options{
 		Addr:     config.ServerConfig.RedisHost,
 		Password: "", // no password set
@@ -61,12 +63,22 @@ func Cors(ctx iris.Context) {
 
 func main() {
 	app := iris.New()
-
-	app.Use(Cors)
+	
+	// app.Use(Cors) 这行是原来用的Cors
+	// 我加进来的部分，换成原来的会报错：blocked by CORS policy
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+	})
+	app.WrapRouter(c.ServeHTTP)
+	
+	// 下面的是没用变化的
 	app.Use(recover.New())
 	app.Use(logger.New())
-
+	
 	route.Route(app)
-
+	
 	app.Listen(":" + strconv.Itoa(config.ServerConfig.Port))
 }

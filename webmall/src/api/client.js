@@ -5,7 +5,9 @@
  */
 
 import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
+const URL = process.env.REACT_APP_API_URL
 const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
 
 export async function fetchProducts() {
@@ -48,3 +50,19 @@ export const fetchProductsByCategory = async (categoryId) => {
         throw new Error(e.message)
     })
 }
+
+export const postProductsToCart = createAsyncThunk (
+    'cart/postCartToSever',
+    async ({ productId, count, OrderId }) => {
+        return await axios
+        .post(`${URL}/cart/create`, {
+            productId,
+            count,
+            OrderId,
+        })
+        .then((res) => res.data)
+        .catch((e) => {
+            throw new Error(e.message)
+        })
+    }
+)

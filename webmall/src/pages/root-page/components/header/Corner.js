@@ -16,6 +16,7 @@ const Corner = () => {
     const totalPrice = useSelector(selectTotalPrice).toFixed(2)
     
     const totalProductNumber = useSelector(selectProductCount)
+    
     return (
         <Fragment>
             <div className="w-full lg:w-1/3 lg:relative right-0 gap-2 h-8 overflow-hidden flex flex-row items-center bg-lime-300 z-[999]">
@@ -29,9 +30,9 @@ const Corner = () => {
                     <div className="text-sm w-6 text-right lg-max:hidden">{totalProductNumber}</div>
                     <span className="lg-max:hidden h-2/3 w-0.5 bg-slate-500/70"></span>
                     <div className="text-sm text-right lg-max:hidden w-16">{totalPrice} €</div>
-                    <div className="ml-2 text-2xl">
+                    <NavLink className="ml-2 text-2xl" to={`/login`}>
                         <BiAccessibility/>
-                    </div>
+                    </NavLink>
                 </div>
                 
             </div>

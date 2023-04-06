@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { postProductsToCart } from '../../api/client'
 
 /* Initialize the state, if already exits in localStorage, fetch it */
-const initialState = JSON.parse(localStorage.getItem('cart')) || { cart: [] }
+const initialState = JSON.parse(localStorage.getItem('cart')) || {
+    cart: [],
+    status: "checkout",
+    error: null
+}
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -38,6 +43,20 @@ const cartSlice = createSlice({
             localStorage.removeItem('cart')
         },
     },
+    extraReducers (builder) {
+        builder.addCase(postProductsToCart.pending, (state) => {
+            state.status = "processing"
+        })
+        builder.addCase(postProductsToCart.fulfilled, (state) => {
+            state.status = "succeeded"
+            state.cart = []
+            localStorage.removeItem('cart')
+        })
+        builder.addCase(postProductsToCart.rejected, (state, action) => {
+            state.isLoading = "failed"
+            state.error = action.error.message
+        })
+    }
 })
 
 export const {

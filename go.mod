@@ -21,7 +21,6 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/blackfriday v2.0.0+incompatible // indirect
 	github.com/iris-contrib/go.uuid v2.0.0+incompatible // indirect
@@ -40,6 +39,7 @@ require (
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.27.1 // indirect
+	github.com/rs/cors v1.8.3 // indirect
 	github.com/ryanuber/columnize v2.1.0+incompatible // indirect
 	github.com/schollz/closestmatch v2.1.0+incompatible // indirect
 	github.com/sergi/go-diff v1.3.1 // indirect

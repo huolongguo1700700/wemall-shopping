@@ -13,6 +13,7 @@ import Cart from '../../pages/shopping-cart/Cart'
 import Root from '../../pages/root-page/Root'
 import ProductsByCategory from '../../pages/products/products-by-category/ProductsByCategory'
 import ProductInfo from '../../pages/products/product-info/ProductInfo'
+import Login from '../../pages/login/Login'
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
                         path: "/collections/product-info/:productID/:categoryID",
                         element: <ProductInfo />,
                     },
+                    {
+                        path: "/login",
+                        element: <Login />
+                    }
                 ]
             },
             {

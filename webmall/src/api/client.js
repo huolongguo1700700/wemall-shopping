@@ -6,6 +6,7 @@
 
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { setCheckoutStatus } from '../stores/cart/cartSlice'
 
 const URL = process.env.REACT_APP_API_URL
 const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
@@ -53,14 +54,20 @@ export const fetchProductsByCategory = async (categoryId) => {
 
 export const postProductsToCart = createAsyncThunk (
     'cart/postCartToSever',
-    async ({ productId, count, OrderId }) => {
+    async ({ productId, count, OrderId }, { getState, dispatch }) => {
         return await axios
         .post(`${URL}/cart/create`, {
             productId,
             count,
             OrderId,
         })
-        .then((res) => res.data)
+        .then((res) => {
+            setTimeout(() => {
+                const currentState = getState()
+                if (currentState.cart.status === 'succeeded') dispatch(setCheckoutStatus())
+            }, 3000)
+            return res.data
+        })
         .catch((e) => {
             throw new Error(e.message)
         })

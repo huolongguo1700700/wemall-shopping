@@ -66,7 +66,7 @@ const CubeContainerStyles = tw.div`
     p-2 md:p-3 py-6 mx-auto
     gap-8 lg:gap-12
     bg-white
-    transition-all duration-300 ease-in-out
+    transition-all duration-300 ease-linear
     drop-shadow-xl hover:shadow-2xl rounded-xl z-0
 `
 

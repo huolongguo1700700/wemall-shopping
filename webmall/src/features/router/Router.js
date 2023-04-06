@@ -7,7 +7,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../../App'
 import Error from '../../pages/error-page/Error'
-import Home from '../../pages/home/Home'
 import Products from '../../pages/products/all-products/Products'
 import Cart from '../../pages/shopping-cart/Cart'
 import Root from '../../pages/root-page/Root'
@@ -25,7 +24,7 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: "/",
-                        element: <Home />
+                        element: <Products />
                     },
                     {
                         path: "/collections",

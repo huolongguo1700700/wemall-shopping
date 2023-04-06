@@ -30,7 +30,8 @@ const Sidebar = ({ totalPrice }) => {
     }
     
     const handleCheckout = (c) => {
-        c.forEach((c) => {
+        console.log(c)
+        c && c.forEach((c) => {
             dispatch(postProductsToCart({
                 "productId": c.id,
                 "count": c.quantity,
@@ -52,7 +53,7 @@ const Sidebar = ({ totalPrice }) => {
                 </div>
                 <ButtonBox>
                     <NavLink className={`${ButtonStyles} bg-green-500`} to={`/collections`}>Continue Shopping</NavLink>
-                    <NavLink className={`${ButtonStyles} bg-green-700`} onClick={() => handleCheckout(state.cart.cart)}>
+                    <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(state.cart.cart)}>
                         {showCheckout}
                     </NavLink>
                 </ButtonBox>

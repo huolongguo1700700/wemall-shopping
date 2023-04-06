@@ -6,3 +6,4 @@
 
 export * from './Toggle/useToggle'
 export * from './WindowSize/useWindowSize'
+export * from './ScrollToTop/useScrollTop'

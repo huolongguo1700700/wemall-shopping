@@ -42,6 +42,9 @@ const cartSlice = createSlice({
             /* Delete all cart products in the localStorage */
             localStorage.removeItem('cart')
         },
+        setCheckoutStatus: (state) => {
+            state.status = 'checkout'
+        }
     },
     extraReducers (builder) {
         builder.addCase(postProductsToCart.pending, (state) => {
@@ -53,7 +56,7 @@ const cartSlice = createSlice({
             localStorage.removeItem('cart')
         })
         builder.addCase(postProductsToCart.rejected, (state, action) => {
-            state.isLoading = "failed"
+            state.status = "failed"
             state.error = action.error.message
         })
     }
@@ -63,5 +66,6 @@ export const {
     setItemQty,
     removeItem,
     removeAllItems,
+    setCheckoutStatus
 } = cartSlice.actions
 export default cartSlice.reducer

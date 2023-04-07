@@ -5,12 +5,13 @@
  */
 
 import React from 'react'
+import LoginForm from './LoginForm'
 
 const Login = () => {
     return (
-        <div className="flex min-h-[calc(100vh-25rem)] w-full h-full justify-center items-center p-2">
-            <div className="w-80 w-full h-full bg-white rounded-2xl flex flex-col justify-center items-center">
-                Login here
+        <div className="flex min-h-[calc(100vh-3rem)] min-w-[320px] w-full h-full justify-center items-center">
+            <div className="w-80 h-[28rem] bg-white flex flex-col justify-center items-center">
+                <LoginForm />
             </div>
         </div>
     )

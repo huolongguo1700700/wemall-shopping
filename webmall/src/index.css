@@ -36,5 +36,26 @@ html {
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
+    text-align: center;
     margin: 0;
+}
+
+.uppercase-placeholder::-webkit-input-placeholder {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.uppercase-placeholder:-moz-placeholder {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.uppercase-placeholder::-moz-placeholder {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.uppercase-placeholder:-ms-input-placeholder {
+    text-transform: uppercase;
+    text-align: center;
 }

@@ -74,7 +74,7 @@ const ProductInfo = () => {
                 
                 
                 <div className={`flex flex-col w-full p-6 lg:p-12 leading-6`}>
-                    <div className="text-2xl border-y-2 border-gray-100 py-6 my-6  lg-max:text-center">Product information</div>
+                    <div className="text-2xl border-y-2 border-gray-100 py-6 my-6 lg-max:text-center text-justify">Product information</div>
                     {info.detail}
                 </div>
             </div>

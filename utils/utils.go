@@ -7,6 +7,8 @@ import (
 	"github.com/kataras/iris/v12"
 	"golang.org/x/crypto/bcrypt"
 	"reflect"
+
+	"github.com/golang-jwt/jwt"
 )
 
 func setField(obj interface{}, name string, value interface{}) error {
@@ -67,8 +69,12 @@ func StrToIntMonth(month string) int {
 
 // HashPassword 将密码加密
 func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+
+	if err != nil {
+		return "", fmt.Errorf("could not hash password %w", err)
+	}
+	return string(hashedPassword), nil
 }
 
 // CheckPasswordHash 验证密码
@@ -85,4 +91,8 @@ func Res(ctx iris.Context, code int, data iris.Map) {
 func ObjStr(v interface{}) string {
 	str, _ := json.Marshal(v)
 	return string(str)
+}
+
+func VerifyPassword(hashedPassword string, candidatePassword string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(candidatePassword))
 }

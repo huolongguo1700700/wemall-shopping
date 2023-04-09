@@ -12,6 +12,7 @@ import (
 	"wemall/controller/ueditor"
 	"wemall/controller/user"
 	"wemall/controller/visit"
+	"wemall/middleware"
 )
 
 // Route 路由
@@ -22,6 +23,9 @@ func Route(app *iris.Application) {
 	{
 		router.Get("/weAppLogin", user.WeAppLogin)
 		router.Post("/setWeAppUser", user.SetWeAppUserInfo)
+		router.Post("/register", user.SignUpUser)
+		router.Post("/login", user.SignInUser)
+		router.Get("/logout", middleware.DeserializeUser, user.LogoutUser)
 		router.Get("/categories", category.List)
 		router.Get("/products", product.List)
 		router.Get("/product/:id", product.Info)

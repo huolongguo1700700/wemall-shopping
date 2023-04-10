@@ -7,8 +7,6 @@ import (
 	"github.com/kataras/iris/v12"
 	"golang.org/x/crypto/bcrypt"
 	"reflect"
-
-	"github.com/golang-jwt/jwt"
 )
 
 func setField(obj interface{}, name string, value interface{}) error {

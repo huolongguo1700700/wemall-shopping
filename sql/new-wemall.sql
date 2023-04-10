@@ -180,22 +180,11 @@ create table if not exists users
 (
     id         int unsigned auto_increment
         primary key,
-    contact_id int unsigned           null comment '默认地址',
-    open_id    text                   null,
-    nickname   varchar(100)           null,
-    username   varchar(100)           null,
+    name       varchar(100)           null,
     email      varchar(100)           null,
-    phone      varchar(20) default '' not null,
-    password   varchar(20) default '' not null,
-    token      text                   null,
-    avatar     text                   null,
-    sex        tinyint(1)             null comment '0:男;1:女',
-    subscribe  tinyint(1)             null,
-    status     int                    null,
-    lastip     varchar(50)            null,
+    password   varchar(100) default '' not null,
     created_at datetime               not null,
     updated_at datetime               not null,
-    deleted_at datetime               null
 )
     charset = utf8mb3;
 

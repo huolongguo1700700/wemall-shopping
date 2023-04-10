@@ -13,8 +13,11 @@ import { fetchProductsByCategory, fetchSingleProduct } from '../../../api/client
 import AddCart from '../../../features/add-to-cart/AddCart'
 import ProductsContainer from '../products-display/ProductsContainer'
 import ProductCard from '../products-display/ProductCard'
+import { useScrollTop } from '../../../hooks'
 
 const ProductInfo = () => {
+    useScrollTop()
+    
     /* Use Router to transfer parameters and navigate to Error page */
     const navigate = useNavigate()
     
@@ -67,7 +70,7 @@ const ProductInfo = () => {
                         }
                     </div>
                     <div className="h-full w-full flex flex-col justify-center items-center gap-12 lg:gap-20">
-                        <div className="text-2xl lg:text-4xl">{info.price} €</div>
+                        <div className="text-2xl lg:text-4xl">{info.price.toFixed(2)} €</div>
                         <AddCart product={info} url={info.images && info.images.length !==0 ? info.images[0].url : ''} disabled={false} />
                     </div>
                 </div>

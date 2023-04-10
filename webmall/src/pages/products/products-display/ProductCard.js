@@ -51,7 +51,7 @@ const ProductCard = ({ p }) => {
                </Link>
                <div>
                    <div className="h-full md:text-xl lg:text-2xl">
-                       <p >{p.price} €</p>
+                       <p >{p.price.toFixed(2)} €</p>
                    </div>
                </div>
                <div className="gap-3 px-12 w-full">

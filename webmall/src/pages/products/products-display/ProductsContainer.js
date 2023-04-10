@@ -17,7 +17,7 @@ const ProductsContainer = (props) => {
             </div>
             
             <hr className="w-full min-w-[300px]"/>
-            <div className="w-full flex flex-col py-8 px-6 md:px-8 lg:px-0">
+            <div className="w-full flex flex-col py-8 px-6 md:px-8 lg:px-0 max-w-[1920px]">
                 {props.children}
             </div>
             {/* To top button */}

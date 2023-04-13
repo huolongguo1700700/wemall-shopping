@@ -67,7 +67,7 @@ func main() {
 	// app.Use(Cors) 这行是原来用的Cors
 	// 我加进来的部分，换成原来的会报错：blocked by CORS policy
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"},
 		AllowedHeaders:   []string{"*"},
 		AllowCredentials: true,

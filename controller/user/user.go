@@ -54,7 +54,7 @@ func SignUpUser(ctx iris.Context) {
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",
 		"data": iris.Map{
-			"name": newUser.Name,
+			"name": newUser.Email,
 		},
 	})
 }
@@ -94,7 +94,7 @@ func SignInUser(ctx iris.Context) {
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",
 		"data": iris.Map{
-			"name": user.Name,
+			"name": user.Email,
 		},
 	})
 }

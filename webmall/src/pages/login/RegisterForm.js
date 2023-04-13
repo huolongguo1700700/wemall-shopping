@@ -4,19 +4,53 @@
  * @date 2023/4/10
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import tw from 'tailwind-styled-components'
+import { useDispatch } from 'react-redux'
+import { userRegister } from '../../api/client'
 
 const RegisterForm = () => {
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirm, setPasswordConfirm] = useState("")
+    
+    const handleRegister = async () => {
+        try {
+            dispatch(userRegister({ email, password, passwordConfirm }))
+        } 
+        catch (e) {
+            console.log(e)
+        }
+    }
+    
     return (
         <div className="w-full h-full flex flex-col justify-center items-center gap-12 pt-16 px-8">
             <InputContainerStyles>
-                <InputStyles type="text" placeholder="email" required={true}/>
-                <InputStyles type="password" placeholder="password" required={true}/>
-                <InputStyles type="password" placeholder="confirm password" required={true}/>
+                <InputStyles
+                    type="text"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required={true}
+                />
+                <InputStyles
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required={true}
+                />
+                <InputStyles
+                    type="password"
+                    placeholder="confirm password"
+                    value={passwordConfirm}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                    required={true}
+                />
             </InputContainerStyles>
             <div className="w-full flex flex-col gap-6">
-                <button onClick={() => {}}
+                <button onClick={handleRegister}
                         className="w-full p-2 uppercase border bg-cyan-500 hover:border-sky-700 hover:bg-sky-600 text-white "
                 >
                     Register
@@ -25,6 +59,7 @@ const RegisterForm = () => {
         </div>
     )
 }
+
 const InputContainerStyles = tw.div`
     w-full
     flex flex-col

@@ -4,19 +4,38 @@
  * @date 2023/4/7
  */
 
-import React from 'react'
+import React, { useState } from 'react'
 import tw from 'tailwind-styled-components'
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../../api/client'
 
 const LoginForm = () => {
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    
+    const handleLogin = async () => await dispatch(userLogin({ email, password }))
+    
     return (
         <div className="w-full h-full flex flex-col justify-center items-center pt-16 gap-12 px-8">
             <InputContainerStyles>
-                <InputStyles type="text" placeholder="email" required={true}/>
-                <InputStyles type="password" placeholder="password" required={true}/>
+                <InputStyles
+                    type="text"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required={true}
+                />
+                <InputStyles
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required={true}
+                />
             </InputContainerStyles>
             <div className="w-full flex flex-col gap-6">
-                <button onClick={() => {
-                }}
+                <button onClick={handleLogin}
                         className="w-full p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white "
                 >
                     Sign In
@@ -25,6 +44,7 @@ const LoginForm = () => {
         </div>
     )
 }
+
 const InputContainerStyles = tw.div`
     w-full
     flex flex-col

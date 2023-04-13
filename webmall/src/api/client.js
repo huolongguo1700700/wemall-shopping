@@ -117,7 +117,7 @@ export const userLogout = createAsyncThunk(
     "auth/userLogout",
     async () => {
         return await axios
-        .post(`${URL}/logout`)
+        .get(`${URL}/logout`)
         .then((res) =>  res.data)
         .catch((e) => {
             throw new Error(e.message)

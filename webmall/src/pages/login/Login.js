@@ -5,10 +5,10 @@
  */
 
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { userLogout } from '../../api/client'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { userLogout } from '../../api/client'
-import { useDispatch } from 'react-redux'
 
 const Login = () => {
     const dispatch = useDispatch()

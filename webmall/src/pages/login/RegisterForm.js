@@ -18,9 +18,10 @@ const RegisterForm = () => {
     const handleRegister = async () => {
         try {
             dispatch(userRegister({ email, password, passwordConfirm }))
-        } 
+        }
         catch (e) {
-            console.log(e)
+            console.error(e)
+            throw new Error(e.message)
         }
     }
     

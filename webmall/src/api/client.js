@@ -77,30 +77,20 @@ export const postProductsToCart = createAsyncThunk (
 
 axios.defaults.withCredentials = true
 
-async function performLogin(email, password) {
-    const response = await axios.post(`${URL}/login`, {
-        Email: email,
-        Password: password,
-    })
-    return response.data
-}
-
 // Sign up/Register
 export const userRegister = createAsyncThunk(
     "auth/userRegister",
     async ({ email, password, passwordConfirm }) => {
-        const response = await axios.post(`${URL}/register`, {
+        return await axios
+        .post(`${URL}/register`, {
             Email: email,
             Password: password,
             PasswordConfirm: passwordConfirm,
         })
-        
-        if (response.data) {
-            // 注册成功后自动登录
-            return await performLogin(email, password)
-        } else {
-            throw new Error("Registration failed.")
-        }
+        .then((res) => res.data)
+        .catch((e) => {
+            throw new Error(e.message)
+        })
     }
 )
 
@@ -108,7 +98,15 @@ export const userRegister = createAsyncThunk(
 export const userLogin = createAsyncThunk(
     "auth/userLogin",
     async ({ email, password }) => {
-        return await performLogin(email, password)
+        return await axios
+        .post(`${URL}/login`, {
+            Email: email,
+            Password: password,
+        })
+        .then((res) => res.data)
+        .catch((e) => {
+            throw new Error(e.message)
+        })
     }
 )
 

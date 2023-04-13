@@ -88,7 +88,7 @@ func SignInUser(ctx iris.Context) {
 		return
 	}
 
-	ctx.SetCookieKV("token", token)
+	ctx.SetCookieKV("token", token, iris.CookieHTTPOnly(false))
 
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,
@@ -101,7 +101,7 @@ func SignInUser(ctx iris.Context) {
 
 // [...] SignOut User
 func LogoutUser(ctx iris.Context) {
-	ctx.SetCookieKV("token", "")
+	ctx.SetCookieKV("token", "", iris.CookieHTTPOnly(false))
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg": "success",

@@ -17,7 +17,7 @@ const authSlice = createSlice({
         builder.addCase(userRegister.pending, (state) => {
             state.status = "loading"
         })
-        builder.addCase(userRegister.fulfilled, (state, action) => {
+        builder.addCase(userRegister.fulfilled, (state) => {
             state.isAuthenticated = true
             state.status = "register succeeded"
         })

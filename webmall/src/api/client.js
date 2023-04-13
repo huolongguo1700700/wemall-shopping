@@ -6,7 +6,6 @@
 
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import Cookies from "js-cookie"
 import { setCheckoutStatus } from '../stores/cart/cartSlice'
 
 const URL = process.env.REACT_APP_API_URL

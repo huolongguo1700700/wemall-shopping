@@ -32,7 +32,7 @@ const Login = () => {
             // Clean up timer when component unmounts or when isLogin changes
             return () => clearTimeout(timer)
         }
-    }, [isLogin, navigate])
+    }, [location.state?.returnUrl, isLogin, navigate])
     
     return (
         <div className="flex min-h-[calc(100vh-3rem)] min-w-[320px] w-full h-full justify-center items-center">

@@ -22,7 +22,7 @@ const Profile = () => {
         if(!isLogin) {
             navigate('/login')
         }
-    }, [isLogin])
+    }, [isLogin, navigate])
     
     
     

@@ -66,7 +66,6 @@ const userSlice = createSlice({
         })
         builder.addCase(userLogout.fulfilled, (state) => {
             state.isAuthenticated = false
-            state = initialState
             localStorage.removeItem('user')
         })
         builder.addCase(userLogout.rejected, (state, action) => {

@@ -4,18 +4,25 @@
  * @date 2023/4/5
  */
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import tw from 'tailwind-styled-components'
 import { postProductsToCart } from '../../api/client'
+import { selectUser, selectUserIsLogin } from '../../stores/user/userSelectors'
 
 const Sidebar = ({ totalPrice }) => {
     const dispatch = useDispatch()
-    const state = useSelector((state) => state)
+    /* Select cart */
+    const cart = useSelector((state) => state.cart)
+    /* If user login */
+    const isLogin = useSelector(selectUserIsLogin)
+    const user = useSelector(selectUser)
+    
+    const navigate = useNavigate()
     
     const showCheckout = () => {
-        switch (state.cart.status) {
+        switch (cart.status) {
             case 'processing':
                 return <div>Processing</div>
             case 'succeeded':
@@ -29,16 +36,29 @@ const Sidebar = ({ totalPrice }) => {
         }
     }
     
-    const handleCheckout = (c) => {
-        console.log(c)
-        c && c.forEach((c) => {
-            dispatch(postProductsToCart({
-                "productId": c.id,
-                "count": c.quantity,
-                "OrderId": 1
-            }))
-        })
-    }
+    const handleCheckout = useCallback((c) => {
+        console.log(user)
+        if(isLogin){
+            c && c.forEach((c) => {
+                console.log({
+                    "productId": c.id,
+                    "count": c.quantity,
+                    "UserId": user.user.id
+                })
+                dispatch(postProductsToCart({
+                    "productId": c.id,
+                    "count": c.quantity,
+                    "UserId": user.user.id
+                }))
+            })
+        }
+        else {
+            alert("Please Login first")
+            setTimeout(() => {
+                navigate('/login', { state: { returnUrl: '/cart' } })
+            }, 0)
+        }
+    }, [isLogin, user, dispatch, navigate])
     
     return (
         <div className="sticky top-20 h-[calc(100vh-5rem)] w-[400px] bg-white lg-max:hidden px-5 pt-8">
@@ -53,7 +73,7 @@ const Sidebar = ({ totalPrice }) => {
                 </div>
                 <ButtonBox>
                     <NavLink className={`${ButtonStyles} bg-green-500`} to={`/collections`}>Continue Shopping</NavLink>
-                    <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(state.cart.cart)}>
+                    <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(cart.cart)}>
                         {showCheckout}
                     </NavLink>
                 </ButtonBox>
@@ -66,7 +86,6 @@ const ButtonStyles = `
     flex justify-center items-center
     hover:bg-green-600
     text-white
-    
 `
 
 const ButtonBox = tw.div`

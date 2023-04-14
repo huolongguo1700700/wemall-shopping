@@ -1,4 +1,4 @@
-create table if not exists carts
+create table carts
 (
     id         int unsigned auto_increment
         primary key,
@@ -8,9 +8,10 @@ create table if not exists carts
     created_at datetime                not null,
     updated_at datetime                not null,
     deleted_at datetime                null,
-    order_id   int                     null
+    user_id    int                     null
 )
     charset = utf8mb3;
+
 
 create table if not exists categories
 (
@@ -187,9 +188,6 @@ create table if not exists users
     updated_at datetime               not null
 )
     charset = utf8mb3;
-
-INSERT INTO wmall.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, order_id) VALUES (7, 50, 1, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:12:58', '2017-06-11 17:12:58', null, 1);
-INSERT INTO wmall.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, order_id) VALUES (8, 48, 2, 'o1c0J0RumJgU1Apa65IDmpcKEFF4', '2017-06-11 17:21:53', '2017-06-11 17:21:53', null, 1);
 
 INSERT INTO wmall.categories (name, sequence, parent_id, status) VALUES ('Fresh Fruit', 0, 0, 1);
 INSERT INTO wmall.categories (name, sequence, parent_id, status) VALUES ('Fresh Vegetables', 0, 0, 1);
@@ -461,6 +459,15 @@ INSERT INTO wmall.orders (id, user_id, total_price, payment, freight, remark, di
 INSERT INTO wmall.orders (id, user_id, total_price, payment, freight, remark, discount, deliver_start, deliver_end, status, created_at, updated_at, deleted_at, pay_at) VALUES (2, 1, 33, 33.5, 0, null, 0, '2023-03-30 23:16:07', '2023-03-30 23:16:13', 1, '2017-04-08 01:00:00', '2017-01-18 12:05:34', null, '2017-03-17 01:00:00');
 INSERT INTO wmall.orders (id, user_id, total_price, payment, freight, remark, discount, deliver_start, deliver_end, status, created_at, updated_at, deleted_at, pay_at) VALUES (3, 7, 45, 45.4, 0, null, 0, '2023-03-30 23:16:09', '2023-03-30 23:16:13', 1, '2017-04-08 01:00:00', '2017-01-18 12:08:34', null, '2017-02-05 01:00:00');
 INSERT INTO wmall.orders (id, user_id, total_price, payment, freight, remark, discount, deliver_start, deliver_end, status, created_at, updated_at, deleted_at, pay_at) VALUES (4, 8, 55, 56, 0, null, 0, '2023-03-30 23:16:08', '2023-03-30 23:16:14', 1, '2017-04-08 01:00:00', '2017-02-07 01:00:00', null, '2017-04-08 01:00:00');
+
+insert into wmall.carts (id, product_id, count, open_id, created_at, updated_at, deleted_at, user_id)
+values  (39, 71, 1, '', '2023-04-14 15:40:29', '2023-04-14 15:40:29', null, 10),
+        (40, 70, 1, '', '2023-04-14 15:40:29', '2023-04-14 15:40:29', null, 10),
+        (41, 74, 1, '', '2023-04-14 15:40:29', '2023-04-14 15:40:29', null, 10),
+        (42, 54, 1, '', '2023-04-14 15:58:45', '2023-04-14 15:58:45', null, 20),
+        (43, 58, 1, '', '2023-04-14 15:58:45', '2023-04-14 15:58:45', null, 20),
+        (44, 55, 1, '', '2023-04-14 15:58:45', '2023-04-14 15:58:45', null, 20),
+        (45, 57, 1, '', '2023-04-14 15:58:45', '2023-04-14 15:58:45', null, 20);
 
 INSERT INTO wmall.product_category (product_id, category_id) VALUES (1, 24);
 INSERT INTO wmall.product_category (product_id, category_id) VALUES (2, 23);

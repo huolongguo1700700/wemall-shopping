@@ -55,12 +55,12 @@ export const fetchProductsByCategory = async (categoryId) => {
 // Post order
 export const postProductsToCart = createAsyncThunk (
     'cart/postCartToSever',
-    async ({ productId, count, OrderId }, { getState, dispatch }) => {
+    async ({ productId, count, UserId }, { getState, dispatch }) => {
         return await axios
         .post(`${URL}/cart/create`, {
             productId,
             count,
-            OrderId,
+            UserId,
         })
         .then((res) => {
             setTimeout(() => {

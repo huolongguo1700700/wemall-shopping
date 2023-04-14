@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { userLogin, userLogout, userRegister } from '../../api/client'
-import store from '../index'
 
-const initialState = {
+const initialState = JSON.parse(localStorage.getItem('user')) || {
     isAuthenticated: false,
     status: "null",
     user: [],
@@ -18,15 +17,19 @@ const userSlice = createSlice({
         builder.addCase(userRegister.pending, (state) => {
             state.status = "loading"
         })
-        builder.addCase(userRegister.fulfilled, (state, action) => {
-            state.isAuthenticated = true
+        builder.addCase(userRegister.fulfilled,  (state, action) => {
             state.status = "register succeeded"
-            store.dispatch(
-                userLogin({
-                    email: action.meta.arg.email,
-                    password: action.meta.arg.password,
-                })
-            )
+            if(action.payload.errNo===0) {
+                state.isAuthenticated = true
+                state.status = "login succeeded"
+                state.user = action.payload.data
+                localStorage.setItem('user', JSON.stringify(state))
+            } else if(action.payload.errNo===1) {
+                state.isAuthenticated = false
+                state.status = "login failed"
+                state.error = action.payload.msg
+                localStorage.setItem('user', JSON.stringify(state))
+            }
         })
         builder.addCase(userRegister.rejected, (state, action) => {
             state.status = "register failed"
@@ -47,7 +50,6 @@ const userSlice = createSlice({
             } else if(action.payload.errNo===1) {
                 state.isAuthenticated = false
                 state.status = "login failed"
-                console.log(action.payload)
                 state.error = action.payload.msg
                 localStorage.setItem('user', JSON.stringify(state))
             }
@@ -64,9 +66,8 @@ const userSlice = createSlice({
         })
         builder.addCase(userLogout.fulfilled, (state) => {
             state.isAuthenticated = false
-            state.status = "logout"
             state = initialState
-            localStorage.setItem('user', JSON.stringify(state))
+            localStorage.removeItem('user')
         })
         builder.addCase(userLogout.rejected, (state, action) => {
             state.status = "failed"

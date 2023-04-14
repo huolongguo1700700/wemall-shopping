@@ -28,8 +28,8 @@ func Create(ctx iris.Context) {
 		return
 	}
 	
-	var order model.Order
-	if model.DB.First(&order, cart.OrderID).Error != nil {
+	var user model.User
+	if model.DB.First(&user, cart.UserID).Error != nil {
 		SendErrJSON("Wrong order Id.", ctx)
 		return
 	}
@@ -76,7 +76,7 @@ func List(ctx iris.Context) {
 			CreatedAt:   v.CreatedAt,
 			UpdatedAt:   v.UpdatedAt,
 			DeletedAt:   v.DeletedAt,
-			OrderID:     v.OrderID,
+			UserID:      v.UserID,
 		})
 	}
 	utils.Res(ctx, iris.StatusOK, iris.Map{

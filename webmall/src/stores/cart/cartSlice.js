@@ -50,10 +50,17 @@ const cartSlice = createSlice({
         builder.addCase(postProductsToCart.pending, (state) => {
             state.status = "processing"
         })
-        builder.addCase(postProductsToCart.fulfilled, (state) => {
-            state.status = "succeeded"
-            state.cart = []
-            localStorage.removeItem('cart')
+        builder.addCase(postProductsToCart.fulfilled, (state, action) => {
+            if(action.payload.errNo===0) {
+                state.status = "succeeded"
+                state.cart = []
+                localStorage.removeItem('cart')
+            }
+            else if(action.payload.errNo===1){
+                state.status = "failed"
+                state.error = action.payload.msg
+            }
+            
         })
         builder.addCase(postProductsToCart.rejected, (state, action) => {
             state.status = "failed"

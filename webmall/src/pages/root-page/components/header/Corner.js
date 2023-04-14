@@ -10,8 +10,11 @@ import Burger from './Burger/Burger'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectProductCount, selectTotalPrice } from '../../../../stores/cart/cartSelectors'
+import { selectUserIsLogin } from '../../../../stores/user/userSelectors'
 
 const Corner = () => {
+    const isLogin = useSelector(selectUserIsLogin)
+    
     const totalPrice = useSelector(selectTotalPrice).toFixed(2)
     
     const totalProductNumber = useSelector(selectProductCount)
@@ -29,7 +32,7 @@ const Corner = () => {
                     <div className="text-sm w-6 text-right lg-max:hidden">{totalProductNumber}</div>
                     <span className="lg-max:hidden h-2/3 w-0.5 bg-slate-500/70"></span>
                     <div className="text-sm text-right lg-max:hidden w-16">{totalPrice} €</div>
-                    <NavLink className="ml-2 text-2xl hover:text-white" to={`/login`}>
+                    <NavLink className="ml-2 text-2xl hover:text-white" to={isLogin ? '/profile' : `/login`}>
                         <AiOutlineUser />
                     </NavLink>
                 </div>

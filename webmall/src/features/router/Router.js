@@ -13,6 +13,7 @@ import Root from '../../pages/root-page/Root'
 import ProductsByCategory from '../../pages/products/products-by-category/ProductsByCategory'
 import ProductInfo from '../../pages/products/product-info/ProductInfo'
 import Login from '../../pages/login/Login'
+import Profile from '../../pages/user-profile/Profile'
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/login",
                         element: <Login />
+                    },
+                    {
+                        path: "/profile",
+                        element: <Profile />
                     }
                 ]
             },

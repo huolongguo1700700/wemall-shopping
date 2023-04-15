@@ -5,6 +5,7 @@ import "time"
 // Cart 购物车
 type Cart struct {
 	ID        uint       `gorm:"primary_key" json:"id"`
+	OrderID   uint       `json:"orderId"`
 	OpenID    string     `json:"openId"`
 	ProductID uint       `json:"productId"`
 	Count     int        `json:"count"`
@@ -25,4 +26,9 @@ type CartInfo struct {
 	UpdatedAt   time.Time  `json:"updatedAt"`
 	DeletedAt   *time.Time `sql:"index" json:"deletedAt"`
 	UserID      uint       `json:"userId"`
+}
+
+type GroupedCartInfo struct {
+	OrderID   uint       `json:"orderId"`
+	CartItems []CartInfo `json:"cartItems"`
 }

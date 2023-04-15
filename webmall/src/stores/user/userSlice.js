@@ -41,7 +41,6 @@ const userSlice = createSlice({
             state.status = "loading"
         })
         builder.addCase(userLogin.fulfilled, (state, action) => {
-            console.log(action.payload)
             if(action.payload.errNo===0) {
                 state.isAuthenticated = true
                 state.status = "login succeeded"

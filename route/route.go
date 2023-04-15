@@ -33,7 +33,7 @@ func Route(app *iris.Application) {
 		router.Get("/product/:id", product.Info)
 		router.Get("/cart", cart.List)
 		router.Post("/cart/create", cart.Create)
-		router.Get("/cart/list", cart.List)
+		router.Get("/cart/list/:userId", cart.List)
 		router.Get("/visit", visit.PV)
 		router.Get("/ueditor", ueditor.Handler)
 		router.Post("/ueditor", ueditor.Handler)

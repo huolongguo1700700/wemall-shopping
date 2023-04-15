@@ -7,11 +7,11 @@
 import React, { Fragment } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useQuery } from '@tanstack/react-query'
 import { selectSortMethod } from '../../../stores/sort/sortSelectors'
 import useFetchCategoryProducts from '../../../api/fecthCategoryProducts'
 import ProductsContainer from '../products-display/ProductsContainer'
 import ProductLists from '../products-display/ProductLists'
-import { useQuery } from '@tanstack/react-query'
 import { fetchProductsByCategory } from '../../../api/client'
 import { sortFunction } from '../products-display/sorting-products'
 

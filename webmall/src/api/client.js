@@ -52,6 +52,20 @@ export const fetchProductsByCategory = async (categoryId) => {
     })
 }
 
+// Fetch order by user
+export  const fetchUserOrders = createAsyncThunk (
+    'orders/fetchUserOrders',
+    async (userId) => {
+        return await  axios.get(`${URL}/cart/list/${userId}`)
+        .then((res)=> {
+            return res.data
+        })
+        .catch(e => {
+            throw new Error(e.message)
+        })
+    }
+)
+
 // Post order
 export const postProductsToCart = createAsyncThunk (
     'cart/postCartToSever',

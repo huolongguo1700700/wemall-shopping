@@ -6,8 +6,11 @@
 
 import React from 'react'
 import DisplayTags from './DisplayTags'
+import { useScrollTop } from '../../../hooks'
 
 const ProductsContainer = (props) => {
+    useScrollTop()
+    
     return (
         <div className="flex flex-col w-full h-full justify-center items-center lg:px-12 py-12 ">
             <div className="w-full flex items-center justify-center lg:h-16 xl:h-28 text-3xl lg:text-5xl font-bold text-center">{props.title}</div>

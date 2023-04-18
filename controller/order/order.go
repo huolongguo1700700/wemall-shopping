@@ -5,6 +5,7 @@ import (
 	"time"
 	"wemall/model"
 	"wemall/utils"
+	"wemall/controller/common"
 )
 
 // TodayCount 今日总订单数
@@ -126,4 +127,53 @@ func Analyze(ctx iris.Context) {
 			"yesterdayTotalSale"  : order.TotalSaleByDate(yesterday),
 		},
 	})
+}
+
+func Checkout(ctx iris.Context){
+	now := time.Now()
+	SendErrJSON := common.SendErrJSON
+	var createdOrder model.CreatedOrder
+
+	if err := ctx.ReadJSON(&createdOrder); err != nil {
+		SendErrJSON("Invalid parameters.", ctx)
+		return
+	}
+
+	var totalPrice float64
+
+	for _, cart := range createdOrder.Carts{
+		var product model.Product
+		if model.DB.First(&product, cart.ProductID).Error != nil {
+			SendErrJSON("wrong product id.", ctx)
+			return
+		}
+
+		totalPrice = totalPrice + product.Price * float64(cart.Count)
+	}
+
+	newOrder := model.Order{
+		CreatedAt: now,
+		UpdatedAt: now,
+		UserID: createdOrder.UserId,
+		TotalPrice: totalPrice,
+	}
+
+	if model.DB.Create(newOrder).Error != nil {
+		SendErrJSON("create order error", ctx)
+		return
+	}
+
+	var existCarts []model.Cart
+	if model.DB.Where("user_id = ?", createdOrder.UserId).Where("delete_flag = 0").Find(&existCarts).Error != nil {
+		SendErrJSON("find carts  by userId error", ctx)
+		return
+	}
+
+	for _, cart := range existCarts {
+		cart.DeleteFlag = 1
+		if model.DB.Save(cart).Error != nil {
+			SendErrJSON("delete cart error", ctx)
+			return
+		}
+	}
 }

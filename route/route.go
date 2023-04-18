@@ -27,6 +27,7 @@ func Route(app *iris.Application) {
 		router.Post("/register", user.SignUpUser)
 		router.Post("/login", user.SignInUser)
 		router.Get("/logout", middleware.DeserializeUser, user.LogoutUser)
+		router.Post("/checkout", order.Checkout)
 		
 		router.Get("/categories", category.List)
 		router.Get("/products", product.List)

@@ -13,6 +13,7 @@ type Cart struct {
 	UpdatedAt time.Time  `json:"updatedAt"`
 	DeletedAt *time.Time `sql:"index" json:"deletedAt"`
 	UserID    uint       `json:"userId"`
+	DeleteFlag uint
 }
 
 // CartInfo 购物车

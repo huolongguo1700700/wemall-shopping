@@ -8,7 +8,8 @@ create table carts
     created_at datetime                not null,
     updated_at datetime                not null,
     deleted_at datetime                null,
-    user_id    int                     null
+    user_id    int                     null,
+    delete_flag int         default 0  null
 )
     charset = utf8mb3;
 

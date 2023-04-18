@@ -23,6 +23,11 @@ type Order struct {
     PayAt          time.Time  `json:"payAt"`
 }
 
+type CreatedOrder struct {
+	Carts []Cart `json:"carts"`
+	UserId uint `json:"userId"`
+}
+
 // Total 总的订单数
 func (order Order) Total() int {
 	count := 0

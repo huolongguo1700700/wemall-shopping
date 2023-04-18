@@ -33,13 +33,13 @@ func Create(ctx iris.Context) {
 	
 	var user model.User
 	if model.DB.First(&user, cart.UserID).Error != nil {
-		SendErrJSON("Wrong order Id.", ctx)
+		SendErrJSON("Wrong user Id.", ctx)
 		return
 	}
 	
 	/* 加的 */
 	var lastCart model.Cart
-	if err := model.DB.Where("user_id = ?", cart.UserID).Order("order_id desc").First(&lastCart).Error; err != nil {
+	if err := model.DB.Where("user_id = ?", cart.UserID).Where("delete_flag = 0").Order("order_id desc").First(&lastCart).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			cart.OrderID = 1
 		} else {
@@ -51,6 +51,7 @@ func Create(ctx iris.Context) {
 	}
 	
 	cart.OpenID = ""
+	cart.DeleteFlag = 0
 	if model.DB.Create(&cart).Error != nil {
 		SendErrJSON("error", ctx)
 		return
@@ -67,48 +68,20 @@ func Create(ctx iris.Context) {
 
 func List(ctx iris.Context) {
 	SendErrJSON := common.SendErrJSON
-	var cart []model.Cart
+	var carts []model.Cart
 	
 	userId := ctx.Params().Get("userId")
-	// cart.OpenID = openID
-	// cart.OpenID = ""
-	if model.DB.Find(&cart).Error != nil {
+	
+	if model.DB.Where("user_id = ?", userId).Where("delete_flag = 0").Order("order_id asc").Find(&carts).Error != nil {
 		SendErrJSON("error", ctx)
 		return
 	}
-	
-	// 加的
-	if model.DB.Where("user_id = ?", userId).Order("order_id asc").Find(&cart).Error != nil {
-		SendErrJSON("error", ctx)
-		return
-	}
-	
-	/*var cartList []model.CartInfo
-	for _, v := range cart {
-		var product model.Product
-		if model.DB.First(&product, v.ProductID).Error != nil {
-			SendErrJSON("错误的商品id", ctx)
-			return
-		}
-		_ = model.DB.First(&product.Image, product.ImageID).Error
-		cartList = append(cartList, model.CartInfo{
-			ID:          v.ID,
-			OpenID:      v.OpenID,
-			ProductID:   v.ProductID,
-			ProductInfo: product,
-			Count:       v.Count,
-			CreatedAt:   v.CreatedAt,
-			UpdatedAt:   v.UpdatedAt,
-			DeletedAt:   v.DeletedAt,
-			UserID:      v.UserID,
-		})
-	}*/
 	
 	groupedCarts := make(map[uint][]model.CartInfo)
-	for _, cart := range cart {
+	for _, cart := range carts {
 		var product model.Product
 		if model.DB.First(&product, cart.ProductID).Error != nil {
-			SendErrJSON("错误的商品id", ctx)
+			SendErrJSON("wrong product id.", ctx)
 			return
 		}
 		_ = model.DB.First(&product.Image, product.ImageID).Error
@@ -126,12 +99,12 @@ func List(ctx iris.Context) {
 	var groupedCartList []model.GroupedCartInfo
 	for orderId, cartItems := range groupedCarts {
 		groupedCartList = append(groupedCartList, model.GroupedCartInfo{
-			OrderID:   orderId,
+			OrderID:  orderId,
 			CartItems: cartItems,
 		})
 	}
 	
-	// 按照 orderId 排序分组后的购物车列表
+	// sort by id
 	sort.SliceStable(groupedCartList, func(i, j int) bool {
 		return groupedCartList[i].OrderID < groupedCartList[j].OrderID
 	})

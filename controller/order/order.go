@@ -161,6 +161,9 @@ func Checkout(ctx iris.Context){
 		UpdatedAt: now,
 		UserID: createdOrder.UserId,
 		TotalPrice: totalPrice,
+		DeliverStart: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+		DeliverEnd: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+		PayAt: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
 	}
 
 	if model.DB.Create(&newOrder).Error != nil {

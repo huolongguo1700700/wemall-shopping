@@ -22,21 +22,6 @@ services:
     ports:
       - 6379:6379
     command: redis-server
-  wemall_nodejs_static:
-    build:
-      context: ./
-      dockerfile: nodejs.Dockerfile
-    command: npm run staticServ
-    privileged: true
-    ports:
-      - 8011:8011
-    container_name: wemall_nodejs_static
-    volumes:
-      - ./nodejs/:/usr/src/wemall/nodejs  
-    depends_on:
-      - wemall_golang
-    links:
-      - wemall_golang
   wemall_golang:
     build:
       context: ./
@@ -55,22 +40,6 @@ services:
       - wemall_mysql
     command: go run main.go
     restart: always
-  wemall_nodejs_start:
-    build:
-      context: ./
-      dockerfile: nodejs.Dockerfile
-    command: npm start
-    privileged: true
-    volumes:
-      - ./nodejs/:/usr/src/wemall/nodejs
-    ports:
-      - "8010:8010"
-      - "8881:8881"
-    container_name: wemall_nodejs_start
-    depends_on:
-      - wemall_golang
-    links:
-      - wemall_golang
   wemall_nodejs_webmall:
     build:
       context: ./

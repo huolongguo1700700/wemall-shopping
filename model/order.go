@@ -24,7 +24,6 @@ type Order struct {
 }
 
 type CreatedOrder struct {
-	Carts []Cart `json:"carts"`
 	UserId uint `json:"userId"`
 }
 

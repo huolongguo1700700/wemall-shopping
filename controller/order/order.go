@@ -141,7 +141,12 @@ func Checkout(ctx iris.Context){
 
 	var totalPrice float64
 
-	for _, cart := range createdOrder.Carts{
+	var carts []model.Cart
+	if model.DB.Where("user_id = ?", createdOrder.UserId).Where("delete_flag = 0").Order("order_id asc").Find(&carts).Error != nil {
+		SendErrJSON("error", ctx)
+		return
+	}
+	for _, cart := range carts{
 		var product model.Product
 		if model.DB.First(&product, cart.ProductID).Error != nil {
 			SendErrJSON("wrong product id.", ctx)
@@ -158,20 +163,20 @@ func Checkout(ctx iris.Context){
 		TotalPrice: totalPrice,
 	}
 
-	if model.DB.Create(newOrder).Error != nil {
+	if model.DB.Create(&newOrder).Error != nil {
 		SendErrJSON("create order error", ctx)
 		return
 	}
 
 	var existCarts []model.Cart
 	if model.DB.Where("user_id = ?", createdOrder.UserId).Where("delete_flag = 0").Find(&existCarts).Error != nil {
-		SendErrJSON("find carts  by userId error", ctx)
+		SendErrJSON("find carts by userId error", ctx)
 		return
 	}
 
 	for _, cart := range existCarts {
 		cart.DeleteFlag = 1
-		if model.DB.Save(cart).Error != nil {
+		if model.DB.Save(&cart).Error != nil {
 			SendErrJSON("delete cart error", ctx)
 			return
 		}

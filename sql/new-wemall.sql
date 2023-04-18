@@ -9,6 +9,7 @@ create table carts
     updated_at datetime                not null,
     deleted_at datetime                null,
     user_id    int                     null,
+    order_id   int                     null,
     delete_flag int         default 0  null
 )
     charset = utf8mb3;
@@ -85,17 +86,17 @@ create table if not exists orders
         primary key,
     user_id       int unsigned     not null,
     total_price   double           not null,
-    payment       double           not null,
+    payment       double           null,
     freight       double default 0 null comment '运费',
     remark        text             null comment '备注',
     discount      int    default 0 null,
-    deliver_start datetime         not null,
-    deliver_end   datetime         not null,
-    status        int              not null,
+    deliver_start datetime         null,
+    deliver_end   datetime         null,
+    status        int              null,
     created_at    datetime         not null,
     updated_at    datetime         not null,
     deleted_at    datetime         null,
-    pay_at        datetime         not null
+    pay_at        datetime         null
 )
     charset = utf8mb3;
 

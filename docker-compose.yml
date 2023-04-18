@@ -65,11 +65,9 @@ services:
     restart: always
     privileged: true
     links:
-      - wemall_nodejs_static
       - wemall_golang
       - wemall_nodejs_start
     depends_on:
-      - wemall_nodejs_static
       - wemall_golang
       - wemall_nodejs_start
     volumes:

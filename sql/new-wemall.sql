@@ -3699,9 +3699,3 @@ values  (1, 'http://wemall.shen100.com/admin#/', '', '', 0, '2017-04-05 17:49:33
         (3056, 'https://dev.wemall.com/admin#/product/edit/50', 'https://dev.wemall.com/admin', '7177679c-c937-4e0c-9b26-37bb183ebe98', 0, '2017-07-13 19:35:33', '127.0.0.1', 1280, 800, 'Chrome', '59.0.3071.115', '', 'CN', 'zh', 'Mac OS', '10.11.3'),
         (3057, 'https://dev.wemall.com/admin#/product/edit/50', 'https://dev.wemall.com/admin', '7177679c-c937-4e0c-9b26-37bb183ebe98', 0, '2017-07-13 19:39:45', '127.0.0.1', 1280, 800, 'Chrome', '59.0.3071.115', '', 'CN', 'zh', 'Mac OS', '10.11.3'),
         (3058, 'https://dev.wemall.com/admin#/product/edit/50', 'https://dev.wemall.com/admin', '7177679c-c937-4e0c-9b26-37bb183ebe98', 0, '2017-07-13 19:40:33', '127.0.0.1', 1280, 800, 'Chrome', '59.0.3071.115', '', 'CN', 'zh', 'Mac OS', '10.11.3');
-
-insert into wmall.users (id, contact_id, open_id, nickname, username, email, phone, password, token, avatar, sex, subscribe, status, lastip, created_at, updated_at, deleted_at)
-values  (1, 1, 'asdfafsafafafafafsfadfsadfasfaf', 'shen100', 'John', null, '00390495', 'adaffasdfasdfafasfas', 'safafdasdfasdfasfsafafdaf', null, 1, null, null, null, '2017-04-02 01:00:00', '2017-02-04 01:00:00', null),
-        (6, 1, 'adsfsadadfafaf', 'shen100', 'Jack', null, '23489843', 'adfafdadfasf', 'asfsafaf', null, 1, null, null, null, '2017-04-02 01:00:00', '2017-02-05 01:00:00', null),
-        (7, 1, 'sadfaafsafs', 'shen', 'MK', null, '33320485', 'bbbbb', 'NULLasfdsafaf', null, 1, null, null, null, '2017-04-02 01:00:00', '2017-02-05 01:00:00', null),
-        (8, 1, 'adfasfdafa', 'kk', 'aa', null, '00305030', 'adaf', 'asdfaf', null, 0, null, null, null, '2017-04-02 01:00:00', '2017-02-07 01:00:00', null);

@@ -10,6 +10,7 @@ create table carts
     deleted_at datetime                null,
     user_id    int                     null,
     order_id   int                     null,
+    sort_id   int                     null,
     delete_flag int         default 0  null
 )
     charset = utf8mb3;

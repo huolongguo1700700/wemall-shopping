@@ -2,6 +2,7 @@ package cart
 
 import (
 	"sort"
+	"time"
 	
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris/v12"
@@ -37,23 +38,51 @@ func Create(ctx iris.Context) {
 		return
 	}
 	
-	/* 加的 */
+	now := time.Now()
+
 	var lastCart model.Cart
-	if err := model.DB.Where("user_id = ?", cart.UserID).Where("delete_flag = 0").Order("order_id desc").First(&lastCart).Error; err != nil {
+	if err := model.DB.Where("user_id = ?", cart.UserID).Where("delete_flag = 0").Order("sort_id desc").First(&lastCart).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			cart.OrderID = 1
+			cart.SortID = 1
+			newOrder := model.Order{
+				CreatedAt: now,
+				UpdatedAt: now,
+				UserID: cart.UserID,
+				TotalPrice: product.Price * float64(cart.Count),
+				DeliverStart: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+				DeliverEnd: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+				PayAt: time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC),
+			}
+		
+			if model.DB.Create(&newOrder).Error != nil {
+				SendErrJSON("create order error", ctx)
+				return
+			}
 		} else {
 			SendErrJSON("error", ctx)
 			return
 		}
 	} else {
-		cart.OrderID = lastCart.OrderID + 1
+		cart.SortID = lastCart.SortID + 1
+		var existOrder model.Order
+		if model.DB.First(&existOrder, lastCart.OrderID).Error != nil {
+			SendErrJSON("Wrong user Id.", ctx)
+			return
+		}
+
+		existOrder.UpdatedAt = now
+		existOrder.TotalPrice = existOrder.TotalPrice + product.Price * float64(cart.Count)
+
+		if model.DB.Save(&existOrder).Error != nil {
+			SendErrJSON("update order error", ctx)
+			return
+		}
 	}
 	
 	cart.OpenID = ""
 	cart.DeleteFlag = 0
 	if model.DB.Create(&cart).Error != nil {
-		SendErrJSON("error", ctx)
+		SendErrJSON("create cart error", ctx)
 		return
 	}
 	utils.Res(ctx, iris.StatusOK, iris.Map{
@@ -72,8 +101,8 @@ func List(ctx iris.Context) {
 	
 	userId := ctx.Params().Get("userId")
 	
-	if model.DB.Where("user_id = ?", userId).Where("delete_flag = 0").Order("order_id asc").Find(&carts).Error != nil {
-		SendErrJSON("error", ctx)
+	if model.DB.Where("user_id = ?", userId).Where("delete_flag = 0").Order("sort_id asc").Find(&carts).Error != nil {
+		SendErrJSON("find cart error", ctx)
 		return
 	}
 	
@@ -93,20 +122,20 @@ func List(ctx iris.Context) {
 			UserID:      cart.UserID,
 		}
 		
-		groupedCarts[cart.OrderID] = append(groupedCarts[cart.OrderID], cartInfo)
+		groupedCarts[cart.SortID] = append(groupedCarts[cart.SortID], cartInfo)
 	}
 	
 	var groupedCartList []model.GroupedCartInfo
-	for orderId, cartItems := range groupedCarts {
+	for sortId, cartItems := range groupedCarts {
 		groupedCartList = append(groupedCartList, model.GroupedCartInfo{
-			OrderID:  orderId,
+			SortID:  sortId,
 			CartItems: cartItems,
 		})
 	}
 	
 	// sort by id
 	sort.SliceStable(groupedCartList, func(i, j int) bool {
-		return groupedCartList[i].OrderID < groupedCartList[j].OrderID
+		return groupedCartList[i].SortID < groupedCartList[j].SortID
 	})
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,

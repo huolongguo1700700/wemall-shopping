@@ -1,6 +1,8 @@
 package order
 
 import (
+	"sort"
+
 	"github.com/kataras/iris/v12"
 	"time"
 	"wemall/model"
@@ -184,4 +186,67 @@ func Checkout(ctx iris.Context){
 			return
 		}
 	}
+}
+
+func ListByUser(ctx iris.Context){
+	SendErrJSON := common.SendErrJSON
+
+	userId := ctx.Params().Get("userId")
+
+	var orders []model.Order
+
+	if model.DB.Where("user_id = ?", userId).Find(&orders).Error != nil {
+		SendErrJSON("find order error", ctx)
+		return
+	}
+
+	var result []model.GroupedCartInfo
+	for _, order := range orders {
+		var carts []model.Cart
+		if model.DB.Where("order_id = ?", order.ID).Find(&carts).Error != nil {
+			SendErrJSON("find cart error", ctx)
+			return
+		}
+
+		groupedCarts := make(map[uint][]model.CartInfo)
+		for _, cart := range carts {
+			var product model.Product
+			if model.DB.First(&product, cart.ProductID).Error != nil {
+				SendErrJSON("wrong product id.", ctx)
+				return
+			}
+			_ = model.DB.First(&product.Image, product.ImageID).Error
+			cartInfo := model.CartInfo{
+				ID:          cart.ID,
+				ProductInfo: product,
+				Count:       cart.Count,
+				CreatedAt:   cart.CreatedAt,
+				UserID:      cart.UserID,
+			}
+			
+			groupedCarts[cart.SortID] = append(groupedCarts[cart.SortID], cartInfo)
+		}
+
+		var groupedCartList []model.GroupedCartInfo
+		for sortId, cartItems := range groupedCarts {
+			groupedCartList = append(groupedCartList, model.GroupedCartInfo{
+				SortID:  sortId,
+				CartItems: cartItems,
+			})
+		}
+		
+		// sort by id
+		sort.SliceStable(groupedCartList, func(i, j int) bool {
+			return groupedCartList[i].SortID < groupedCartList[j].SortID
+		})
+
+		result = append(result, groupedCartList...)
+	}
+
+	utils.Res(ctx, iris.StatusOK, iris.Map{
+		"errNo": model.ErrorCode.SUCCESS,
+		"msg":   "success",
+		"data":  result,
+	})
+	return
 }

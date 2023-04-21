@@ -64,6 +64,10 @@ func Create(ctx iris.Context) {
 		}
 	} else {
 		cart.SortID = lastCart.SortID + 1
+		if (lastCart.ProductID == cart.ProductID){
+			cart.Count = cart.Count + lastCart.Count
+		}
+
 		var existOrder model.Order
 		if model.DB.First(&existOrder, lastCart.OrderID).Error != nil {
 			SendErrJSON("Wrong user Id.", ctx)

@@ -67,9 +67,13 @@ services:
     links:
       - wemall_golang
       - wemall_nodejs_start
+      - wemall_nodejs_static
+      - wemall_nodejs_webmall
     depends_on:
       - wemall_golang
       - wemall_nodejs_start
+      - wemall_nodejs_static
+      - wemall_nodejs_webmall
     volumes:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
   wemall_nodejs_start:
@@ -84,6 +88,21 @@ services:
       - "8010:8010"
       - "8881:8881"
     container_name: wemall_nodejs_start
+    depends_on:
+      - wemall_golang
+    links:
+      - wemall_golang
+  wemall_nodejs_static:
+    build:
+      context: ./
+      dockerfile: nodejs.Dockerfile
+    command: npm run staticServ
+    privileged: true
+    ports:
+      - 8011:8011
+    container_name: wemall_nodejs_static
+    volumes:
+      - ./nodejs/:/usr/src/wemall/nodejs  
     depends_on:
       - wemall_golang
     links:

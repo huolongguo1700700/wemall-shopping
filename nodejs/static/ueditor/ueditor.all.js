@@ -8058,7 +8058,7 @@ UE.Editor.defaultOptions = function(editor){
         imagePopup: true,
         enterTag: 'p',
         customDomain: false,
-        lang: 'en',
+        lang: 'zh-cn',
         langPath: _url + 'lang/',
         theme: 'default',
         themePath: _url + 'themes/',

@@ -6,17 +6,17 @@ class Platform extends Component {
         let { software } = this.props;
         return (
             <div className="platform">
-                <div className="platform-title">Platform Information</div>
+                <div className="platform-title">平台信息</div>
                 <div className="platform-info">
-                    <span className="platform-label">Platform Name:</span>
+                    <span className="platform-label">程序名称:</span>
                     <span>{software.name}</span>
                 </div>
                 <div className="platform-info">
-                    <span className="platform-label">Platform Version:</span>
+                    <span className="platform-label">程序版本:</span>
                     <span>{software.version}</span>
                 </div>
                 <div className="platform-info">
-                    <span className="platform-label">Latest Version:</span>
+                    <span className="platform-label">最新版本:</span>
                     <span></span>
                 </div>
             </div>

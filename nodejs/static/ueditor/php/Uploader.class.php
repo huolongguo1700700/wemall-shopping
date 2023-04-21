@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Created by JetBrains PhpStorm.
+ * User: taoqili
+ * Date: 12-7-18
+ * Time: 上午11: 32
+ * UEditor编辑器通用上传类
+ */
 class Uploader
 {
     private $fileField; //文件域名
@@ -15,26 +22,26 @@ class Uploader
     private $stateInfo; //上传状态信息,
     private $stateMap = array( //上传状态映射表，国际化用户需考虑此处数据的国际化
         "SUCCESS", //上传成功标记，在UEditor中内不可改变，否则flash判断会出错
-        "File size exceeds limit upload_max_filesize",
-        "File size exceeds limit MAX_FILE_SIZE",
-        "The file was not fully uploaded",
-        "No file was uploaded",
-        "The uploaded file is empty",
-        "ERROR_TMP_FILE" => "Temporary file error",
-        "ERROR_TMP_FILE_NOT_FOUND" => "Temporary file not found",
-        "ERROR_SIZE_EXCEED" => "File size out of site limit",
-        "ERROR_TYPE_NOT_ALLOWED" => "The file type is not allowed",
-        "ERROR_CREATE_DIR" => "Directory creation failure",
-        "ERROR_DIR_NOT_WRITEABLE" => "The directory has no write permission",
-        "ERROR_FILE_MOVE" => "An error occurred while saving the file",
-        "ERROR_FILE_NOT_FOUND" => "The upload file cannot be found",
-        "ERROR_WRITE_CONTENT" => "Error writing file content",
-        "ERROR_UNKNOWN" => "Unknown error",
-        "ERROR_DEAD_LINK" => "Link unavailable",
-        "ERROR_HTTP_LINK" => "The link is not an http link",
-        "ERROR_HTTP_CONTENTTYPE" => "The contentType of link is incorrect",
-        "INVALID_URL" => "Invalid URL",
-        "INVALID_IP" => "Invalid IP"
+        "文件大小超出 upload_max_filesize 限制",
+        "文件大小超出 MAX_FILE_SIZE 限制",
+        "文件未被完整上传",
+        "没有文件被上传",
+        "上传文件为空",
+        "ERROR_TMP_FILE" => "临时文件错误",
+        "ERROR_TMP_FILE_NOT_FOUND" => "找不到临时文件",
+        "ERROR_SIZE_EXCEED" => "文件大小超出网站限制",
+        "ERROR_TYPE_NOT_ALLOWED" => "文件类型不允许",
+        "ERROR_CREATE_DIR" => "目录创建失败",
+        "ERROR_DIR_NOT_WRITEABLE" => "目录没有写权限",
+        "ERROR_FILE_MOVE" => "文件保存时出错",
+        "ERROR_FILE_NOT_FOUND" => "找不到上传文件",
+        "ERROR_WRITE_CONTENT" => "写入文件内容错误",
+        "ERROR_UNKNOWN" => "未知错误",
+        "ERROR_DEAD_LINK" => "链接不可用",
+        "ERROR_HTTP_LINK" => "链接不是http链接",
+        "ERROR_HTTP_CONTENTTYPE" => "链接contentType不正确",
+        "INVALID_URL" => "非法 URL",
+        "INVALID_IP" => "非法 IP"
     );
 
     /**

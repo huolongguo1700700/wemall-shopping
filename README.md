@@ -81,7 +81,7 @@ In the browser address bar, typehttps://dev.wemall.com/admin
 * M-site framework set: vue, vuex, vue-router
 * M-site UI component library: vux
 * Backend management framework set: react, redux, react-router-redux
-*Backend management UI component library: antd
+* Backend management UI component library: antd
 * Data Visualization: echarts
 * Rich Text Editor: ueditor
 * Packing tools: webpack

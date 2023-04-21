@@ -208,12 +208,12 @@ class EditProduct extends Component {
     onBeforeUpload(file) {
         var isImage = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isImage) {
-            message.error('Only jpg or png images are supported.');
+            message.error('只支持jpg或png格式的图片');
             return false;
         }
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isLt2M) {
-            message.error('The size of the picture should be less than 2M');
+            message.error('图片大小要小于2M');
         }
         return isImage && isLt2M;
     }
@@ -433,7 +433,7 @@ class EditProduct extends Component {
     render() {
         let self                = this;
         let { data }            = this.props;
-        let editLabel           = this.state.productId ? 'Edit' : 'Insert';
+        let editLabel           = this.state.productId ? '编辑' : '添加';
         let isLoading           = this.state.isLoading; 
         let name                = this.state.name;
         let contents            = this.state.contents;
@@ -465,7 +465,7 @@ class EditProduct extends Component {
         let uploadButton = (
             <div>
                 <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">点击上传</div>
             </div>
         );
 
@@ -501,7 +501,7 @@ class EditProduct extends Component {
             multiple : true,
             treeCheckable: true,
             showCheckedStrategy: TreeSelect.SHOW_PARENT,
-            searchPlaceholder: 'Select Parent Category',
+            searchPlaceholder: '选择父分类',
             style: {
                 width: '100%',
             }
@@ -512,27 +512,27 @@ class EditProduct extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div id="productBox">
-                            <div className="product-title">{editLabel} Product</div>
+                            <div className="product-title">{editLabel}商品</div>
 
                             <Tabs defaultActiveKey="1" onChange={self.onTabChange}>
-                                <TabPane tab="Product Information" key="1">
+                                <TabPane tab="商品信息" key="1">
                                 {
                                     isLoading ? null :
                                     <Form>
-                                        <FormItem {...formItemLayout} label="Product Name">
+                                        <FormItem {...formItemLayout} label="商品名称">
                                             <Input defaultValue={name} onBlur={this.onNameBlur}/>
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Product Categories">
+                                        <FormItem {...formItemLayout} label="商品分类">
                                             <TreeSelect {...treeProps} />
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Product status">
+                                        <FormItem {...formItemLayout} label="商品状态">
                                             <Select defaultValue={status} style={{ width: 120 }} onChange={this.onStatusChange}>
-                                                <Select.Option value="3">Waiting for on shelf</Select.Option>
-                                                <Select.Option value="1">On shelf</Select.Option>
-                                                <Select.Option value="2">Off shelf</Select.Option>
+                                                <Select.Option value="3">等待上架</Select.Option>
+                                                <Select.Option value="1">上架</Select.Option>
+                                                <Select.Option value="2">下架</Select.Option>
                                             </Select>
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Product covers">
+                                        <FormItem {...formItemLayout} label="商品封面图">
                                             <Upload className="image-uploader" name="upFile"
                                                 showUploadList={false} action={uploadURL}
                                                 beforeUpload={this.onBeforeUpload}
@@ -545,7 +545,7 @@ class EditProduct extends Component {
                                                 }
                                             </Upload>
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Product images list">
+                                        <FormItem {...formItemLayout} label="商品图片集">
                                             <div className="clearfix">
                                                 <Upload action={uploadURL} name="upFile"
                                                     listType="picture-card"
@@ -557,22 +557,22 @@ class EditProduct extends Component {
                                                 </Upload>
                                                 <Modal visible={previewVisible} onCancel={this.onCancelPreview}
                                                     footer={null}>
-                                                    <img alt="Previews" style={{ width: '100%' }} src={previewImage} />
+                                                    <img alt="预览图片" style={{ width: '100%' }} src={previewImage} />
                                                 </Modal>
                                             </div>
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Original price">
+                                        <FormItem {...formItemLayout} label="原价">
                                             <InputNumber min={0} max={1000000} defaultValue={originalPrice} step={0.01} onBlur={this.onOriginalPriceBlur} />
                                             元
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Promotion price">
+                                        <FormItem {...formItemLayout} label="促销价">
                                             <InputNumber min={0} max={1000000} defaultValue={price} step={0.01} onBlur={this.onPriceBlur} />
                                             元
                                         </FormItem>
-                                        <FormItem {...formItemLayout} label="Remark">
+                                        <FormItem {...formItemLayout} label="备注">
                                             <Input type="textarea" defaultValue={remark} rows={4} onBlur={this.onRemarkBlur}/>
                                         </FormItem>
-                                        <FormItem {...editorLayout} label="Product Detail">
+                                        <FormItem {...editorLayout} label="商品详情">
                                         {
                                             contents.map(function(content) {
                                                 return (
@@ -599,21 +599,21 @@ class EditProduct extends Component {
                                         }
                                             <div>
                                                 <Select defaultValue={contentType} style={{ width: 120 }} onChange={this.onContentTypeChange}>
-                                                    <Select.Option value="image">Image</Select.Option>
-                                                    <Select.Option value="text">Text</Select.Option>
+                                                    <Select.Option value="image">图片</Select.Option>
+                                                    <Select.Option value="text">文本</Select.Option>
                                                 </Select>
-                                                <Button onClick={this.onAddContent} type="primary" size="large">Insert</Button>
+                                                <Button onClick={this.onAddContent} type="primary" size="large">添加</Button>
                                             </div>
                                         </FormItem>
                                     </Form>
                                 }
                                 </TabPane>
-                                <TabPane tab="Comodity Inventory" key="2">
+                                <TabPane tab="商品库存" key="2">
                                     <Form>
-                                        <FormItem className="produc" {...formItemLayout} label={'Product Property'}>
+                                        <FormItem className="produc" {...formItemLayout} label={'商品属性'}>
                                             <Select defaultValue={hasProperty + ''} style={{ width: 120 }} onChange={this.onHasPropertyChange}>
-                                                <Select.Option value="0">No</Select.Option>
-                                                <Select.Option value="1">Yes</Select.Option>
+                                                <Select.Option value="0">无</Select.Option>
+                                                <Select.Option value="1">有</Select.Option>
                                             </Select>
                                         </FormItem>
                                         {
@@ -631,12 +631,12 @@ class EditProduct extends Component {
                                                         <Popover content={
                                                             <div>
                                                                 <Input value={propValueTemp} onChange={self.onPropValueInput.bind(self, prop.id)} className="product-prop-value-add-input"/>
-                                                                <Button onClick={self.addPropValue.bind(self, prop.id)} type="primary" className="product-prop-value-add-confirm">Confirm</Button>
+                                                                <Button onClick={self.addPropValue.bind(self, prop.id)} type="primary" className="product-prop-value-add-confirm">确定</Button>
                                                                 <Button onClick={self.cancelAddPropValue.bind(self, prop.id)}>取消</Button>
                                                             </div>} 
                                                             onVisibleChange={self.onPropValueVisibleChange.bind(self, prop.id)}
                                                             visible={propValueVisibleMap[prop.id]}
-                                                            title={'Insert' + prop.name} trigger="click" >
+                                                            title={'添加' + prop.name} trigger="click" >
                                                             <Icon type="plus-circle" className="product-prop-value-add"/>
                                                         </Popover>
                                                     </FormItem>
@@ -650,20 +650,20 @@ class EditProduct extends Component {
                                             <Popover content={
                                                 <div>
                                                     <Input value={propTemp} onChange={self.onPropInput} className="product-prop-add-input"/>
-                                                    <Button onClick={self.addProp} type="primary" className="product-prop-add-confirm">Confirm</Button>
+                                                    <Button onClick={self.addProp} type="primary" className="product-prop-add-confirm">确定</Button>
                                                     <Button onClick={self.cancelAddProp}>取消</Button>
                                                 </div>} 
                                                 onVisibleChange={self.onPropVisibleChange}
                                                 visible={propPopupVisible}
-                                                title={' Insert Property'} trigger="click" >
-                                                <Button type="primary">Insert Property</Button>
+                                                title={'添加属性'} trigger="click" >
+                                                <Button type="primary">添加属性</Button>
                                             </Popover>
                                         </FormItem>
                                         : ''
                                         }
                                         { 
                                         hasProperty && hasPropertyValue ? 
-                                        <FormItem {...formItemLayout} label="Inventory">
+                                        <FormItem {...formItemLayout} label="库存">
                                         {
                                             inventories.map(function(inv) {
                                                 var str = '';
@@ -676,26 +676,26 @@ class EditProduct extends Component {
                                                 return (
                                                     <div key={inv.id} className="product-inventory-item">
                                                         <span className="product-inventory-label" dangerouslySetInnerHTML={{__html: str}}/>
-                                                        <span className="product-inventory-unit">unit</span>
+                                                        <span className="product-inventory-unit">件</span>
                                                         <InputNumber onChange={self.onInventoryChange.bind(self, inv.id)} min={0} max={10000000000} defaultValue={inv.count} />
                                                     </div>
                                                 )
                                             })
                                         }
                                             <div className="inventory-total">
-                                                <span className="inventory-total-label">Total</span>
+                                                <span className="inventory-total-label">共</span>
                                                 {totalInventory}
-                                                <span className="inventory-total-unit">unit</span>
+                                                <span className="inventory-total-unit">件</span>
                                             </div>
                                             <div className="inventory-save">
-                                                <Button onClick={self.onSaveInventory} type="primary" size="large">Save Inventory</Button>
+                                                <Button onClick={self.onSaveInventory} type="primary" size="large">保存库存</Button>
                                             </div>
                                         </FormItem>
                                         : ''
                                         }
                                         {
                                         !hasProperty ?
-                                        <FormItem {...formItemLayout} label="Total Inventories">
+                                        <FormItem {...formItemLayout} label="总库存">
                                             <InputNumber className="inventory-total-input" min={0} max={10000000000} 
                                                 onChange={self.onTotalInventoryChange}
                                                 defaultValue={totalInventory} />
@@ -706,7 +706,7 @@ class EditProduct extends Component {
                                         {
                                         !hasProperty ?
                                         <FormItem {...formItemLayout} label=" ">
-                                            <Button onClick={self.onSaveTotalInventory} type="primary" size="large">Save Inventory</Button>
+                                            <Button onClick={self.onSaveTotalInventory} type="primary" size="large">保存库存</Button>
                                         </FormItem>
                                         : ''
                                         }
@@ -716,8 +716,8 @@ class EditProduct extends Component {
                         </div>
                     </Col>
                     <Col span={24} className="submit-box" style={{display: activeTabKey == '1' ? '' : 'none'}}>
-                        <Button onClick={this.onSubmit} type="primary" size="large">Save</Button>
-                        <Button className="submit-cancel-btn" size="large">Cancel</Button>
+                        <Button onClick={this.onSubmit} type="primary" size="large">保存</Button>
+                        <Button className="submit-cancel-btn" size="large">取消</Button>
                     </Col>
                 </Row>
                 <Software />

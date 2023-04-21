@@ -15,7 +15,6 @@ import (
 	"wemall/middleware"
 )
 
-// Route 路由
 func Route(app *iris.Application) {
 	apiPrefix := config.APIConfig.Prefix
 	
@@ -48,8 +47,7 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/category/create", category.Create)
 		adminRouter.Post("/category/update", category.Update)
 		adminRouter.Post("/category/status/update", category.UpdateStatus)
-		
-		// /api/admin/products?pageNo=1&order=3&asc=1&all=true
+
 		adminRouter.Get("/products", product.AdminList)
 		adminRouter.Get("/product/:id", product.Info)
 		adminRouter.Post("/product/create", product.Create)
@@ -60,8 +58,6 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/product/property/flag", product.UpdateHasProperty)
 		adminRouter.Post("/product/inventory/save", product.SaveInventory)
 		adminRouter.Post("/product/inventory/total", product.UpdateTotalInventory)
-		
-		// http://localhost:8012/api/admin/categoryProducts?categoryId=:categoryId
 		adminRouter.Get("/categoryProducts", category.GetProductsByCategory)
 		
 		adminRouter.Get("/order/analyze", order.Analyze)
@@ -71,14 +67,14 @@ func Route(app *iris.Application) {
 		adminRouter.Get("/order/totalsale", order.TotalSale)
 		adminRouter.Get("/order/latest/30", order.Latest30Day)
 		adminRouter.Get("/order/amount/latest/30", order.AmountLatest30Day)
-		
+
 		adminRouter.Get("/user/today", user.TodayRegisterUser)
 		adminRouter.Get("/user/yesterday", user.YesterdayRegisterUser)
 		adminRouter.Get("/user/latest/30", user.Latest30Day)
 		adminRouter.Get("/user/analyze", user.Analyze)
-		
+
 		adminRouter.Post("/upload", common.Upload)
-		
+
 		adminRouter.Get("/visit/pv/latest/30", visit.Latest30Day)
 	}
 }

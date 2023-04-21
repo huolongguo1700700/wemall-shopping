@@ -7,11 +7,11 @@ function getId() {
 var sidebarData = [
 	{
 		id    : getId(),
-		title : 'Platform Information',
+		title : '平台概况',
 		children: [
 			{
 				id    : getId(),
-				title : 'System Homepage',
+				title : '系统首页',
 				url   : '/'
 			},
 			// {
@@ -21,23 +21,23 @@ var sidebarData = [
 			// },
 			{
 				id    : getId(),
-				title : 'Order Analyze',
+				title : '订单分析',
 				url   : '/order/analyze'	
 			},
 			{
 				id    : getId(),
-				title : 'Product Analyze',
+				title : '商品分析',
 				url   : '/product/analyze'	
 			}
 		]
 	},
 	{
 		id    : getId(),
-		title : 'Settings',
+		title : '系统设置',
 		children: [
 			{
 				id    : getId(),
-				title : 'Wemall Settings'	
+				title : '商城设置'	
 			}
 			// {
 			// 	id    : getId(),
@@ -59,16 +59,16 @@ var sidebarData = [
 	},
     {
         id    : getId(),
-        title : 'Management',
+        title : '商城管理',
         children: [
             {
                 id    : getId(),
-                title : 'Category Management',
+                title : '商品分类管理',
                 url   : ['/category/manage', /^\/category\/edit\/[0-9]+$/]
             },
             {
                 id    : getId(),
-                title : 'Product Management',
+                title : '商品管理',
                 url   : ['/product/manage', '/product/add', /^\/product\/edit\/[0-9]+$/]
             }
             // {

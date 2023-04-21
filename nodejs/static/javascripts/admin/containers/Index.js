@@ -31,7 +31,7 @@ class Index extends Component {
                         <div className="index-overview" style={{backgroundColor: '#3598dc'}}>
                             <div className="index-overview-numberwrap">
                                 <p className="index-overview-number">{data.todayOrderCount}</p>
-                                <p className="index-overview-desc">Orders of the day</p>
+                                <p className="index-overview-desc">今日订单数</p>
                             </div>
                         </div>
                     </Col>
@@ -39,7 +39,7 @@ class Index extends Component {
                         <div className="index-overview" style={{backgroundColor: '#e7505a'}}>
                             <div className="index-overview-numberwrap">
                                 <p className="index-overview-number"><span>¥</span>{data.todayTotalSale}</p>
-                                <p className="index-overview-desc">Sales amount of the day</p>
+                                <p className="index-overview-desc">今日销售额</p>
                             </div>
                         </div>
                     </Col>
@@ -47,7 +47,7 @@ class Index extends Component {
                         <div className="index-overview" style={{backgroundColor: '#32c5d2'}}>
                             <div className="index-overview-numberwrap">
                                 <p className="index-overview-number">{data.totalOrderCount}</p>
-                                <p className="index-overview-desc">Total amount of orders</p>
+                                <p className="index-overview-desc">总订单数</p>
                             </div>
                         </div>
                     </Col>
@@ -55,7 +55,7 @@ class Index extends Component {
                         <div className="index-overview" style={{backgroundColor: '#8E44AD'}}>
                             <div className="index-overview-numberwrap">
                                 <p className="index-overview-number"><span>¥</span>{data.totalSale}</p>
-                                <p className="index-overview-desc">Total amount of sales</p>
+                                <p className="index-overview-desc">总销售额</p>
                             </div>
                         </div>
                     </Col>
@@ -63,7 +63,7 @@ class Index extends Component {
                 <Row gutter={24}>
                     <Col span={12}>
                         <div className="index-box">
-                            <div className="index-box-title">Total count of platfor visitors</div>
+                            <div className="index-box-title">平台访客</div>
                             <div className="index-box-chart">
                                 <LineChart collapsed={this.props.collapsed} 
                                     title="PV" xName="date" yName="pv" 
@@ -74,19 +74,19 @@ class Index extends Component {
                     </Col>
                     <Col span={12}>
                         <div className="index-box">
-                            <div className="index-box-title">Recent order</div>
+                            <div className="index-box-title">最近订单</div>
                         </div>
                     </Col>
                 </Row>
                 <Row gutter={24}>
                     <Col span={12}>
                         <div className="index-box">
-                            <div className="index-box-title">Recent comment</div>
+                            <div className="index-box-title">最近评论</div>
                         </div>
                     </Col>
                     <Col span={12}>
                         <div className="index-box">
-                            <div className="index-box-title">Active users</div>
+                            <div className="index-box-title">活跃用户</div>
                         </div>
                     </Col>
                 </Row>

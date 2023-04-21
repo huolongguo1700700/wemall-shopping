@@ -43,7 +43,7 @@ class EditCategory extends Component {
     render() {
         let { data }  = this.props;
         let isLoading = data.category ? false : true;
-        let editLabel = this.state.categoryId ? 'Edit' : 'Insert';
+        let editLabel = this.state.categoryId ? '编辑' : '添加';
 
         const FormItem = Form.Item;
         const formItemLayout = {
@@ -66,7 +66,7 @@ class EditCategory extends Component {
             multiple : true,
             treeCheckable: true,
             showCheckedStrategy: TreeSelect.SHOW_PARENT,
-            searchPlaceholder: 'Select parent classification',
+            searchPlaceholder: '选择父分类',
             style: {
                 width: 300,
             }
@@ -77,9 +77,9 @@ class EditCategory extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div id="categoryBox" className="category-box">
-                            <div className="category-title">{editLabel}Product Categories</div>
+                            <div className="category-title">{editLabel}商品分类</div>
                             <Form>
-                                <FormItem {...formItemLayout} label="Parent Classification">
+                                <FormItem {...formItemLayout} label="父分类">
                                   <TreeSelect {...treeProps} />
                                 </FormItem>
                             </Form>

@@ -33,7 +33,7 @@ class OrderAnalyze extends Component {
                         <div className="order-analyze" style={{backgroundColor: '#3598dc'}}>
                             <div className="order-analyze-numberwrap">
                                 <p className="order-analyze-number">{data.todayOrderCount}</p>
-                                <p className="order-analyze-desc">Orders of the day</p>
+                                <p className="order-analyze-desc">今日订单数</p>
                             </div>
                         </div>
                     </Col>
@@ -41,7 +41,7 @@ class OrderAnalyze extends Component {
                         <div className="order-analyze" style={{backgroundColor: '#e7505a'}}>
                             <div className="order-analyze-numberwrap">
                                 <p className="order-analyze-number"><span>¥</span>{data.todayTotalSale}</p>
-                                <p className="order-analyze-desc">Sales amount of the day</p>
+                                <p className="order-analyze-desc">今日销售额</p>
                             </div>
                         </div>
                     </Col>
@@ -49,7 +49,7 @@ class OrderAnalyze extends Component {
                         <div className="order-analyze" style={{backgroundColor: '#32c5d2'}}>
                             <div className="order-analyze-numberwrap">
                                 <p className="order-analyze-number">{data.yesterdayOrderCount}</p>
-                                <p className="order-analyze-desc">Orders of last day</p>
+                                <p className="order-analyze-desc">昨日订单数</p>
                             </div>
                         </div>
                     </Col>
@@ -57,7 +57,7 @@ class OrderAnalyze extends Component {
                         <div className="order-analyze" style={{backgroundColor: '#8E44AD'}}>
                             <div className="order-analyze-numberwrap">
                                 <p className="order-analyze-number"><span>¥</span>{data.yesterdayTotalSale}</p>
-                                <p className="order-analyze-desc">Sales of last day</p>
+                                <p className="order-analyze-desc">昨日销售额</p>
                             </div>
                         </div>
                     </Col>
@@ -65,11 +65,11 @@ class OrderAnalyze extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="order-chart-box">
-                            <div className="order-chart-title">Order trend</div>
+                            <div className="order-chart-title">订单走势</div>
                             <div className="order-chart">
                                 <LineChart collapsed={this.props.collapsed} 
                                     xName="createdAt" yName="count" 
-                                    yLabel="Order counts"
+                                    yLabel="订单数"
                                     data={data.orders}></LineChart>
                             </div>
                         </div>
@@ -78,11 +78,11 @@ class OrderAnalyze extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="order-chart-box">
-                            <div className="order-chart-title">Sales trend</div>
+                            <div className="order-chart-title">销售额走势</div>
                             <div className="order-chart">
                                 <LineChart collapsed={this.props.collapsed} 
                                     xName="payAt" yName="amount" 
-                                    yLabel="Sales counts"
+                                    yLabel="销售额"
                                     data={data.amounts}></LineChart>
                             </div>
                         </div>

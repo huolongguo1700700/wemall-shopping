@@ -31,7 +31,7 @@ var EnvUtil = {
         errors = errors.join('\n  ');
         console.error('\x1B[31mERROR: ' + packages.name + ' is unable to start due to missing dependencies:\x1B[0m\n  ' + errors);
         console.error('\x1B[32m\nPlease run `npm install` and try starting ' + packages.name + ' again.');
-        // console.error('\x1B[32mHelp and documentation can be found at ' + config.docs.github + '\x1B[0m\n');
+        console.error('\x1B[32mHelp and documentation can be found at ' + config.docs.github + '\x1B[0m\n');
         return false;
     }
 };

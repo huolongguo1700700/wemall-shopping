@@ -98,7 +98,7 @@ class EitCategory extends Component {
     onSubmit() {
         var parentId = parseInt(this.state.parentId);
         if (parentId == this.state.categoryId) {
-            alert('Cannot select yourself as a parent category.');
+            alert('不能选择自身作为父分类');
             return;
         }
         const { dispatch } = this.props;
@@ -113,7 +113,7 @@ class EitCategory extends Component {
     }
     render() {
         let { data }  = this.props;
-        let editLabel = this.state.categoryId ? 'Edit' : 'Insert';
+        let editLabel = this.state.categoryId ? '编辑' : '添加';
         let isLoading = this.state.categoryId 
             && (!data.category || !data.categories || data.categories.length <= 0) 
             ? true : false;
@@ -141,31 +141,31 @@ class EitCategory extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="category-box">
-                            <div className="category-title">{editLabel} Product Categories</div>
+                            <div className="category-title">{editLabel}商品分类</div>
                             {
                                 isLoading ? null :
                                 <Form>
-                                    <FormItem {...formItemLayout} label="Name">
+                                    <FormItem {...formItemLayout} label="名称">
                                         <Input defaultValue={name} onBlur={this.onNameBlur}/>
                                     </FormItem>
-                                    <FormItem {...formItemLayout} label="Parent Category">
+                                    <FormItem {...formItemLayout} label="父分类">
                                         <TreeSelect
                                             style={{ width: '100%' }}
                                             value={this.state.parentKey}
                                             dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                                             treeData={treeData}
-                                            placeholder="Please select parent category."
+                                            placeholder="请选择父分类"
                                             treeDefaultExpandAll
                                             onChange={this.onCategoryChange} />
                                     </FormItem>
-                                    <FormItem {...formItemLayout} label="Status">
+                                    <FormItem {...formItemLayout} label="状态">
                                         <Switch onChange={this.onStatusChange} defaultChecked={checked} 
-                                            checkedChildren={'Start'} unCheckedChildren={'Stop'}/>
+                                            checkedChildren={'开启'} unCheckedChildren={'关闭'}/>
                                     </FormItem>
-                                    <FormItem {...formItemLayout} label="Sort">
+                                    <FormItem {...formItemLayout} label="排序">
                                         <InputNumber min={0} max={10000} defaultValue={sequence} onChange={this.onOrderChange} />
                                     </FormItem>
-                                    <FormItem {...formItemLayout} label="Remark">
+                                    <FormItem {...formItemLayout} label="备注">
                                         <Input type="textarea" defaultValue={remark} rows={4} onBlur={this.onRemarkBlur}/>
                                     </FormItem>
                                 </Form>
@@ -174,8 +174,8 @@ class EitCategory extends Component {
                     </Col>
                     <Col span={24}>
                         <Col span={15} className="submit-box">
-                            <Button onClick={this.onSubmit} type="primary" size="large">Save</Button>
-                            <Button className="submit-cancel-btn" size="large">Cancel</Button>
+                            <Button onClick={this.onSubmit} type="primary" size="large">保存</Button>
+                            <Button className="submit-cancel-btn" size="large">取消</Button>
                         </Col>
                     </Col>
                 </Row>

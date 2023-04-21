@@ -26,19 +26,19 @@ class CategoryManage extends Component {
         this.state =  {
             columns: [
                 {
-                    title: 'Category Name',
+                    title: '分类名称',
                     dataIndex: 'name'
                 },
                 {
-                    title: 'Sorting',
+                    title: '排序',
                     dataIndex: 'sequence'
                 },
                 {
-                    title: 'Create At',
+                    title: '创建时间',
                     dataIndex: 'createdAt'
                 },
                 {
-                    title: 'Operation',
+                    title: '操作',
                     render: (text, record) => {
                         let openEnabled  = false;
                         let closeEnabled = false;
@@ -53,31 +53,31 @@ class CategoryManage extends Component {
                             <span>
                                 <Link href={"#category/" + record.id}>
                                     <Icon type="eye"/>
-                                    <span>View</span>
+                                    <span>查看</span>
                                 </Link>
                                 <span className="ant-divider category-manage-divider" />
                                 <Link href={"#category/edit/" + record.id}>
                                     <Icon type="edit"/>
-                                    <span>Edit</span>
+                                    <span>编辑</span>
                                 </Link>
                                 <span className="ant-divider category-manage-divider" />
                                 {
                                     openEnabled ?
-                                    <Popconfirm title="Ensure to start?" okText="Yes" cancelText="Cancel"
+                                    <Popconfirm title="确定要开启？" okText="确定" cancelText="取消"
                                         onConfirm={self.onMenuOpen.bind(self, record)}> 
                                         <a>
                                             <Icon type="arrow-up"/>
-                                            <span>Start</span>
+                                            <span>开启</span>
                                         </a>
                                     </Popconfirm>
                                     : 
                                     (
                                         closeEnabled ?
-                                        <Popconfirm title="Ensure to Stop?" okText="Yes" cancelText="Cancel" 
+                                        <Popconfirm title="确定要关闭？" okText="确定" cancelText="取消" 
                                             onConfirm={self.onMenuClose.bind(self, record)}>
                                             <a>
                                                 <Icon type="arrow-down"/>
-                                                <span>Stop</span>
+                                                <span>关闭</span>
                                             </a>
                                         </Popconfirm>
                                         : 
@@ -123,7 +123,7 @@ class CategoryManage extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="category-list-box">
-                            <div className="category-list-title">Product Categories List</div>
+                            <div className="category-list-title">商品分类列表</div>
                             <Table rowKey="id" columns={columns} 
                                 loading={isLoading} pagination={false}
                                 dataSource={data.categories} bordered /> 

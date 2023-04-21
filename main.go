@@ -13,9 +13,9 @@ import (
 	"github.com/kataras/iris/v12/middleware/recover"
 	"github.com/kataras/iris/v12/sessions"
 	"github.com/rs/cors"
-	"wemall/config"
-	"wemall/model"
-	"wemall/route"
+	"wemall/golang/config"
+	"wemall/golang/model"
+	"wemall/golang/route"
 )
 
 func init() {
@@ -63,9 +63,7 @@ func Cors(ctx iris.Context) {
 
 func main() {
 	app := iris.New()
-	
-	// app.Use(Cors) 这行是原来用的Cors
-	// 我加进来的部分，换成原来的会报错：blocked by CORS policy
+
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"},
@@ -73,8 +71,7 @@ func main() {
 		AllowCredentials: true,
 	})
 	app.WrapRouter(c.ServeHTTP)
-	
-	// 下面的是没用变化的
+
 	app.Use(recover.New())
 	app.Use(logger.New())
 	

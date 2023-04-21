@@ -2,11 +2,8 @@ FROM golang:1.20.0
 
 WORKDIR /usr/src/wemall
 
-COPY ./config /usr/src/wemall/config
-COPY ./controller /usr/src/wemall/controller
-COPY ./model /usr/src/wemall/model
-COPY ./route /usr/src/wemall/route
-COPY ./utils /usr/src/wemall/utils
+COPY ./golang /usr/src/wemall/golang
+
 COPY ./go.mod /usr/src/wemall/go.mod
 COPY ./go.sum /usr/src/wemall/go.sum
 COPY ./main.go /usr/src/wemall/main.go

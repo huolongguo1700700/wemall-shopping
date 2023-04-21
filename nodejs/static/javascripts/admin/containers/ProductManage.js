@@ -27,27 +27,27 @@ class ProductManage extends Component {
         this.state =  {
             columns: [
                 {
-                    title: '商品名称',
+                    title: 'Product Name',
                     dataIndex: 'name'
                 },
                 {
-                    title: '浏览量',
+                    title: 'Pageviews',
                     dataIndex: 'browseCount'
                 },
                 {
-                    title: '购买量',
+                    title: 'Purchase quantity',
                     dataIndex: 'buyCount'
                 },
                 {
-                    title: '创建时间',
+                    title: 'Create At',
                     dataIndex: 'createdAt'
                 },
                 {
-                    title: '销售额',
+                    title: 'Sales',
                     dataIndex: 'totalSale'
                 },
                 {
-                    title: '操作',
+                    title: 'Operation',
                     render: (text, record) => {
                         let upEnabled   = false;
                         let downEnabled = false;
@@ -63,12 +63,12 @@ class ProductManage extends Component {
                             <span>
                                 <a>
                                     <Icon type="eye"/>
-                                    <span>查看</span>
+                                    <span>View</span>
                                 </a>
                                 <span className="ant-divider product-manage-divider" />
                                 <Link href={"#product/edit/" + record.id}>
                                     <Icon type="edit"/>
-                                    <span>编辑</span>
+                                    <span>Edit</span>
                                 </Link>
                                 {
                                     upEnabled || downEnabled ?
@@ -78,21 +78,21 @@ class ProductManage extends Component {
                                 }
                                 {
                                     upEnabled ?
-                                    <Popconfirm title="确定要上架？" okText="确定" cancelText="取消"
+                                    <Popconfirm title="Ensure on shelf the product?" okText="Yes" cancelText="Cancel"
                                         onConfirm={self.onProductUp.bind(self, record)}> 
                                         <a>
                                             <Icon type="arrow-up"/>
-                                            <span>上架</span>
+                                            <span>On shelf</span>
                                         </a>
                                     </Popconfirm>
                                     : 
                                     (
                                         downEnabled ?
-                                        <Popconfirm title="确定要下架？" okText="确定" cancelText="取消" 
+                                        <Popconfirm title="Ensure off shelf the product?" okText="Yes" cancelText="Cancel" 
                                             onConfirm={self.onProductDown.bind(self, record)}>
                                             <a>
                                                 <Icon type="arrow-down"/>
-                                                <span>下架</span>
+                                                <span>Off shelf</span>
                                             </a>
                                         </Popconfirm>
                                         : 
@@ -140,11 +140,11 @@ class ProductManage extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="product-list-box">
-                            <div className="product-list-title">商品列表
+                            <div className="product-list-title">Product List
                                 <ul className="action-group">
                                     <li>
                                         <Link href={"#product/add"}>
-                                            <Button type="primary">添加商品</Button>
+                                            <Button type="primary">Insert Product</Button>
                                         </Link>
                                     </li>
                                 </ul>

@@ -16,26 +16,26 @@ class ProductAnalyze extends Component {
         this.state =  {
             columns: [
                 {
-                    title: '商品名称',
+                    title: 'Product Name',
                     dataIndex: 'name'
                 },
                 {
-                    title: '浏览量',
+                    title: 'Pageviews',
                     dataIndex: 'browseCount'
                 },
                 {
-                    title: '购买量',
+                    title: 'Purchase quantity',
                     dataIndex: 'buyCount'
                 },
                 {
-                    title: '销售额',
+                    title: 'Sales',
                     dataIndex: 'totalSale'
                 },
                 {
-                    title: '操作',
+                    title: 'Operation',
                     render: (text, record) => (
                         <Link to={{ pathname: '/product', query: { id: record.id } }}>
-                            <span>查看</span>
+                            <span>View</span>
                         </Link>
                     )
                 }
@@ -56,7 +56,7 @@ class ProductAnalyze extends Component {
                 <Row gutter={24}>
                     <Col span={24}>
                         <div className="product-hot-box">
-                            <div className="product-hot-title">热销商品</div>
+                            <div className="product-hot-title">Hot commodities</div>
                             <Table rowKey="id" columns={columns} 
                                 loading={isLoading} pagination={false}
                                 dataSource={data.hotProducts} bordered /> 

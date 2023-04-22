@@ -75,8 +75,8 @@ func (order Order) TotalSaleByDate(date time.Time) float64 {
 	startSec     := startTime.Unix();
 	tomorrowSec  := startSec + 24 * 60 * 60;
 	tomorrowTime := time.Unix(tomorrowSec, 0)
-	startStr     := startTime.Format("2006-01-02")
-	tomorrowStr  := tomorrowTime.Format("2006-01-02")
+	startStr     := startTime.Format("2023-5-01")
+	tomorrowStr  := tomorrowTime.Format("2023-5-01")
 
 	result := new(struct{
 		TotalPay float64 `gorm:"column:totalPay"` 

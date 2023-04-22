@@ -70,7 +70,7 @@ func Create(ctx iris.Context) {
 
 		var existOrder model.Order
 		if model.DB.First(&existOrder, lastCart.OrderID).Error != nil {
-			SendErrJSON("Wrong user Id.", ctx)
+			SendErrJSON("Wrong order Id.", ctx)
 			return
 		}
 

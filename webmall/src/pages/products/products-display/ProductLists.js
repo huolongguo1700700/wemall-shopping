@@ -15,8 +15,8 @@ const ProductLists = ({products}) => {
                 {products.map((p, i) => {
                     return (
                         <ProductCard key={i} p={p}/>
-                    )}
-                )}
+                    )
+                })}
             </Fragment>
         </DisplayedProductsContainerStyles>
     )

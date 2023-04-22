@@ -17,6 +17,4 @@ export default function useFetchCategories () {
         /* Prefetch the categories' data using the QueryClient */
         queryClient.prefetchQuery(['categories'], fetchCategories)
     }, [queryClient]) // The dependency array, which includes queryClient
-    
-    
 }

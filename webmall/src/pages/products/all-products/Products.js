@@ -30,7 +30,7 @@ const Products = () => {
         queryFn: fetchProducts,
         staleTime: Infinity,
     })
-    
+
     /* Sorted products */
     const sortedProducts = sortFunction(products && products.products, sortMethod)
     

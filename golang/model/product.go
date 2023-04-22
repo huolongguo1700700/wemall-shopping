@@ -29,6 +29,13 @@ type Product struct {
 	CategoryID     int         `json:"category_id"`
 }
 
+type OrderProductInfo struct {
+	ProductID    uint    `json:"productId"`
+	ProductName  string  `json:"productName"`
+	ProductPrice float64 `json:"productPrice"`
+	ProductImage Image   `json:"productImage"`
+}
+
 const (
 	// ProductUpShelf 商品已上架
 	ProductUpShelf = 1

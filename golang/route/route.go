@@ -27,7 +27,9 @@ func Route(app *iris.Application) {
 		router.Post("/login", user.SignInUser)
 		router.Get("/logout", middleware.DeserializeUser, user.LogoutUser)
 		router.Post("/checkout", order.Checkout)
-		router.Get("/ListByUser/:userId", order.ListByUser)
+		router.Get("/delete-order/:orderId", order.DeleteOrder)
+		router.Get("/orders/:userId", order.ListByUser)
+		router.Get("/order/:orderId", order.ListByOrder)
 		
 		router.Get("/categories", category.List)
 		router.Get("/products", product.List)
@@ -47,7 +49,7 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/category/create", category.Create)
 		adminRouter.Post("/category/update", category.Update)
 		adminRouter.Post("/category/status/update", category.UpdateStatus)
-
+		
 		adminRouter.Get("/products", product.AdminList)
 		adminRouter.Get("/product/:id", product.Info)
 		adminRouter.Post("/product/create", product.Create)
@@ -67,14 +69,14 @@ func Route(app *iris.Application) {
 		adminRouter.Get("/order/totalsale", order.TotalSale)
 		adminRouter.Get("/order/latest/30", order.Latest30Day)
 		adminRouter.Get("/order/amount/latest/30", order.AmountLatest30Day)
-
+		
 		adminRouter.Get("/user/today", user.TodayRegisterUser)
 		adminRouter.Get("/user/yesterday", user.YesterdayRegisterUser)
 		adminRouter.Get("/user/latest/30", user.Latest30Day)
 		adminRouter.Get("/user/analyze", user.Analyze)
-
+		
 		adminRouter.Post("/upload", common.Upload)
-
+		
 		adminRouter.Get("/visit/pv/latest/30", visit.Latest30Day)
 	}
 }

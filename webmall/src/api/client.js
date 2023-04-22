@@ -14,7 +14,7 @@ const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
 export async function fetchProducts() {
     return await axios.get(
         `${ADMIN_URL}/products?order=3&asc=1&all=true`
-    ).then((res)=>res.data.data)
+    ).then((res)=>  res.data.data)
 }
 
 export async function fetchCategories() {

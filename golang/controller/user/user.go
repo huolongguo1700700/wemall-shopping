@@ -33,7 +33,7 @@ func SignUpUser(ctx iris.Context) {
 	
 	now := time.Now()
 	newUser := model.User{
-		Name:      user.Name,
+		Name:      strings.ToLower(user.Email),
 		Email:     strings.ToLower(user.Email),
 		Password:  hashedPassword,
 		CreatedAt: now,

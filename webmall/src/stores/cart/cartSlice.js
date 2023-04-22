@@ -60,7 +60,6 @@ const cartSlice = createSlice({
                 state.status = "failed"
                 state.error = action.payload.msg
             }
-            
         })
         builder.addCase(postProductsToCart.rejected, (state, action) => {
             state.status = "failed"

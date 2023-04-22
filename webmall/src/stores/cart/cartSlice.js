@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
 import { postProductsToCart } from '../../api/client'
-import { setOrderID } from '../orders/oderSlice'
 
 /* Initialize the state, if already exits in localStorage, fetch it */
 const initialState = JSON.parse(localStorage.getItem('cart')) || {

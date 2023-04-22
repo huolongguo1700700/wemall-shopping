@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchSingleOrder, fetchUserOrders } from '../../api/client'
+import { fetchUserOrders } from '../../api/client'
 
 const orderSlice = createSlice({
     name: 'orders',

@@ -15,7 +15,6 @@ import ProductInfo from '../../pages/products/product-info/ProductInfo'
 import Login from '../../pages/login/Login'
 import Profile from '../../pages/user-profile/Profile'
 import Order from '../../pages/user-profile/Order'
-import OrderDisplay from '../../pages/user-profile/OrderDisplay'
 import Orders from '../../pages/user-profile/Orders'
 
 export const router = createBrowserRouter([

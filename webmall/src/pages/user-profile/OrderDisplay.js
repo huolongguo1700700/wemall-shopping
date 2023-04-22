@@ -5,15 +5,13 @@
  */
 
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectOrders } from '../../stores/orders/orderSelectors'
 import { NavLink } from 'react-router-dom'
 
 const OrderDisplay = ({products}) => {
     
     return products.map((p, i) => {
         return (
-            <div className="flex flex-row gap-4 w-full h-full">
+            <div key={i} className="flex flex-row gap-4 w-full h-full">
                 <NavLink to={`/collections/product-info/${p.productId}/${p.categoryId}`}>
                     <img className="w-20 h-20 object-contain " src={p.productImage.url} alt={p.productName}/>
                 </NavLink>

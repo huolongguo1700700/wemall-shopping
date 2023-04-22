@@ -1,6 +1,7 @@
 package order
 
 import (
+	"math"
 	"strconv"
 	"time"
 	
@@ -162,7 +163,7 @@ func Checkout(ctx iris.Context) {
 			return
 		}
 		
-		totalPrice = totalPrice + product.Price*float64(cart.Count)
+		totalPrice = math.Round((totalPrice+product.Price*float64(cart.Count))*100) / 100
 	}
 	
 	newOrder := model.Order{
@@ -189,34 +190,36 @@ func Checkout(ctx iris.Context) {
 		}
 	}
 	
-	// Retrieve the created order using the getOrders function
-	orders, err := getOrders("", newOrder.ID)
-	if err != nil {
-		SendErrJSON("Error in getting orders", ctx)
-		return
-	}
-	
-	if len(orders) == 0 {
-		SendErrJSON("Order not found", ctx)
-		return
-	}
-	
-	// Generate the order data using the generateOrderInfo function
-	orderList, err := generateOrderInfo(orders)
-	if err != nil {
-		SendErrJSON("Error in generating order data", ctx)
-		return
-	}
-	
-	if len(orderList) == 0 {
-		SendErrJSON("Order data not found", ctx)
-		return
-	}
+	// // Retrieve the created order using the getOrders function
+	// orders, err := getOrders("", newOrder.ID)
+	// if err != nil {
+	// 	SendErrJSON("Error in getting orders", ctx)
+	// 	return
+	// }
+	//
+	// if len(orders) == 0 {
+	// 	SendErrJSON("Order not found", ctx)
+	// 	return
+	// }
+	//
+	// // Generate the order data using the generateOrderInfo function
+	// orderList, err := generateOrderInfo(orders)
+	// if err != nil {
+	// 	SendErrJSON("Error in generating order data", ctx)
+	// 	return
+	// }
+	//
+	// if len(orderList) == 0 {
+	// 	SendErrJSON("Order data not found", ctx)
+	// 	return
+	// }
 	
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",
-		"data":  orderList[0],
+		"data": iris.Map{
+			"id": newOrder.ID,
+		},
 	})
 	return
 }
@@ -305,7 +308,9 @@ func DeleteOrder(ctx iris.Context) {
 	utils.Res(ctx, iris.StatusOK, iris.Map{
 		"errNo": model.ErrorCode.SUCCESS,
 		"msg":   "success",
-		"data":  iris.Map{},
+		"data": iris.Map{
+			"id": orderID,
+		},
 	})
 }
 
@@ -345,6 +350,7 @@ func generateOrderInfo(orders []model.Order) ([]model.OrderInfo, error) {
 				ProductName:  product.Name,
 				ProductPrice: product.Price,
 				ProductImage: product.Image,
+				CategoryID:   product.CategoryID,
 			}
 			products = append(products, productInfo)
 		}

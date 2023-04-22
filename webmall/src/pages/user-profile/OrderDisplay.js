@@ -7,15 +7,22 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectOrders } from '../../stores/orders/orderSelectors'
+import { NavLink } from 'react-router-dom'
 
-const OrderDisplay = () => {
+const OrderDisplay = ({products}) => {
     
-    const orders = useSelector(selectOrders)
-    return (
-        <div>
-            {JSON.stringify(orders)}
-        </div>
-    )
+    return products.map((p, i) => {
+        return (
+            <div className="flex flex-row gap-4 w-full h-full">
+                <NavLink to={`/collections/product-info/${p.productId}/${p.categoryId}`}>
+                    <img className="w-20 h-20 object-contain " src={p.productImage.url} alt={p.productName}/>
+                </NavLink>
+                
+                <div>{p.productName}</div>
+                <div>{p.productPrice}</div>
+            </div>
+        )
+    })
 }
 /**
  * End of OderDisplay Component

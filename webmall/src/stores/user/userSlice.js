@@ -48,7 +48,7 @@ const userSlice = createSlice({
                 localStorage.setItem('user', JSON.stringify(state))
             } else if(action.payload.errNo===1) {
                 state.isAuthenticated = false
-                state.status = "login failed"
+                state.status = "Email or Password invalid"
                 state.error = action.payload.msg
                 localStorage.setItem('user', JSON.stringify(state))
             }

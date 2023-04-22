@@ -6,11 +6,10 @@
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { selectUser, selectUserIsLogin } from '../../stores/user/userSelectors'
 import { fetchUserOrders, userLogout } from '../../api/client'
 import { useScrollTop } from '../../hooks'
-import OrderDisplay from './OrderDisplay'
 
 const Profile = () => {
     useScrollTop()
@@ -25,18 +24,16 @@ const Profile = () => {
     const handleLogout = async () => await dispatch(userLogout())
     
     useEffect(() => {
-        console.log(user.id)
         isLogin ?
             user.id && dispatch(fetchUserOrders(user.id))
             :
             navigate('/login')
-        
     }, [isLogin, navigate, dispatch, user.id])
     
     return (
-        <div className="h-[calc(100vh-5rem)] w-full">
+        <div className="min-h-[calc(100vh-5rem)] w-full">
             <div>
-                <OrderDisplay />
+                <Outlet />
             </div>
             <button onClick={handleLogout}
                     className="w-36 p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white "

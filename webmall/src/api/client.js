@@ -35,6 +35,7 @@ export async function fetchSingleProduct(id) {
     })
 }
 
+
 export async function fetchSingleCategory(id) {
     return await axios.get(
         `${ADMIN_URL}/category/${id}`
@@ -56,7 +57,7 @@ export const fetchProductsByCategory = async (categoryId) => {
 export  const fetchUserOrders = createAsyncThunk (
     'orders/fetchUserOrders',
     async (userId) => {
-        return await  axios.get(`${URL}/cart/list/${userId}`)
+        return await  axios.get(`${URL}/orders/${userId}`)
         .then((res)=> {
             return res.data
         })
@@ -66,15 +67,24 @@ export  const fetchUserOrders = createAsyncThunk (
     }
 )
 
+// Fetch order by orderId
+export async function fetchSingleOrder(orderId) {
+    return await axios.get(
+        `${URL}/order/${orderId}`
+    ).then((res)=>res.data.data)
+    .catch(e => {
+        throw new Error(e.message)
+    })
+}
+
 // Post order
 export const postProductsToCart = createAsyncThunk (
     'cart/postCartToSever',
-    async ({ productId, count, UserId }, { getState, dispatch }) => {
+    async ({ carts, userId }, { getState, dispatch }) => {
         return await axios
-        .post(`${URL}/cart/create`, {
-            productId,
-            count,
-            UserId,
+        .post(`${URL}/checkout`, {
+            carts,
+            userId,
         })
         .then((res) => {
             setTimeout(() => {

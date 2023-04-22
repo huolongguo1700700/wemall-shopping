@@ -4,6 +4,7 @@ import { postProductsToCart } from '../../api/client'
 /* Initialize the state, if already exits in localStorage, fetch it */
 const initialState = JSON.parse(localStorage.getItem('cart')) || {
     cart: [],
+    order: 0,
     status: "checkout",
     error: null
 }
@@ -51,9 +52,11 @@ const cartSlice = createSlice({
             state.status = "processing"
         })
         builder.addCase(postProductsToCart.fulfilled, (state, action) => {
+            console.log()
             if(action.payload.errNo===0) {
                 state.status = "succeeded"
                 state.cart = []
+                state.order = action.payload.data.id
                 localStorage.removeItem('cart')
             }
             else if(action.payload.errNo===1){

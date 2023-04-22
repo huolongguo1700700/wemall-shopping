@@ -34,6 +34,7 @@ type OrderProductInfo struct {
 	ProductName  string  `json:"productName"`
 	ProductPrice float64 `json:"productPrice"`
 	ProductImage Image   `json:"productImage"`
+	CategoryID   int     `json:"categoryId"`
 }
 
 const (

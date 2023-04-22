@@ -47,8 +47,6 @@ const ProductInfo = () => {
         staleTime: Infinity
     })
     
-    console.log(recommend && recommend.products)
-    
     /* Error and Loading states */
     if (isLoading || loading || recLoading) return <span></span>
     if (isError || isCateError || isRecError) {

@@ -14,8 +14,10 @@ import StyledSidebar from '../../assets/cart-profile-structure/StyledSidebar'
 
 const Sidebar = ({ totalPrice }) => {
     const dispatch = useDispatch()
+    
     /* Select cart */
     const cart = useSelector((state) => state.cart)
+    
     /* If user login */
     const isLogin = useSelector(selectUserIsLogin)
     const user = useSelector(selectUser)
@@ -36,39 +38,42 @@ const Sidebar = ({ totalPrice }) => {
                 return 0
         }
     }
-    const data = {
-        "carts": [
-            {
-                "productId": 1,
-                "count": 1,
-            },
-            {
-                "productId": 2,
-                "count": 1,
-            },
-        ],
-        "userId": 1
-    }
     
-    const handleCheckout = useCallback((c) => {
-        console.log(user)
+    const handleCheckout = useCallback((cart) => {
+        
+        console.log(cart)
+        const carts = cart.cart && cart.cart.map((c) => {
+            return {
+                "productId": c.id,
+                "count": c.quantity,
+            }
+        })
         if(isLogin){
-            c && c.forEach((c) => {
+            if (carts.length !==0){
                 dispatch(postProductsToCart({
-                    "productId": c.id,
-                    "count": c.quantity,
-                    "userId": user.user.id
+                    carts: carts,
+                    userId: user.id && user.id
                 }))
-            })
+                alert("Purchase Success!")
+                setTimeout(() => {
+                    navigate(`/profile/order/${cart.order && cart.order}`)
+                }, 1500)
+            }
+            else {
+                alert("Add product first!")
+                setTimeout(() => {
+                    navigate('/collections')
+                }, 500)
+            }
+            
         }
         else {
-            alert("Please Login first")
+            alert("Please Login first!")
             setTimeout(() => {
                 navigate('/login', { state: { returnUrl: '/cart' } })
-            }, 0)
+            }, 1000)
         }
     }, [isLogin, user, dispatch, navigate])
-    
     return (
         <StyledSidebar>
             <div className="w-full">
@@ -81,7 +86,7 @@ const Sidebar = ({ totalPrice }) => {
             </div>
             <ButtonBox>
                 <NavLink className={`${ButtonStyles} bg-green-500`} to={`/collections`}>Continue Shopping</NavLink>
-                <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(cart.cart)}>
+                <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(cart)}>
                     {showCheckout}
                 </NavLink>
             </ButtonBox>

@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchUserOrders } from '../../api/client'
+import { fetchSingleOrder, fetchUserOrders } from '../../api/client'
 
 const orderSlice = createSlice({
     name: 'orders',
     initialState: {
         orders: [],
+        order: [],
         status: 'no-order',
         error: null,
     },

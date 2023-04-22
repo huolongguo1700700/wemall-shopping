@@ -5,12 +5,12 @@ import (
 )
 
 type User struct {
-	ID               uint `gorm:"type:uuid;default:uuid_generate_v4();primary_key"`
-	Name             string    `gorm:"type:varchar(255);"`
-	Email            string    `gorm:"uniqueIndex;"`
-	Password         string    `gorm:"not null"`
-	CreatedAt        time.Time `gorm:""`
-	UpdatedAt        time.Time `gorm:""`
+	ID        uint      `gorm:"primary_key" json:"id"`
+	Name      string    `gorm:"type:varchar(255);"`
+	Email     string    `gorm:"uniqueIndex;"`
+	Password  string    `gorm:"not null"`
+	CreatedAt time.Time `gorm:""`
+	UpdatedAt time.Time `gorm:""`
 }
 
 type SignUpInput struct {
@@ -26,7 +26,7 @@ type SignInInput struct {
 }
 
 type UserResponse struct {
-	ID        uint `json:"id,omitempty"`
+	ID        uint      `json:"id,omitempty"`
 	Name      string    `json:"name,omitempty"`
 	Email     string    `json:"email,omitempty"`
 	CreatedAt time.Time `json:"created_at"`

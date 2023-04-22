@@ -18,7 +18,7 @@ const AddCart = ({ product, url, disabled:isDisabled, background }) => {
     /* Fetch the quantity of this product */
     const fetchQty = useSelector(selectProductQty(product.id))
     
-    const imageUrl = url ? url : '';
+    const imageUrl = url ? url : ''
     /* Initialize the product data for shopping cart */
     const initProduct = {
         id: product.id,
@@ -38,9 +38,9 @@ const AddCart = ({ product, url, disabled:isDisabled, background }) => {
     }
     
     const handleChange = (e) => {
-        const newQuantity = parseInt(e.target.value);
+        const newQuantity = parseInt(e.target.value)
         if (newQuantity >= 0 && newQuantity < 100) {
-            dispatch(setItemQty({ ...initProduct, quantity: newQuantity }));
+            dispatch(setItemQty({ ...initProduct, quantity: newQuantity }))
         }
     }
     

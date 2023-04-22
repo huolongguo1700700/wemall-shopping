@@ -3,6 +3,7 @@ import cartReducer from './cart/cartSlice'
 import sortSlice from './sort/sortSlice'
 import userSlice from './user/userSlice'
 import orderSlice from './orders/oderSlice'
+import pageSlice from './page/pageSlice'
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         sort: sortSlice,
         user: userSlice,
         orders:orderSlice,
+        page: pageSlice,
     },
 })
 

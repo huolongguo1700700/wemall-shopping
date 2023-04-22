@@ -9,7 +9,7 @@ function useTest(url) {
     
     useEffect(() => {
         const fetchData = async () => {
-            setIsLoading(true);
+            setIsLoading(true)
             try {
                 const response = await axios.get(url)
                 setData(response.data)

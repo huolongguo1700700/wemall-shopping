@@ -4,7 +4,7 @@
  * @date 2023/4/5
  */
 
-import React, { useCallback } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import tw from 'tailwind-styled-components'
@@ -12,7 +12,7 @@ import { selectUser, selectUserIsLogin } from '../../stores/user/userSelectors'
 import { postProductsToCart } from '../../api/client'
 import StyledSidebar from '../../assets/cart-profile-structure/StyledSidebar'
 
-const Sidebar = ({ totalPrice }) => {
+const Sidebar = ({totalPrice, deviceHidden}) => {
     const dispatch = useDispatch()
     
     /* Select cart */
@@ -40,23 +40,21 @@ const Sidebar = ({ totalPrice }) => {
     }
     
     const handleCheckout = useCallback((cart) => {
-        
-        console.log(cart)
         const carts = cart.cart && cart.cart.map((c) => {
             return {
                 "productId": c.id,
                 "count": c.quantity,
             }
         })
-        if(isLogin){
-            if (carts.length !==0){
+        if (isLogin) {
+            if (carts.length !== 0) {
                 dispatch(postProductsToCart({
                     carts: carts,
                     userId: user.id && user.id
                 }))
                 alert("Purchase Success!")
                 setTimeout(() => {
-                    navigate(`/profile/order/${cart.order && cart.order}`)
+                    navigate(`/profile/order`)
                 }, 1500)
             }
             else {
@@ -70,38 +68,44 @@ const Sidebar = ({ totalPrice }) => {
         else {
             alert("Please Login first!")
             setTimeout(() => {
-                navigate('/login', { state: { returnUrl: '/cart' } })
+                navigate('/login', {state: {returnUrl: '/cart'}})
             }, 1000)
         }
     }, [isLogin, user, dispatch, navigate])
+    
     return (
-        <StyledSidebar>
-            <div className="w-full">
-                <div className="text-2xl mb-12 ">Summary</div>
+        <StyledSidebar deviceHidden={deviceHidden}>
+            <div className="lg:w-full">
+                <div className="lg-max:hidden text-2xl lg:mb-12">Summary</div>
                 
-                <div className="flex flex-row justify-between items-center border-b-2 border-gray-150">
+                <div
+                    className="lg-max:hidden flex flex-row justify-center lg:justify-between items-center border-b-2 border-gray-150">
                     <div>Shopping</div>
                     <div>€{totalPrice}</div>
                 </div>
             </div>
             <ButtonBox>
-                <NavLink className={`${ButtonStyles} bg-green-500`} to={`/collections`}>Continue Shopping</NavLink>
-                <NavLink className={`${ButtonStyles} bg-green-700 }`} onClick={() => handleCheckout(cart)}>
-                    {showCheckout}
-                </NavLink>
+                <NavLink className={`${ButtonStyles} bg-green-500 lg-max:hidden`} to={`/collections`}>Continue Shopping</NavLink>
+                <div className={`${ButtonStyles} bg-green-700 lg-max:bg-green-500 }`} onClick={() => handleCheckout(cart)}>
+                    {showCheckout()}
+                    <div className="lg:hidden">
+                        Shopping €{totalPrice}
+                    </div>
+                </div>
             </ButtonBox>
         </StyledSidebar>
     )
 }
 const ButtonStyles = `
     w-full h-12
-    flex justify-center items-center
-    hover:bg-green-600
+    flex flex-row lg-max:px-5 justify-between lg:justify-center items-center
+    hover:bg-green-600 cursor-pointer
     text-white
 `
 
 const ButtonBox = tw.div`
     w-full flex flex-col
+    justify-center items-center
     gap-5
 `
 /**

@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
 import { postProductsToCart } from '../../api/client'
+import { setOrderID } from '../orders/oderSlice'
 
 /* Initialize the state, if already exits in localStorage, fetch it */
 const initialState = JSON.parse(localStorage.getItem('cart')) || {
@@ -56,7 +58,6 @@ const cartSlice = createSlice({
             if(action.payload.errNo===0) {
                 state.status = "succeeded"
                 state.cart = []
-                state.order = action.payload.data.id
                 localStorage.removeItem('cart')
             }
             else if(action.payload.errNo===1){

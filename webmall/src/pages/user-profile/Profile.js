@@ -10,6 +10,10 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { selectUser, selectUserIsLogin } from '../../stores/user/userSelectors'
 import { fetchUserOrders, userLogout } from '../../api/client'
 import { useScrollTop } from '../../hooks'
+import StyledMain from '../../assets/cart-profile-structure/StyledMain'
+import StyledContainer from '../../assets/cart-profile-structure/StyledContainer'
+import StyledContents from '../../assets/cart-profile-structure/StyledContents'
+import Footer from '../root-page/components/footer/Footer'
 
 const Profile = () => {
     useScrollTop()
@@ -31,16 +35,26 @@ const Profile = () => {
     }, [isLogin, navigate, dispatch, user.id])
     
     return (
-        <div className="min-h-[calc(100vh-5rem)] w-full">
-            <div>
-                <Outlet />
-            </div>
-            <button onClick={handleLogout}
-                    className="w-36 p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white "
-            >
-                Logout
-            </button>
-        </div>
+        <StyledMain>
+            <StyledContainer>
+                <StyledContents>
+                    <div className="min-h-[calc(80vh)] pb-12">
+                        <Outlet />
+                    </div>
+                    <div className="w-full h-full flex justify-center items-center">
+                        <button onClick={handleLogout}
+                                className="w-full flex justify-center items-center p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white "
+                        >
+                            Logout
+                        </button>
+                    </div>
+                </StyledContents>
+                <Footer />
+            </StyledContainer>
+            
+            
+            
+        </StyledMain>
     )
 }
 /**

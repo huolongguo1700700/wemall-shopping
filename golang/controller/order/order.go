@@ -351,6 +351,7 @@ func generateOrderInfo(orders []model.Order) ([]model.OrderInfo, error) {
 				ProductPrice: product.Price,
 				ProductImage: product.Image,
 				CategoryID:   product.CategoryID,
+				Count:        cart.Count,
 			}
 			products = append(products, productInfo)
 		}

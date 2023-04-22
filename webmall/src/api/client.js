@@ -7,6 +7,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setCheckoutStatus } from '../stores/cart/cartSlice'
+import { setOrderID } from '../stores/orders/oderSlice'
 
 const URL = process.env.REACT_APP_API_URL
 const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
@@ -87,11 +88,15 @@ export const postProductsToCart = createAsyncThunk (
             userId,
         })
         .then((res) => {
+            const data = res.data
+            if (data.errNo === 0) dispatch(setOrderID(data.data.id))
+            
             setTimeout(() => {
                 const currentState = getState()
                 if (currentState.cart.status === 'succeeded') dispatch(setCheckoutStatus())
             }, 3000)
-            return res.data
+            
+            return data
         })
         .catch((e) => {
             throw new Error(e.message)

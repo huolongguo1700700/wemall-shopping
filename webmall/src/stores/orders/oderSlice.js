@@ -5,19 +5,30 @@ const orderSlice = createSlice({
     name: 'orders',
     initialState: {
         orders: [],
-        order: [],
+        orderID: 0,
         status: 'no-order',
         error: null,
     },
-    reducers: {},
+    reducers: {
+        setOrderID: (state, action) => {
+            state.orderID = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchUserOrders.pending, (state) => {
             state.status = 'loading'
         })
         builder.addCase(fetchUserOrders.fulfilled, (state, action) => {
-            state.status = 'succeeded'
-            state.orders = action.payload.data
-            state.error = null
+            if(action.payload.data){
+                state.status = 'succeeded'
+                state.orders = action.payload.data
+                state.error = null
+            }
+            else {
+                state.status = 'succeeded'
+                state.orders = []
+                state.error = null
+            }
         })
         builder.addCase(fetchUserOrders.rejected, (state, action) => {
             state.status = 'failed'
@@ -25,5 +36,6 @@ const orderSlice = createSlice({
         })
     },
 })
+export const { setOrderID } = orderSlice.actions
 
 export default orderSlice.reducer

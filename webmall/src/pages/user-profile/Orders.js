@@ -7,25 +7,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectOrders } from '../../stores/orders/orderSelectors'
-import { NavLink } from 'react-router-dom'
 import OrderDisplay from './OrderDisplay'
 
 const Orders = () => {
-    
     const orders = useSelector(selectOrders)
-    console.log(orders.orders && orders.orders)
+    
     return (
         <div className="w-full h-full flex flex-col gap-12 justify-center items-start">
-            {orders.orders && orders.orders.map((o,i) => {
-                return (
-                    <div className="flex flex-col">
-                        <NavLink to={`/profile/order/${o.orderId}`} key={i} >
-                            {o.orderId}
-                        </NavLink>
-                        <OrderDisplay key={i} products={o.products}/>
-                    </div>
-                )
-            })}
+            {orders.orders && orders.orders.map((o,i) => <OrderDisplay key={i} order={o} isBriefly={true} />)}
         </div>
     )
 }

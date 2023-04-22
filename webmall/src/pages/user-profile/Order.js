@@ -6,19 +6,21 @@
 
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useFetchOrder from '../../api/fetchOrder'
 import { fetchSingleOrder } from '../../api/client'
 import OrderDisplay from './OrderDisplay'
+import { useSelector } from 'react-redux'
+import { selectOrderId } from '../../stores/orders/orderSelectors'
 
 const Order = () => {
     /* Use Router to transfer parameters and navigate to Error page */
     const navigate = useNavigate()
     
     /* Fetch parameter from link */
-    const { orderID } = useParams()
+    const orderID = useSelector(selectOrderId)
     
-    useFetchOrder(orderID)
+    useFetchOrder(orderID && orderID)
     
     /* Calling request API function and keep data by useQuery */
     const { data:order, isLoading, error, isError } = useQuery({
@@ -37,7 +39,7 @@ const Order = () => {
     return (
         <div>
             {/*{JSON.stringify(order)}*/}
-            <OrderDisplay products={order.products && order.products} />
+            <OrderDisplay order={order && order} isBriefly={false}/>
         </div>
     )
 }

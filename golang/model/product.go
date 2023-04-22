@@ -30,11 +30,12 @@ type Product struct {
 }
 
 type OrderProductInfo struct {
-	ProductID    uint    `json:"productId"`
-	ProductName  string  `json:"productName"`
-	ProductPrice float64 `json:"productPrice"`
-	ProductImage Image   `json:"productImage"`
+	ProductID    uint    `json:"id"`
+	ProductName  string  `json:"name"`
+	ProductPrice float64 `json:"price"`
+	ProductImage Image   `json:"image"`
 	CategoryID   int     `json:"categoryId"`
+	Count        int     `json:"count"`
 }
 
 const (

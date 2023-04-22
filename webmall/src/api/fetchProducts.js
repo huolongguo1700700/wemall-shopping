@@ -4,9 +4,9 @@
  * @date 30.03.2023
 */
 
-import { useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { fetchProducts } from './client';
+import { useEffect } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { fetchProducts } from './client'
 
 // Define the custom hook useFetchProducts
 export default function useFetchProducts() {

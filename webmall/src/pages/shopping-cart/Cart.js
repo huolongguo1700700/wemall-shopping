@@ -30,21 +30,25 @@ const Cart = () => {
                     <StyledContents>
                         <CartTitle />
                         {cartItems && cartItems.length !== 0 ?
-                            cartItems.map((p, i) => (
+                            (<div className={`min-h-[calc(80vh-5rem)]`}>
+                                {cartItems.map((p, i) => (
                                 <CartItem key={i} p={p} />
-                            ))
+                                ))}
+                            </div>)
                             :
-                            <div className="h-[calc(80vh-8rem)] flex flex-col justify-center items-center text-2xl gap-6">
-                                <div className="text-3xl">Empty Cart!</div>
-                                <NavLink className="cursor-pointer hover:text-green-500" to={`/collections`}>
+                            <div className="min-h-[calc(80vh-5rem)] flex flex-col justify-center items-center lg:text-2xl gap-6">
+                                <div className="text-2xl lg:text-3xl">Empty Cart!</div>
+                                <NavLink className="cursor-pointer hover:text-green-500 text-center" to={`/collections`}>
                                     Add the first product to the shopping cart
                                 </NavLink>
                             </div>
                         }
+                        <Sidebar deviceHidden={false} totalPrice={totalPrice} />
                     </StyledContents>
+                    
                     <Footer />
                 </StyledContainer>
-                <Sidebar totalPrice={totalPrice} />
+                <Sidebar deviceHidden={true} totalPrice={totalPrice} />
         </StyledMain>
     )
 }

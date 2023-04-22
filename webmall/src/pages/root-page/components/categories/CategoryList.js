@@ -13,7 +13,7 @@ import Subsequences from './Subsequences'
 import tw from 'tailwind-styled-components'
 
 export const CategoryList = ({category, toggle, setSelectedCategory, closeCategories}) => {
-    const handleClick = () => setSelectedCategory(toggle ? null : category.id);
+    const handleClick = () => setSelectedCategory(toggle ? null : category.id)
     
     return (
         <Fragment>

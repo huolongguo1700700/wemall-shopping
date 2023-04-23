@@ -28,6 +28,8 @@ type OrderInfo struct {
 	OrderID    uint               `json:"orderId"`
 	TotalPrice float64            `json:"totalPrice"`
 	Products   []OrderProductInfo `json:"products"`
+	CreatedAt  time.Time          `json:"createdAt"`
+	DeleteFlag int                `gorm:"default:0" json:"isDeleted"`
 }
 
 type CreatedOrder struct {
@@ -49,10 +51,10 @@ func (order Order) TotalSale() float64 {
 	result := new(struct {
 		TotalSale float64 `gorm:"column:totalPay"`
 	})
-	
+
 	var err = DB.Table("orders").Select("sum(payment) as totalPay").Where("status = ?",
 		OrderStatusPaid).Scan(&result).Error
-	
+
 	if err != nil {
 		return 0
 	}
@@ -67,7 +69,7 @@ func (order Order) CountByDate(date time.Time) int {
 	tomorrowTime := time.Unix(tomorrowSec, 0)
 	startYMD := startTime.Format("2006-01-02")
 	tomorrowYMD := tomorrowTime.Format("2006-01-02")
-	
+
 	var count int
 	var err = DB.Model(&Order{}).Where("created_at >= ? AND created_at < ?",
 		startYMD, tomorrowYMD).Count(&count).Error
@@ -85,14 +87,14 @@ func (order Order) TotalSaleByDate(date time.Time) float64 {
 	tomorrowTime := time.Unix(tomorrowSec, 0)
 	startStr := startTime.Format("2023-5-01")
 	tomorrowStr := tomorrowTime.Format("2023-5-01")
-	
+
 	result := new(struct {
 		TotalPay float64 `gorm:"column:totalPay"`
 	})
-	
+
 	var err = DB.Table("orders").Select("sum(payment) as totalPay").Where("pay_at >= ? AND pay_at < ? AND status = ?",
 		startStr, tomorrowStr, OrderStatusPaid).Scan(&result).Error
-	
+
 	if err != nil {
 		return 0
 	}
@@ -102,7 +104,7 @@ func (order Order) TotalSaleByDate(date time.Time) float64 {
 const (
 	// OrderStatusPending 未支付
 	OrderStatusPending = 0
-	
+
 	// OrderStatusPaid 已支付
 	OrderStatusPaid = 1
 )
@@ -120,10 +122,10 @@ func (orders OrderPerDay) Latest30Day() OrderPerDay {
 	month := now.Month()
 	date := now.Day()
 	today := time.Date(year, month, date, 0, 0, 0, 0, time.Local)
-	
+
 	before29 := today.Unix() - 29*24*60*60 // 29天前（秒）
 	before29Date := time.Unix(before29, 0)
-	
+
 	sqlData := before29Date.Format("2006-01-02")
 	sqlArr := []string{
 		"SELECT count(id) as count, DATE_FORMAT(created_at,'%Y-%m-%d') as createdAt",
@@ -153,10 +155,10 @@ func (amount AmountPerDay) AmountLatest30Day() AmountPerDay {
 	month := now.Month()
 	date := now.Day()
 	today := time.Date(year, month, date, 0, 0, 0, 0, time.Local)
-	
+
 	before29 := today.Unix() - 29*24*60*60 // 29天前（秒）
 	before29Date := time.Unix(before29, 0)
-	
+
 	sqlData := before29Date.Format("2006-01-02")
 	sqlArr := []string{
 		"SELECT sum(payment) as amount, DATE_FORMAT(pay_at,'%Y-%m-%d') as payAt",
@@ -164,7 +166,7 @@ func (amount AmountPerDay) AmountLatest30Day() AmountPerDay {
 		"WHERE pay_at > ? and status = ?",
 		"GROUP BY DATE_FORMAT(pay_at,'%Y-%m-%d');",
 	}
-	
+
 	sql := strings.Join(sqlArr, " ")
 	var result AmountPerDay
 	var err = DB.Raw(sql, sqlData, OrderStatusPaid).Scan(&result).Error

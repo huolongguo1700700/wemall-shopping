@@ -41,14 +41,14 @@ const Burger = ({ color }) => {
     
     return (
         <>
-            <div className={`flex flex-col h-full w-full text-amber-50 cursor-pointer z-50 group`}
+            <div className={`flex flex-col h-full w-full text-amber-50  cursor-pointer z-50 group `}
                  onClick={toggleOpen}       // if click the button, set reverse boolean status
             >
-                <span className={`${color} h-[1px] w-5 my-1.5 duration-300 ease-in-out ${firstLineStyles} group-hover:bg-white`}>
+                <span className={`${color} h-[1px] w-5 my-1.5 duration-300 dark:bg-lime-50 ease-in-out ${firstLineStyles} group-hover:bg-white dark:group-hover:bg-lime-400`}>
                 </span>
-                    <span className={`${color} h-[1px] w-5 duration-300 ease-in-out ${midLineStyle} group-hover:bg-white`}>
+                    <span className={`${color} h-[1px] w-5 duration-300 dark:bg-lime-50 ease-in-out ${midLineStyle} group-hover:bg-white dark:group-hover:bg-lime-400`}>
                 </span>
-                    <span className={`${color} h-[1px] w-5 my-1.5 duration-300 ease-in-out ${thirdLineStyles} group-hover:bg-white`}>
+                    <span className={`${color} h-[1px] w-5 my-1.5 duration-300 dark:bg-lime-50 ease-in-out ${thirdLineStyles} group-hover:bg-white dark:group-hover:bg-lime-400`}>
                 </span>
             </div>
         </>

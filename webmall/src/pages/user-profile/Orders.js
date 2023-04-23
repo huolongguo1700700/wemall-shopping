@@ -13,7 +13,7 @@ const Orders = () => {
     const orders = useSelector(selectOrders)
     
     return (
-        <div className="w-full h-full flex flex-col gap-12 justify-center items-start">
+        <div className="w-full h-full flex flex-col justify-center items-center">
             {orders.orders && orders.orders.map((o,i) => <OrderDisplay key={i} order={o} isBriefly={true} />)}
         </div>
     )

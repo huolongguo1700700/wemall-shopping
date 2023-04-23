@@ -13,11 +13,11 @@ import { useDispatch } from 'react-redux'
 const CartItem = ({ p }) => {
     const dispatch = useDispatch()
     return (
-        <div className="grid grid-cols-4 w-full h-full items-center justify-items-start border-b my-3 border-gray-100 group-hover/item:bg-lime-200">
-            <div className="w-full h-full flex gap-3 lg:gap-5 col-span-2">
-                <div className="min-h-[5rem] min-w-[5rem]">
+        <div className="grid grid-cols-4 w-full h-full items-center justify-items-start border-b border-gray-100 dark:hover:bg-green-600 hover:bg-green-50 p-2">
+            <div className="w-full h-full flex gap-3 lg:gap-5 col-span-2 p-2">
+                <div className="w-20 h-20 bg-white">
                     {p.image &&
-                        <img src={p.image} alt={p.name} className={`w-20 h-20 object-contain`}/>
+                        <img src={p.image} alt={p.name} className={`w-20 h-20 min-h-[5rem] min-w-[5rem] object-contain`}/>
                     }
                 </div>
                 <div>

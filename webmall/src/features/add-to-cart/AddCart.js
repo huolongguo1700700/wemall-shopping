@@ -81,7 +81,7 @@ const ButtonStyles = tw.button`
     rounded-2xl
     cursor-pointer disabled:cursor-not-allowed disabled:text-gray-700/30 disabled:bg-stone-200/30
     rounded hover:bg-lime-300 hover:text-green-700
-    ${(p) => (p.$q ? "bg-stone-200/80 text-gray-700" : "bg-lime-200/60 text-green-800") }
+    ${(p) => (p.$q ? "bg-stone-200/80 dark:bg-stone-100 text-gray-700" : "bg-lime-200/60 dark:bg-lime-200 text-green-800") }
 `
 /**
  * End of AddCart Component

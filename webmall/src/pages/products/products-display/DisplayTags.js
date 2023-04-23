@@ -4,13 +4,25 @@
  * @date 2023/4/1
  */
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectSortMethod } from '../../../stores/sort/sortSelectors'
+import { useDispatch } from 'react-redux'
 import { setSortMethod } from '../../../stores/sort/sortSlice'
+import tw from 'tailwind-styled-components'
 
 const DisplayTags = ({ tags }) => {
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const dropdownRef = useRef()
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setDropdownOpen(false)
+        }
+        
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => { document.removeEventListener("mousedown", handleClickOutside) }
+    }, [])
+    
     /* Get current Router path(URL) */
     const location = useLocation()
     /* Not to display sorting menu in product-info page */
@@ -18,13 +30,12 @@ const DisplayTags = ({ tags }) => {
     
     /* Set option select menu for sorting products */
     const dispatch = useDispatch()
-    const sortMethod = useSelector(selectSortMethod)
     
     const handleSortChange = (e) => dispatch(setSortMethod(e.target.value))
     
     return (tags &&
-        <div className={`flex flex-row gap-2 w-full mt-6 h-12 justify-between items-center`}>
-            <div className="flex flex-row w-full h-full justify-start items-center lg-max:gap-2">
+        <div className={`flex flex-col lg:flex-row w-full my-6 h-full justify-between items-center gap-3`}>
+            <div className="flex flex-row w-full h-full justify-center lg:justify-start items-center lg-max:gap-2">
                 <NavLink className={tags.length ===0 ? `${LinkStyles} ${ActiveStyles}` : `${LinkStyles}`}
                          to="/collections"
                 >
@@ -33,7 +44,7 @@ const DisplayTags = ({ tags }) => {
                 {tags.length !==0 && tags.map((t, i) => {
                     return (
                         <Fragment key={i}>
-                            <span className="h-1/2 w-0.5 bg-slate-500/60 "></span>
+                            <span className="h-6 w-0.5 bg-slate-500/60 dark:bg-slate-300/60 "></span>
                             <NavLink className={({ isActive }) => isActive ? `${LinkStyles} ${ActiveStyles}` : `${LinkStyles}`}
                                      to={`/collections/${t.name}/${t.id}`}
                             >
@@ -44,19 +55,49 @@ const DisplayTags = ({ tags }) => {
                 })}
             </div>
             {!containProduct &&
-                <div >
-                    <select className="bg-transparent p-1 border border-lime-800 rounded-md hover:ring-1 box-border " value={sortMethod} onChange={handleSortChange}>
-                        <option value="DEFAULT">Features</option>
-                        <option value="NAME_ASC">Name (A-Z)</option>
-                        <option value="NAME_DESC">Name (Z-A)</option>
-                        <option value="PRICE_ASC">Price (Low to High)</option>
-                        <option value="PRICE_DESC">Price (High to Low)</option>
-                    </select>
+                <div  className="w-full h-full flex justify-center lg:justify-end items-center relative px-12">
+                    <div ref={dropdownRef} className="w-1/2 md:w-48 ">
+                        <button onClick={() => setDropdownOpen(!dropdownOpen)}
+                                className="w-full bg-transparent p-1 border border-lime-800 dark:border-lime-500 dark:text-lime-50 rounded-md hover:ring-1 box-border"
+                        >
+                            Dropdown button
+                        </button>
+                        {dropdownOpen && (
+                            <div className="w-full lg:w-48 z-10 absolute top-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-green-600">
+                                <ul className="w-full py-2 text-sm text-gray-700 dark:text-green-200">
+                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "DEFAULT" } });setDropdownOpen(false);}}>
+                                        Features
+                                    </ListStyles>
+                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "NAME_ASC" } });setDropdownOpen(false)}}>
+                                        Name (A-Z)
+                                    </ListStyles>
+                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "NAME_DESC" } });setDropdownOpen(false);}}>
+                                        Name (Z-A)
+                                    </ListStyles>
+                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "PRICE_ASC" } });setDropdownOpen(false);}}>
+                                        Price (Low to High)
+                                    </ListStyles>
+                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "PRICE_DESC" } });setDropdownOpen(false);}}>
+                                        Price (High to Low)
+                                    </ListStyles>
+                                </ul>
+                            </div>
+                        )}
+                    </div>
                 </div>
             }
         </div>
     )
 }
+
+const ListStyles = tw.li`
+    w-full
+    block
+    px-4 py-2
+    hover:bg-gray-100
+    dark:hover:bg-green-500 dark:hover:text-white
+    cursor-pointer
+`
 
 const LinkStyles = `
     lg:p-2
@@ -64,10 +105,13 @@ const LinkStyles = `
     hover:underline
     hover:underline-offset-2
     hover:text-lime-500
+    dark:text-lime-400
+    dark:hover:text-lime-100
 `
 
 const ActiveStyles =`
     text-lime-600
+    dark:text-lime-100
     hover:no-underline
 `
 /**

@@ -38,12 +38,12 @@ const Profile = () => {
         <StyledMain>
             <StyledContainer>
                 <StyledContents>
-                    <div className="min-h-[calc(80vh)] pb-12">
+                    <div className="min-h-[calc(80vh)]">
                         <Outlet />
                     </div>
                     <div className="w-full h-full flex justify-center items-center">
                         <button onClick={handleLogout}
-                                className="w-full flex justify-center items-center p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white "
+                                className="w-full max-w-5xl flex justify-center items-center p-2 uppercase border bg-green-500 hover:border-green-700 hover:bg-green-600 text-white"
                         >
                             Logout
                         </button>

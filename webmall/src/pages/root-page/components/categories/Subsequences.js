@@ -38,7 +38,8 @@ const OuterContainerStyles = tw.div`
     bg-white
     scale-0 group-hover/category:scale-100 transition-all duration-100 origin-top ease-linear
     z-30
-    border border-emerald-500 border-t-0
+    dark:bg-green-600
+    border border-emerald-500 border-t-0 dark:border-emerald-700
 `
 
 const InnerContainerStyles = tw.div`
@@ -55,12 +56,14 @@ const SelfNavLinkStyles = `
 const SelfActiveLinkStyles = `
     underline underline-offset-2
     text-lime-600
+    dark:text-white
 `
 
 const LetterStyles = tw.span`
     group-hover:underline
     group-hover:underline-offset-2
     group-hover:text-lime-600
+    dark:group-hover:text-lime-100
 `
 
 /**

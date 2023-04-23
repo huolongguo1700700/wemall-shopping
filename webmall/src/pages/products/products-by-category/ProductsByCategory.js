@@ -15,7 +15,7 @@ import ProductLists from '../products-display/ProductLists'
 import { fetchProductsByCategory } from '../../../api/client'
 import { sortFunction } from '../products-display/sorting-products'
 import { selectItemsPerPage } from '../../../stores/page/pageSelectors'
-import Pagination from '../products-display/Pagination'
+import Pagination from '../components/Pagination'
 
 const ProductsByCategory = () => {
     const sortMethod = useSelector(selectSortMethod)

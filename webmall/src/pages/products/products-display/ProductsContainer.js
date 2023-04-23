@@ -13,9 +13,9 @@ const ProductsContainer = (props) => {
     
     return (
         <div className="flex flex-col w-full h-full justify-center items-center lg:px-12 py-12 ">
-            <div className="w-full flex items-center justify-center lg:h-16 xl:h-28 text-3xl lg:text-5xl font-bold text-center">{props.title}</div>
+            <div className="w-full flex items-center justify-center lg:h-16 xl:h-28 text-3xl lg:text-5xl font-bold text-center dark:text-lime-50">{props.title}</div>
     
-            <div className="w-full lg-max:px-6">
+            <div className="w-full">
                 <DisplayTags tags={props.tags}/>
             </div>
             

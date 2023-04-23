@@ -86,7 +86,7 @@ const Sidebar = ({totalPrice, deviceHidden}) => {
             </div>
             <ButtonBox>
                 <NavLink className={`${ButtonStyles} bg-green-500 lg-max:hidden`} to={`/collections`}>Continue Shopping</NavLink>
-                <div className={`${ButtonStyles} bg-green-700 lg-max:bg-green-500 }`} onClick={() => handleCheckout(cart)}>
+                <div className={`${ButtonStyles} bg-green-700 dark:bg-green-400 lg-max:bg-green-500}`} onClick={() => handleCheckout(cart)}>
                     {showCheckout()}
                     <div className="lg:hidden">
                         Shopping €{totalPrice}

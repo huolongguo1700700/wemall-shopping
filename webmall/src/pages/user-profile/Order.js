@@ -37,7 +37,7 @@ const Order = () => {
     }
     
     return (
-        <div>
+        <div className="flex justify-center items-center">
             {/*{JSON.stringify(order)}*/}
             <OrderDisplay order={order && order} isBriefly={false}/>
         </div>

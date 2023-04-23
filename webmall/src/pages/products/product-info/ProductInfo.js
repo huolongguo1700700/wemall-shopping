@@ -59,12 +59,12 @@ const ProductInfo = () => {
     
     return product && cateProducts &&
         <ProductsContainer className="" tags={cateProducts.categorySequence} title={info.name}>
-            <div className="w-full h-full bg-white flex flex-col justify-center items-center ">
+            <div className="w-full h-full bg-white dark:bg-green-800 dark:text-lime-50 flex flex-col justify-center items-center ">
                 <div className="flex flex-col lg:flex-row w-full h-full justify-center items-center px-12 pt-12 gap-5">
                     <div className={`flex w-full h-full justify-center items-center lg-max:m-3 lg:min-w-[24rem] lg:min-h-[24rem]`}>
                         {info.images.length !==0 &&
                             <img src={info.images[1].url} alt={info.name}
-                                 className={`w-72 h-72 lg:w-96 lg:h-96 object-contain `}/>
+                                 className={`w-72 h-72 lg:w-96 lg:h-96 object-contain bg-white`}/>
                         }
                     </div>
                     <div className="h-full w-full flex flex-col justify-center items-center gap-12 lg:gap-20">
@@ -75,14 +75,14 @@ const ProductInfo = () => {
                 
                 
                 <div className={`flex flex-col w-full p-6 lg:p-12 leading-6`}>
-                    <div className="text-2xl border-y-2 border-gray-100 py-6 my-6 lg-max:text-center text-justify">Product information</div>
+                    <div className="text-2xl border-y-2 border-gray-100 dark:border-gray-500 py-6 my-6 lg-max:text-center text-justify">Product information</div>
                     {info.detail}
                 </div>
             </div>
             
             {/* Recommend something more */}
             <div className="flex flex-col my-16 justify-center items-center lg-max:hidden">
-                <div className="mb-16 flex justify-center items-center text-4xl"><i>You May Also Like</i></div>
+                <div className="mb-16 flex justify-center items-center text-4xl dark:text-lime-50"><i>You May Also Like</i></div>
                 <div className="flex flex-row  gap-5">
                     {recommend && recommend.products.filter(p => p.id !== parseInt(productID)).slice(0,3).map((p, i)=>{
                         return (

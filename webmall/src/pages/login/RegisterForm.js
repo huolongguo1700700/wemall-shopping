@@ -8,14 +8,32 @@ import React, { useState } from 'react'
 import tw from 'tailwind-styled-components'
 import { useDispatch } from 'react-redux'
 import { userRegister } from '../../api/client'
+import EmailValidation from './EmailValidation'
+import PasswordInput from './PasswordInput'
 
 const RegisterForm = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
+    const [emailError, setEmailError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+    const [isEmailEmpty, setIsEmailEmpty] = useState(false)
+    const [isPwdEmpty, setIsPwdEmpty] = useState(false)
     
-    const handleRegister = async () => {
+    const handleRegister = async (event) => {
+        event.preventDefault()
+        const isEmailValid = !emailError
+        const isPasswordValid = !passwordError
+        setIsEmailEmpty(!email)
+        setIsPwdEmpty(!password)
+        const isFormValid = email && password && passwordConfirm && (isEmailValid || isEmailEmpty) && (isPasswordValid || isPwdEmpty)
+        
+        if (!isFormValid) {
+            if (!passwordConfirm) setPasswordError(true)
+            return
+        }
+        
         try {
             dispatch(userRegister({ email, password, passwordConfirm }))
         }
@@ -26,45 +44,47 @@ const RegisterForm = () => {
     }
     
     return (
-        <div className="w-full h-full flex flex-col justify-center items-center gap-12 pt-16 px-8">
+        <form className="w-full h-full flex flex-col justify-around items-center pt-16 gap-12 px-5"
+              onSubmit={handleRegister}
+        >
             <InputContainerStyles>
-                <InputStyles
-                    type="text"
-                    placeholder="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required={true}
-                />
-                <InputStyles
-                    type="password"
-                    placeholder="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required={true}
-                />
-                <InputStyles
-                    type="password"
-                    placeholder="confirm password"
-                    value={passwordConfirm}
-                    onChange={(e) => setPasswordConfirm(e.target.value)}
-                    required={true}
+                <div className="relative my-3">
+                    <EmailValidation
+                        email={email}
+                        setEmail={setEmail}
+                        isEmailEmpty={isEmailEmpty}
+                        emailError={emailError}
+                        setEmailError={setEmailError}
+                        InputStyles={InputStyles}
+                    />
+                </div>
+                <PasswordInput
+                    isSingle={false}
+                    password={password}
+                    setPassword={setPassword}
+                    isPwdEmpty={isPwdEmpty}
+                    confirmPassword={passwordConfirm}
+                    setConfirmPassword={setPasswordConfirm}
+                    passwordError={passwordError}
+                    setPasswordError={setPasswordError}
+                    InputStyles={InputStyles}
                 />
             </InputContainerStyles>
             <div className="w-full flex flex-col gap-6">
-                <button onClick={handleRegister}
+                <button type="submit"
                         className="w-full p-2 uppercase border bg-cyan-500 hover:border-sky-700 hover:bg-sky-600 text-white "
                 >
                     Register
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 
 const InputContainerStyles = tw.div`
     w-full
     flex flex-col
-    gap-12
+    pt-12
 `
 
 const InputStyles = tw.input`
@@ -72,7 +92,9 @@ const InputStyles = tw.input`
     p-2
     uppercase-placeholder cursor-pointer
     text-middle
-    hover:shadow-inner border-2 border-slate-400 focus:cursor-text
+    hover:shadow-inner border-2 border-slate-400 dark:border-slate-100 focus:cursor-text
+    rounded
+    dark:bg-green-900
 `
 
 /**

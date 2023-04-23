@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-    @apply bg-gray-100
+    @apply bg-gray-100 dark:bg-green-700
 }
 
 /* 在需要添加滚动条的容器上设置 overflow 属性 */

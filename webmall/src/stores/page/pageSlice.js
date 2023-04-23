@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const pageSlice = createSlice({
     name: 'page',
     initialState: {
-        itemsPerPage: 10,
+        itemsPerPage: 12,
         currentPage: 1
     },
     reducers: {

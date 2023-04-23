@@ -96,8 +96,8 @@ const NavLinkStyles = `
 `
 export const ActiveLinkStyles = `
     underline underline-offset-2
-    text-lime-600
-    lg-max:text-lime-500
+    text-lime-600 dark:text-lime-100
+    lg-max:text-lime-200
     
 `
 

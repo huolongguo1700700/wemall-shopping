@@ -38,14 +38,14 @@ const ProductCard = ({ p }) => {
     const imageUrl = info.images && info.images.length !==0 ? info.images[0].url : ''
     
     return product &&
-           <CubeContainerStyles className="">
+           <CubeContainerStyles>
                <Link to={`/collections/product-info/${p.id}/${p.category_id}`} className="flex flex-col gap-6 items-center text-center" >
-                   <div className="flex justify-center items-center min-w-[8rem] min-h-[8rem] w-32 h-32 sm:w-36 sm:h-36 md:w-56 md:h-56">
+                   <div className="flex justify-center items-center min-w-[8rem] min-h-[8rem] w-32 h-32 sm:w-36 sm:h-36 md:w-56 md:h-56 bg-white">
                    {imageUrl &&
-                       <img src={imageUrl} alt={info.name} className={`w-full h-full object-contain`}/>
+                       <img src={imageUrl} alt={info.name} className={`w-full h-full object-contain `}/>
                    }
                    </div>
-                   <p className={` sm:text-lg lg:text-xl`}>
+                   <p className={`h-8 sm:text-lg lg:text-xl`}>
                        {p.name}
                    </p>
                </Link>
@@ -55,7 +55,7 @@ const ProductCard = ({ p }) => {
                    </div>
                </div>
                <div className="gap-3 px-12 w-full">
-                   <AddCart product={info} url={imageUrl} disabled={true} background={`bg-white`}/>
+                   <AddCart product={info} url={imageUrl} disabled={true} background={`bg-white dark:bg-green-900`}/>
                </div>
            </CubeContainerStyles>
 }
@@ -63,10 +63,11 @@ const ProductCard = ({ p }) => {
 const CubeContainerStyles = tw.div`
     flex flex-col justify-center items-center
     min-w-sm max-w-lg w-full h-full
-    p-2 md:p-3 py-6 mx-auto
+    p-2 md:p-8 mx-auto
     gap-8 lg:gap-12
     bg-white
-    transition-all duration-300 ease-linear
+    dark:bg-green-900 dark:text-green-100
+    transition-all duration-200 ease-linear
     drop-shadow-xl hover:shadow-2xl rounded-xl z-0
 `
 

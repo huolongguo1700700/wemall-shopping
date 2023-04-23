@@ -9,14 +9,14 @@ import { useQuery } from '@tanstack/react-query'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { fetchProducts } from '../../../api/client'
+import { selectSortMethod } from '../../../stores/sort/sortSelectors'
+import { sortFunction } from '../products-display/sorting-products'
+import { selectItemsPerPage } from '../../../stores/page/pageSelectors'
 import useFetchProducts from '../../../api/fetchProducts'
 import LoadingSkeleton from '../../skeletons/LoadingSkeleton'
 import ProductsContainer from '../products-display/ProductsContainer'
 import ProductLists from '../products-display/ProductLists'
-import { selectSortMethod } from '../../../stores/sort/sortSelectors'
-import { sortFunction } from '../products-display/sorting-products'
-import Pagination from '../products-display/Pagination'
-import { selectItemsPerPage } from '../../../stores/page/pageSelectors'
+import Pagination from '../components/Pagination'
 
 const Products = () => {
     const location = useLocation()
@@ -46,10 +46,7 @@ const Products = () => {
     const totalPages = sortedProducts && Math.ceil(sortedProducts.length / itemsPerPage)
     
     // Items to display in current page
-    const paginatedProducts = sortedProducts && sortedProducts.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    )
+    const paginatedProducts = sortedProducts && sortedProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
     
     /* Error and Loading states */
     if (isLoading) return < LoadingSkeleton/>

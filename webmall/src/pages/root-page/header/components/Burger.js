@@ -6,8 +6,8 @@
 
 import React, { useContext } from 'react'
 import { isMobile } from 'react-device-detect'
-import { useWindowSize } from '../../../../../hooks'
-import AppContext from '../../../Context'
+import AppContext from '../../Context'
+import { useWindowSize } from '../../../../hooks'
 
 const Burger = ({ color }) => {
     /* variables area */

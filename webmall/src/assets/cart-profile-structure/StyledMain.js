@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import Header from '../../pages/root-page/components/header/Header'
+import Header from '../../pages/root-page/header/Header'
 
 const StyledMain = (props) => {
     return (

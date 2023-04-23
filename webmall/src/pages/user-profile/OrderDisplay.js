@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 const OrderDisplay = ({order, isBriefly}) => {
     const dispatch = useDispatch()
     
+    console.log(order)
     function formatDate(dateString) {
         const date = new Date(dateString)
         const day = String(date.getDate()).padStart(2, '0')
@@ -38,6 +39,13 @@ const OrderDisplay = ({order, isBriefly}) => {
                         <span>Date</span>
                         <span>:</span>
                         <span>{formatDate(order.createdAt)}</span>
+                    </div>
+                    <span className="h-2/3 w-0.5 bg-slate-500/60 dark:bg-slate-300/60 lg-max:hidden"></span>
+                    <div className="flex gap-1">
+                        <span>Total</span>
+                        <span>Products</span>
+                        <span>:</span>
+                        <span>{order.products.length}</span>
                     </div>
                     <span className="h-2/3 w-0.5 bg-slate-500/60 dark:bg-slate-300/60 lg-max:hidden"></span>
                     <div className="flex gap-1">

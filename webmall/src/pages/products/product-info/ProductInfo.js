@@ -86,8 +86,8 @@ const ProductInfo = () => {
                 <div className="flex flex-row  gap-5">
                     {recommend && recommend.products.filter(p => p.id !== parseInt(productID)).slice(0,3).map((p, i)=>{
                         return (
-                            <div className="lg:w-72">
-                                <ProductCard key={i} p={p}/>
+                            <div key={i} className="lg:w-72">
+                                <ProductCard  p={p}/>
                             </div>
                         )
                     })}

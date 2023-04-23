@@ -32,6 +32,13 @@ html {
     scrollbar-color: #c0c0c0 #f0f0f0; /* 设置滚动条滑块和轨道的颜色 */
 }
 
+.disable-scroll {
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
 /* Custom input styles */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {

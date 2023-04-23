@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    sortBy: 'DEFAULT',
+    sortBy: "DEFAULT",
+    sortLabel: "Features",
+    sortOptions: [
+        { value: "DEFAULT", label: "Features" },
+        { value: "NAME_ASC", label: "Name (A-Z)" },
+        { value: "NAME_DESC", label: "Name (Z-A)" },
+        { value: "PRICE_ASC", label: "Price (Low to High)" },
+        { value: "PRICE_DESC", label: "Price (High to Low)" },
+    ],
 }
 
 const sortSlice = createSlice({
@@ -9,8 +17,9 @@ const sortSlice = createSlice({
     initialState,
     reducers: {
         setSortMethod: (state, action) => {
-            /* Set sort method by input */
-            state.sortBy = action.payload
+            const selectedOption = state.sortOptions.find((option) => option.value === action.payload)
+            state.sortBy = action.payload;
+            state.sortLabel = selectedOption.label
         },
     },
 })

@@ -31,7 +31,7 @@ export const CategoryList = ({category, toggle, setSelectedCategory, closeCatego
                 </NavLink>
                 
                 {/* Mobile devices or Small Screen Display */}
-                <div className={`flex flex-col h-full select-none  ${DeviceNavLinkStyles} `}>
+                <div className={`flex flex-col h-full   ${DeviceNavLinkStyles} `}>
                     {!category.id ?
                         <NavLink className={`text-lime-400 p-3 m-2 hover:bg-stone-500 ${HoverStyles}`}
                                  onClick={() => {
@@ -98,7 +98,6 @@ export const ActiveLinkStyles = `
     underline underline-offset-2
     text-lime-600 dark:text-lime-100
     lg-max:text-lime-200
-    
 `
 
 const LetterStyles = tw.div`

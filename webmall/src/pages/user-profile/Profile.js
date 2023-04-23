@@ -13,7 +13,7 @@ import { useScrollTop } from '../../hooks'
 import StyledMain from '../../assets/cart-profile-structure/StyledMain'
 import StyledContainer from '../../assets/cart-profile-structure/StyledContainer'
 import StyledContents from '../../assets/cart-profile-structure/StyledContents'
-import Footer from '../root-page/components/footer/Footer'
+import Footer from '../root-page/footer/Footer'
 
 const Profile = () => {
     useScrollTop()

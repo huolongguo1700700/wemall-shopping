@@ -6,11 +6,11 @@
 
 import React, { Fragment } from 'react'
 import { AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai'
-import Burger from './Burger/Burger'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectProductCount, selectTotalPrice } from '../../../../stores/cart/cartSelectors'
 import { selectUserIsLogin } from '../../../../stores/user/userSelectors'
+import Burger from './Burger'
 
 const Corner = () => {
     const isLogin = useSelector(selectUserIsLogin)

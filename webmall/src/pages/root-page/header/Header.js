@@ -5,9 +5,9 @@
  */
 
 import React from 'react'
-import Marquee from './Marquee'
 import { Categories } from '../categories/Categories'
-import Corner from './Corner'
+import Corner from './components/Corner'
+import Marquee from './components/Marquee'
 
 const Header = () => {
     return (

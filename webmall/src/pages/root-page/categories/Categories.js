@@ -4,16 +4,17 @@
  * @date 2023/3/28
  */
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import tw from 'tailwind-styled-components'
-import useFetchCategories from '../../../../api/fetchCategories'
 import Classify from './classify'
-import AppContext from '../../Context'
 import { CategoryList } from './CategoryList'
 import { useQuery } from '@tanstack/react-query'
-import { fetchCategories } from '../../../../api/client'
-import LoadingSkeleton from '../../../skeletons/LoadingSkeleton'
+import AppContext from '../Context'
+import LoadingSkeleton from '../../skeletons/LoadingSkeleton'
+import useFetchCategories from '../../../api/fetchCategories'
+import { fetchCategories } from '../../../api/client'
+import { useWindowSize } from '../../../hooks'
 
 export const Categories = () => {
     /* Use Router to transfer parameters and navigate to Error page */
@@ -25,7 +26,14 @@ export const Categories = () => {
     /* Fetch Context from Burger Component for open the category lists for responsive design */
     const {isOpen, toggleOpen} = useContext(AppContext)
     
+    const window = useWindowSize()
+    
     useFetchCategories()
+    
+    useEffect(() => {
+        if (isOpen && window.width <= 1024 ) document.body.classList.add("disable-scroll")
+        else document.body.classList.remove("disable-scroll")
+    }, [isOpen, window])
     
     /* Using the query hook to fetch Categories info from API */
     const {data: categories, isLoading, isError, error} = useQuery({queryKey: ['categories'], queryFn: fetchCategories, staleTime: Infinity})
@@ -55,6 +63,7 @@ export const Categories = () => {
                         return (
                             <CategoryList key= {i}
                                           category={c}
+                                          isOpen={isOpen}
                                           toggle={selectedCategory === c.id}
                                           closeCategories={toggleOpen}
                                           setSelectedCategory={setSelectedCategory}
@@ -62,7 +71,6 @@ export const Categories = () => {
                         )
                     })}
                 </ItemContainerStyles>
-                <div className="lg:hidden h-full" onClick={toggleOpen}></div>
             </MiddleContainerStyles>
         </ContainerStyles>
     )
@@ -79,7 +87,6 @@ const ContainerStyles = tw.div`
     lg-max:w-full lg-max:h-full
     lg-max:duration-300 lg-max:ease-in-out
     lg-max:z-30
-    
 `
 
 const MiddleContainerStyles = tw.div`
@@ -100,6 +107,8 @@ const ItemContainerStyles = tw.div`
     lg-max:py-12
     items-center
     justify-start
+    lg-max:h-[calc(100vh-60px)]
+    lg-max:overflow-y-auto
 `
 /**
  * End of Navigation Component

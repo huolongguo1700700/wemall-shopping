@@ -6,14 +6,17 @@
 
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setSortMethod } from '../../../stores/sort/sortSlice'
 import tw from 'tailwind-styled-components'
+import { selectLabel, selectOptions } from '../../../stores/sort/sortSelectors'
 
 const DisplayTags = ({ tags }) => {
+    /* Dropdown variables */
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef()
     
+    /* Click outside to close the dropdown menu */
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setDropdownOpen(false)
@@ -25,12 +28,16 @@ const DisplayTags = ({ tags }) => {
     
     /* Get current Router path(URL) */
     const location = useLocation()
+    
     /* Not to display sorting menu in product-info page */
     const containProduct = location.pathname.includes('/product-info')
     
     /* Set option select menu for sorting products */
     const dispatch = useDispatch()
+    const label = useSelector(selectLabel)
+    const sortOptions = useSelector(selectOptions)
     
+    /* Define a sorting method */
     const handleSortChange = (e) => dispatch(setSortMethod(e.target.value))
     
     return (tags &&
@@ -60,26 +67,16 @@ const DisplayTags = ({ tags }) => {
                         <button onClick={() => setDropdownOpen(!dropdownOpen)}
                                 className="w-full bg-transparent p-1 border border-lime-800 dark:border-lime-500 dark:text-lime-50 rounded-md hover:ring-1 box-border"
                         >
-                            Dropdown button
+                            {label}
                         </button>
                         {dropdownOpen && (
                             <div className="w-full lg:w-48 z-10 absolute top-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-green-600">
                                 <ul className="w-full py-2 text-sm text-gray-700 dark:text-green-200">
-                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "DEFAULT" } });setDropdownOpen(false);}}>
-                                        Features
-                                    </ListStyles>
-                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "NAME_ASC" } });setDropdownOpen(false)}}>
-                                        Name (A-Z)
-                                    </ListStyles>
-                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "NAME_DESC" } });setDropdownOpen(false);}}>
-                                        Name (Z-A)
-                                    </ListStyles>
-                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "PRICE_ASC" } });setDropdownOpen(false);}}>
-                                        Price (Low to High)
-                                    </ListStyles>
-                                    <ListStyles onClick={() => {handleSortChange({ target: { value: "PRICE_DESC" } });setDropdownOpen(false);}}>
-                                        Price (High to Low)
-                                    </ListStyles>
+                                    {sortOptions.map((opt, i) =>
+                                        <ListStyles key={i} onClick={() => {handleSortChange({ target: { value: opt.value } }); setDropdownOpen(false);}}>
+                                            {opt.label}
+                                        </ListStyles>
+                                    )}
                                 </ul>
                             </div>
                         )}

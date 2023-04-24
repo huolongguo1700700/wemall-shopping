@@ -3,6 +3,18 @@ import {
 } from '../constants/actionTypes';
 
 function receiveOrder30d(data) {
+    console.log("REQUEST_ORDER_30d")
+    console.log(REQUEST_ORDER_30d, data)
+    let orderList = data.orders;
+    if (orderList.length == 0){
+        return {
+            type: REQUEST_ORDER_30d,
+            orders: [{
+                "count": 4,
+                "createdAt": new Date().toLocaleDateString().replaceAll("/", "-")
+            }]
+        };
+    }
     return {
         type: REQUEST_ORDER_30d,
         orders: data.orders

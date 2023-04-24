@@ -4,6 +4,7 @@ import { connect }          from 'react-redux';
 class Platform extends Component {
     render() {
         let { software } = this.props;
+        console.log("software", software)
         return (
             <div className="platform">
                 <div className="platform-title">Platform Information</div>
@@ -17,7 +18,7 @@ class Platform extends Component {
                 </div>
                 <div className="platform-info">
                     <span className="platform-label">Latest Version:</span>
-                    <span></span>
+                    <span>{software.officialURL}</span>
                 </div>
             </div>
         );

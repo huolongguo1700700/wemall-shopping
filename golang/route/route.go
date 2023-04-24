@@ -6,6 +6,7 @@ import (
 	"wemall/golang/controller/admin"
 	"wemall/golang/controller/cart"
 	"wemall/golang/controller/category"
+	"wemall/golang/controller/comment"
 	"wemall/golang/controller/common"
 	"wemall/golang/controller/order"
 	"wemall/golang/controller/product"
@@ -78,5 +79,6 @@ func Route(app *iris.Application) {
 		adminRouter.Post("/upload", common.Upload)
 		
 		adminRouter.Get("/visit/pv/latest/30", visit.Latest30Day)
+		adminRouter.Get("/comment/latest/30", comment.Latest30Day)
 	}
 }

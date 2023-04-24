@@ -40,6 +40,11 @@ var config = {
 		todayOrderSale  : "/admin/order/todaysale",
 		totalOrderCount : "/admin/order/totalcount",
 		totalSale       : "/admin/order/totalsale"
+	},
+	software: {
+		name: configData.software.name,
+		version: configData.software.version,
+		officialURL: configData.software.officialURL
 	}
 };
 

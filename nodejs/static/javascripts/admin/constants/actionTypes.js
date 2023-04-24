@@ -4,6 +4,10 @@ export const REQUEST_SYSTEM_INDEX = 'requestSystemIndex';
 
 export const REQUEST_USER_ANALYZE = 'requestUserAnalyze';
 
+export const REQUEST_USER_ANALYZE_30d = 'requestUserAnalyze30d';
+
+export const REQUEST_RECENT_COMMENT = 'requestRecentComment';
+
 export const REQUEST_RECENT_PV = 'requestRecentPV';
 
 export const REQUEST_ORDER_ANALYZE = 'requestOrderAnalyze';

@@ -1,9 +1,10 @@
-import React, { Component }      from 'react';
-import { connect }               from 'react-redux';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { goBack } from 'react-router-redux';
+import uuid from 'uuid/v4';
 import {
     Button,
-    Row, 
+    Row,
     Col,
     Form,
     Icon,
@@ -30,10 +31,10 @@ import {
     requestUpdateTotalInventory
 } from '../../actions/product';
 
-import requestCategoryList       from '../../actions/category/requestCategoryList';
-import Software                  from '../Software';
-import utils                     from '../../utils';
-import analyze                   from '../../../sdk/analyze';
+import requestCategoryList from '../../actions/category/requestCategoryList';
+import Software from '../Software';
+import utils from '../../utils';
+import analyze from '../../../sdk/analyze';
 import '../../../../styles/admin/product/editProduct.css';
 
 /*
@@ -42,60 +43,61 @@ import '../../../../styles/admin/product/editProduct.css';
 class EditProduct extends Component {
     constructor(props) {
         super(props);
-        this.onNameBlur               = this.onNameBlur.bind(this);
-        this.onCategoriesChange       = this.onCategoriesChange.bind(this);
-        this.onOriginalPriceBlur      = this.onOriginalPriceBlur.bind(this);
-        this.onPriceBlur              = this.onPriceBlur.bind(this);
-        this.onRemarkBlur             = this.onRemarkBlur.bind(this);
-        this.onStatusChange           = this.onStatusChange.bind(this);
-        this.onImageChange            = this.onImageChange.bind(this);
-        this.onImageListChange        = this.onImageListChange.bind(this);
-        this.onPreview                = this.onPreview.bind(this);
-        this.onCancelPreview          = this.onCancelPreview.bind(this);
-        this.onContentTypeChange      = this.onContentTypeChange.bind(this);
-        this.onAddContent             = this.onAddContent.bind(this);
-        this.onContentTextChange      = this.onContentTextChange.bind(this);
-        this.onContentImageChange     = this.onContentImageChange.bind(this);
-        this.onSubmit                 = this.onSubmit.bind(this);
+        this.onNameBlur = this.onNameBlur.bind(this);
+        this.onCategoriesChange = this.onCategoriesChange.bind(this);
+        this.onOriginalPriceBlur = this.onOriginalPriceBlur.bind(this);
+        this.onPriceBlur = this.onPriceBlur.bind(this);
+        this.onRemarkBlur = this.onRemarkBlur.bind(this);
+        this.onStatusChange = this.onStatusChange.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
+        this.onImageListChange = this.onImageListChange.bind(this);
+        this.onPreview = this.onPreview.bind(this);
+        this.onCancelPreview = this.onCancelPreview.bind(this);
+        this.onContentTypeChange = this.onContentTypeChange.bind(this);
+        this.onAddContent = this.onAddContent.bind(this);
+        this.onContentTextChange = this.onContentTextChange.bind(this);
+        this.onContentImageChange = this.onContentImageChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onCancel = this.onCancel.bind(this);
         this.onPropValueVisibleChange = this.onPropValueVisibleChange.bind(this);
-        this.onPropVisibleChange      = this.onPropVisibleChange.bind(this);
-        this.onPropInput              = this.onPropInput.bind(this);
-        this.addProp                  = this.addProp.bind(this);
-        this.cancelAddProp            = this.cancelAddProp.bind(this);
-        this.onInventoryChange        = this.onInventoryChange.bind(this);
-        this.onSaveInventory          = this.onSaveInventory.bind(this);
-        this.onTabChange              = this.onTabChange.bind(this);
-        this.onHasPropertyChange      = this.onHasPropertyChange.bind(this);
-        this.onTotalInventoryChange   = this.onTotalInventoryChange.bind(this);
-        this.onSaveTotalInventory     = this.onSaveTotalInventory.bind(this);
+        this.onPropVisibleChange = this.onPropVisibleChange.bind(this);
+        this.onPropInput = this.onPropInput.bind(this);
+        this.addProp = this.addProp.bind(this);
+        this.cancelAddProp = this.cancelAddProp.bind(this);
+        this.onInventoryChange = this.onInventoryChange.bind(this);
+        this.onSaveInventory = this.onSaveInventory.bind(this);
+        this.onTabChange = this.onTabChange.bind(this);
+        this.onHasPropertyChange = this.onHasPropertyChange.bind(this);
+        this.onTotalInventoryChange = this.onTotalInventoryChange.bind(this);
+        this.onSaveTotalInventory = this.onSaveTotalInventory.bind(this);
 
         this.state = {
-            activeTabKey        : '1',
-            productId           : this.props.routeParams.id,
-            categories          : [], //产品所属的分类
-            name                : '',
-            originalPrice       : 0,
-            price               : 0,
-            remark              : '',
-            status              : '3', //等待上架
-            imageID             : '',
-            imageData           : '',
-            previewVisible      : false,
-            previewImage        : '',
-            imageIDs            : '[]',
-            imageList           : [],
-            contentType         : 'image',
-            contents            : [],
-            properties          : [],
-            inventories         : [],
-            totalInventory      : 0,
-            propValueVisibleMap : {},
-            propValueTemp       : '',
-            propPopupVisible    : false,
-            propTemp            : '',
-            hasProperty         : false,
-            hasPropertyValue    : false,
-            isLoading           : true
+            activeTabKey: '1',
+            productId: this.props.routeParams.id,
+            categories: [], //产品所属的分类
+            name: '',
+            originalPrice: 0,
+            price: 0,
+            remark: '',
+            status: '3', //等待上架
+            imageID: '',
+            imageData: '',
+            previewVisible: false,
+            previewImage: '',
+            imageIDs: '[]',
+            imageList: [],
+            contentType: 'image',
+            contents: [],
+            properties: [],
+            inventories: [],
+            totalInventory: 0,
+            propValueVisibleMap: {},
+            propValueTemp: '',
+            propPopupVisible: false,
+            propTemp: '',
+            hasProperty: false,
+            hasPropertyValue: false,
+            isLoading: true
         };
     }
     componentDidMount() {
@@ -107,13 +109,14 @@ class EditProduct extends Component {
         dispatch(requestCategoryList());
     }
     componentWillReceiveProps(nextProps) {
-        var self          = this;
-        var product       = nextProps.data.product;
+        var self = this;
+        var product = nextProps.data.product;
         var allCategories = nextProps.data.categories;
 
         function onDataReady(data) {
             console.log("onDataReady");
-            var product    = data.product;
+            console.log(data);
+            var product = data.product;
             var properties = product && product.properties || [];
             var propValueVisibleMap = {};
             var inventories = product && product.inventories || [];
@@ -124,26 +127,40 @@ class EditProduct extends Component {
                     hasPropertyValue = true;
                 }
             }
+
+            let content = [];
+            try {
+                content = JSON.parse(product.detail)
+            } catch (error) {
+                if (product != null) {
+                    content = new Array({
+                        "id": uuid(),
+                        "type": "text",
+                        "value": product.detail
+                    });
+                }
+            }
+
             self.setState({
-                productId           : product && product.id || '',
-                categories          : data.categories || [],
-                name                : product && product.name || '',
-                contents            : product && JSON.parse(product.detail) || [],
-                originalPrice       : product && product.originalPrice,
-                price               : product && product.price,
-                remark              : product && product.remark || '',
-                status              : (product && product.status + '') || '3',
-                imageID             : product && product.imageID || '',
-                imageData           : data.imageURL || '',
-                imageIDs            : product && product.imageIDs || '[]',
-                imageList           : data.imageList || [],
-                properties          : properties,
-                inventories         : inventories,
-                totalInventory      : product && product.totalInventory || 0,
-                propValueVisibleMap : propValueVisibleMap,
-                hasProperty         : product ? !!product.hasProperty : false,
-                hasPropertyValue    : hasPropertyValue,
-                isLoading           : false
+                productId: product && product.id || '',
+                categories: data.categories || [],
+                name: product && product.name || '',
+                contents: product && content || [],
+                originalPrice: product && product.originalPrice,
+                price: product && product.price,
+                remark: product && product.remark || '',
+                status: (product && product.status + '') || '3',
+                imageID: product && product.imageID || '',
+                imageData: data.imageURL || '',
+                imageIDs: product && product.imageIDs || '[]',
+                imageList: data.imageList || [],
+                properties: properties,
+                inventories: inventories,
+                totalInventory: product && product.totalInventory || 0,
+                propValueVisibleMap: propValueVisibleMap,
+                hasProperty: product ? !!product.hasProperty : false,
+                hasPropertyValue: hasPropertyValue,
+                isLoading: false
             });
         }
         if (allCategories && allCategories.length > 0) {
@@ -152,33 +169,33 @@ class EditProduct extends Component {
                     var categories = [];
                     for (var i = 0; i < product.categories.length; i++) {
                         var parentId = product.categories[i].parentId;
-                        var id       = product.categories[i].id;
+                        var id = product.categories[i].id;
                         categories.push(utils.parseTreeNodeKey(allCategories, id));
                     }
 
-                    var imageList  = [];
+                    var imageList = [];
                     var pImageList = product.images || [];
                     for (var i = 0; i < pImageList.length; i++) {
                         imageList.push({
-                            uid    : pImageList[i].id,
-                            name   : pImageList[i].orignalTitle,
-                            status : 'done',
-                            url    : pImageList[i].url
+                            uid: pImageList[i].id,
+                            name: pImageList[i].orignalTitle,
+                            status: 'done',
+                            url: pImageList[i].url
                         });
                     }
 
                     var imageURL = product.image && product.image.url || '';
                     onDataReady({
-                        product    : product,
-                        imageURL   : imageURL,
-                        imageList  : imageList,
-                        categories : categories
+                        product: product,
+                        imageURL: imageURL,
+                        imageList: imageList,
+                        categories: categories
                     });
                 }
             } else {
                 onDataReady({
-                    product  : null,
-                    imageURL : ''
+                    product: null,
+                    imageURL: ''
                 });
             }
         }
@@ -191,12 +208,12 @@ class EditProduct extends Component {
     }
     onOriginalPriceBlur(event) {
         var price = event.target.value;
-        price     = Number(price);
+        price = Number(price);
         this.setState({ originalPrice: price });
     }
     onPriceBlur(event) {
         var price = event.target.value;
-        price     = Number(price);
+        price = Number(price);
         this.setState({ price: price });
     }
     onRemarkBlur(event) {
@@ -221,26 +238,26 @@ class EditProduct extends Component {
         var self = this;
         if (info.file.status === 'done') {
             self.setState({
-                imageID  : info.file.response.data.id
+                imageID: info.file.response.data.id
             });
-            (function(originFileObj, callback) {
+            (function (originFileObj, callback) {
                 var reader = new FileReader();
-                reader.addEventListener('load', function() {
+                reader.addEventListener('load', function () {
                     callback(reader.result);
                 });
                 reader.readAsDataURL(originFileObj);
-            }(info.file.originFileObj, function(imageData) {
+            }(info.file.originFileObj, function (imageData) {
                 self.setState({ imageData })
             }));
         }
     }
     onCancelPreview() {
-        this.setState({ previewVisible: false }); 
+        this.setState({ previewVisible: false });
     }
     onPreview(file) {
         this.setState({
-            previewImage   : file.url || file.thumbUrl,
-            previewVisible : true
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true
         });
     }
     onImageListChange(data) {
@@ -254,8 +271,8 @@ class EditProduct extends Component {
             }
         }
         this.setState({
-            imageIDs  : JSON.stringify(imageIDs),
-            imageList : data.fileList
+            imageIDs: JSON.stringify(imageIDs),
+            imageList: data.fileList
         });
     }
     onContentTypeChange(value) {
@@ -266,9 +283,9 @@ class EditProduct extends Component {
     onAddContent() {
         var contents = this.state.contents.slice(0);
         contents.push({
-            id    : utils.uuid(),
-            type  : this.state.contentType,
-            value : ''
+            id: utils.uuid(),
+            type: this.state.contentType,
+            value: ''
         });
         this.setState({
             contents: contents
@@ -300,41 +317,45 @@ class EditProduct extends Component {
             }
         }
     }
+    onCancel() {
+        this.props.router.push("product/manage");
+    }
     onSubmit() {
         const { dispatch } = this.props;
         dispatch(requestSaveProduct({
-            id            : this.state.productId,
-            name          : this.state.name,
-            categories    : this.state.categories,
-            status        : this.state.status,
-            imageID       : this.state.imageID,
-            imageIDs      : this.state.imageIDs,
-            originalPrice : this.state.originalPrice,
-            price         : this.state.price,
-            remark        : this.state.remark,
-            detail        : JSON.stringify(this.state.contents)
+            id: this.state.productId,
+            name: this.state.name,
+            categories: this.state.categories,
+            status: this.state.status,
+            imageID: this.state.imageID,
+            imageIDs: this.state.imageIDs,
+            originalPrice: this.state.originalPrice,
+            price: this.state.price,
+            remark: this.state.remark,
+            detail: JSON.stringify(this.state.contents)
         }));
+        this.props.router.push("product/manage");
     }
     onPropValueVisibleChange(propId, visible) {
         var propValueVisibleMap = this.state.propValueVisibleMap;
         propValueVisibleMap[propId] = visible;
-        this.setState({ 
+        this.setState({
             propValueVisibleMap: propValueVisibleMap,
-            propValueTemp      : ''
+            propValueTemp: ''
         });
     }
     onPropValueInput(propId, event) {
-        this.setState({ 
+        this.setState({
             propValueTemp: event.target.value
         });
     }
     addPropValue(propId) {
-        var propValueTemp           = this.state.propValueTemp;
-        var propValueVisibleMap     = this.state.propValueVisibleMap;
+        var propValueTemp = this.state.propValueTemp;
+        var propValueVisibleMap = this.state.propValueVisibleMap;
         propValueVisibleMap[propId] = false;
-        this.setState({ 
-            propValueVisibleMap : propValueVisibleMap,
-            propValueTemp       : '' 
+        this.setState({
+            propValueVisibleMap: propValueVisibleMap,
+            propValueTemp: ''
         });
 
         if (!propValueTemp) {
@@ -343,21 +364,21 @@ class EditProduct extends Component {
 
         const { dispatch } = this.props;
         dispatch(requestSavePropertyValue({
-            productID  : this.state.productId,
-            propertyID : propId,
-            name       : propValueTemp
+            productID: this.state.productId,
+            propertyID: propId,
+            name: propValueTemp
         }));
     }
     cancelAddPropValue(propId) {
-        var propValueVisibleMap     = this.state.propValueVisibleMap;
+        var propValueVisibleMap = this.state.propValueVisibleMap;
         propValueVisibleMap[propId] = false;
         this.setState({
-            propValueVisibleMap : propValueVisibleMap,
-            propValueTemp       : ''
+            propValueVisibleMap: propValueVisibleMap,
+            propValueTemp: ''
         });
     }
     onPropVisibleChange(visible) {
-        this.setState({ 
+        this.setState({
             propPopupVisible: visible
         });
     }
@@ -369,26 +390,26 @@ class EditProduct extends Component {
     addProp() {
         var propTemp = this.state.propTemp;
         this.setState({
-            propTemp         : '',
-            propPopupVisible : false
+            propTemp: '',
+            propPopupVisible: false
         });
         const { dispatch } = this.props;
         dispatch(requestSaveProperty({
-            productID  : this.state.productId,
-            name       : propTemp
+            productID: this.state.productId,
+            name: propTemp
         }));
     }
     cancelAddProp() {
         this.setState({
-            propTemp         : '',
-            propPopupVisible : false
+            propTemp: '',
+            propPopupVisible: false
         });
     }
     onInventoryChange(id, count) {
         const { dispatch } = this.props;
         dispatch(requestUpdateInventory({
-            inventoryId : id,
-            count       : count
+            inventoryId: id,
+            count: count
         }));
     }
     onSaveInventory() {
@@ -396,67 +417,70 @@ class EditProduct extends Component {
         var inventories = [];
         for (var i = 0; i < this.state.inventories.length; i++) {
             inventories.push({
-                id    : this.state.inventories[i].id,
-                count : this.state.inventories[i].count
+                id: this.state.inventories[i].id,
+                count: this.state.inventories[i].count
             });
         }
         dispatch(requestSaveInventory({
-            productID   : this.state.productId,
-            inventories : inventories
+            productID: this.state.productId,
+            inventories: inventories
         }));
+        console.log("to manage")
+        dispatch(replace('/product/manage', {}));
     }
     onTabChange(activeTabKey) {
         this.setState({
-            activeTabKey: activeTabKey 
+            activeTabKey: activeTabKey
         });
     }
     onHasPropertyChange(value) {
         const { dispatch } = this.props;
         dispatch(requestUpdateHasProperty({
-            productID : this.state.productId,
-            value     : !!parseInt(value)
+            productID: this.state.productId,
+            value: !!parseInt(value)
         }));
     }
     onTotalInventoryChange(count) {
         const { dispatch } = this.props;
         dispatch(requestUpdateTotalInventoryTemp({
-            totalInventory : count
+            totalInventory: count
         }));
     }
     onSaveTotalInventory() {
         const { dispatch } = this.props;
         dispatch(requestUpdateTotalInventory({
-            productID      : this.state.productId,
-            totalInventory : this.state.totalInventory
+            productID: this.state.productId,
+            totalInventory: this.state.totalInventory
         }));
+        this.props.router.push("product/manage");
     }
     render() {
-        let self                = this;
-        let { data }            = this.props;
-        let editLabel           = this.state.productId ? 'Edit' : 'Insert';
-        let isLoading           = this.state.isLoading; 
-        let name                = this.state.name;
-        let contents            = this.state.contents;
-        let originalPrice       = this.state.originalPrice;
-        let price               = this.state.price;
-        let remark              = this.state.remark;
-        let status              = this.state.status;
-        let imageData           = this.state.imageData;
-        let uploadURL           = pageConfig.apiPath + '/admin/upload';
-        let previewVisible      = this.state.previewVisible;
-        let previewImage        = this.state.previewImage;
-        let imageList           = this.state.imageList;
-        let contentType         = this.state.contentType;
-        let properties          = this.state.properties;
-        let totalInventory      = this.state.totalInventory;
-        let inventories         = this.state.inventories;
+        let self = this;
+        let { data } = this.props;
+        let editLabel = this.state.productId ? 'Edit' : 'Insert';
+        let isLoading = this.state.isLoading;
+        let name = this.state.name;
+        let contents = this.state.contents;
+        let originalPrice = this.state.originalPrice;
+        let price = this.state.price;
+        let remark = this.state.remark;
+        let status = this.state.status;
+        let imageData = this.state.imageData;
+        let uploadURL = pageConfig.apiPath + '/admin/upload';
+        let previewVisible = this.state.previewVisible;
+        let previewImage = this.state.previewImage;
+        let imageList = this.state.imageList;
+        let contentType = this.state.contentType;
+        let properties = this.state.properties;
+        let totalInventory = this.state.totalInventory;
+        let inventories = this.state.inventories;
         let propValueVisibleMap = this.state.propValueVisibleMap;
-        let propValueTemp       = this.state.propValueTemp;
-        let propPopupVisible    = this.state.propPopupVisible;
-        let propTemp            = this.state.propTemp;
-        let activeTabKey        = this.state.activeTabKey;
-        let hasProperty         = this.state.hasProperty ? 1 : 0;
-        let hasPropertyValue    = this.state.hasPropertyValue;
+        let propValueTemp = this.state.propValueTemp;
+        let propPopupVisible = this.state.propPopupVisible;
+        let propTemp = this.state.propTemp;
+        let activeTabKey = this.state.activeTabKey;
+        let hasProperty = this.state.hasProperty ? 1 : 0;
+        let hasPropertyValue = this.state.hasPropertyValue;
 
         console.log(hasProperty, typeof hasProperty);
 
@@ -473,7 +497,7 @@ class EditProduct extends Component {
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 3  },
+                sm: { span: 3 },
             },
             wrapperCol: {
                 xs: { span: 24 },
@@ -484,7 +508,7 @@ class EditProduct extends Component {
         const editorLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 3  },
+                sm: { span: 3 },
             },
             wrapperCol: {
                 xs: { span: 24 },
@@ -496,9 +520,9 @@ class EditProduct extends Component {
 
         const treeProps = {
             treeData,
-            value    : this.state.categories,
-            onChange : this.onCategoriesChange,
-            multiple : true,
+            value: this.state.categories,
+            onChange: this.onCategoriesChange,
+            multiple: true,
             treeCheckable: true,
             showCheckedStrategy: TreeSelect.SHOW_PARENT,
             searchPlaceholder: 'Select Parent Category',
@@ -516,97 +540,97 @@ class EditProduct extends Component {
 
                             <Tabs defaultActiveKey="1" onChange={self.onTabChange}>
                                 <TabPane tab="Product Information" key="1">
-                                {
-                                    isLoading ? null :
-                                    <Form>
-                                        <FormItem {...formItemLayout} label="Product Name">
-                                            <Input defaultValue={name} onBlur={this.onNameBlur}/>
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Product Categories">
-                                            <TreeSelect {...treeProps} />
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Product status">
-                                            <Select defaultValue={status} style={{ width: 120 }} onChange={this.onStatusChange}>
-                                                <Select.Option value="3">Waiting for on shelf</Select.Option>
-                                                <Select.Option value="1">On shelf</Select.Option>
-                                                <Select.Option value="2">Off shelf</Select.Option>
-                                            </Select>
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Product covers">
-                                            <Upload className="image-uploader" name="upFile"
-                                                showUploadList={false} action={uploadURL}
-                                                beforeUpload={this.onBeforeUpload}
-                                                onChange={this.onImageChange}>
-                                                {
-                                                    imageData ?
-                                                    <img src={imageData} alt="" className="image" /> 
-                                                    :
-                                                    <Icon type="plus" className="image-uploader-trigger" />
-                                                }
-                                            </Upload>
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Product images list">
-                                            <div className="clearfix">
-                                                <Upload action={uploadURL} name="upFile"
-                                                    listType="picture-card"
-                                                    fileList={imageList}
-                                                    onPreview={this.onPreview}
-                                                    beforeUpload={this.onBeforeUpload}
-                                                    onChange={this.onImageListChange}>
-                                                { imageList.length >= 6 ? null : uploadButton }
-                                                </Upload>
-                                                <Modal visible={previewVisible} onCancel={this.onCancelPreview}
-                                                    footer={null}>
-                                                    <img alt="Previews" style={{ width: '100%' }} src={previewImage} />
-                                                </Modal>
-                                            </div>
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Original price">
-                                            <InputNumber min={0} max={1000000} defaultValue={originalPrice} step={0.01} onBlur={this.onOriginalPriceBlur} />
-                                            元
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Promotion price">
-                                            <InputNumber min={0} max={1000000} defaultValue={price} step={0.01} onBlur={this.onPriceBlur} />
-                                            元
-                                        </FormItem>
-                                        <FormItem {...formItemLayout} label="Remark">
-                                            <Input type="textarea" defaultValue={remark} rows={4} onBlur={this.onRemarkBlur}/>
-                                        </FormItem>
-                                        <FormItem {...editorLayout} label="Product Detail">
-                                        {
-                                            contents.map(function(content) {
-                                                return (
-                                                    content.type == 'text' ?
-                                                    <div key={content.id}>
-                                                        <Input type="textarea" defaultValue={content.value} rows={4} onBlur={self.onContentTextChange.bind(self, content.id)}/>
-                                                    </div>
-                                                    :
-                                                    <div key={content.id}>
-                                                        <Upload className="image-uploader" name="upFile"
-                                                            showUploadList={false} action={uploadURL}
-                                                            beforeUpload={self.onBeforeUpload}
-                                                            onChange={self.onContentImageChange.bind(self, content.id)}>
-                                                            {
-                                                                content.value ?
-                                                                <img src={content.value} alt="" className="image" /> 
+                                    {
+                                        isLoading ? null :
+                                            <Form>
+                                                <FormItem {...formItemLayout} label="Product Name">
+                                                    <Input defaultValue={name} onBlur={this.onNameBlur} />
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Product Categories">
+                                                    <TreeSelect {...treeProps} />
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Product status">
+                                                    <Select defaultValue={status} style={{ width: 120 }} onChange={this.onStatusChange}>
+                                                        <Select.Option value="3">Waiting for on shelf</Select.Option>
+                                                        <Select.Option value="1">On shelf</Select.Option>
+                                                        <Select.Option value="2">Off shelf</Select.Option>
+                                                    </Select>
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Product covers">
+                                                    <Upload className="image-uploader" name="upFile"
+                                                        showUploadList={false} action={uploadURL}
+                                                        beforeUpload={this.onBeforeUpload}
+                                                        onChange={this.onImageChange}>
+                                                        {
+                                                            imageData ?
+                                                                <img src={imageData} alt="" className="image" />
                                                                 :
                                                                 <Icon type="plus" className="image-uploader-trigger" />
-                                                            }
+                                                        }
+                                                    </Upload>
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Product images list">
+                                                    <div className="clearfix">
+                                                        <Upload action={uploadURL} name="upFile"
+                                                            listType="picture-card"
+                                                            fileList={imageList}
+                                                            onPreview={this.onPreview}
+                                                            beforeUpload={this.onBeforeUpload}
+                                                            onChange={this.onImageListChange}>
+                                                            {imageList.length >= 6 ? null : uploadButton}
                                                         </Upload>
+                                                        <Modal visible={previewVisible} onCancel={this.onCancelPreview}
+                                                            footer={null}>
+                                                            <img alt="Previews" style={{ width: '100%' }} src={previewImage} />
+                                                        </Modal>
                                                     </div>
-                                                )
-                                            })
-                                        }
-                                            <div>
-                                                <Select defaultValue={contentType} style={{ width: 120 }} onChange={this.onContentTypeChange}>
-                                                    <Select.Option value="image">Image</Select.Option>
-                                                    <Select.Option value="text">Text</Select.Option>
-                                                </Select>
-                                                <Button onClick={this.onAddContent} type="primary" size="large">Insert</Button>
-                                            </div>
-                                        </FormItem>
-                                    </Form>
-                                }
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Original price">
+                                                    <InputNumber min={0} max={1000000} defaultValue={originalPrice} step={0.01} onBlur={this.onOriginalPriceBlur} />
+                                                    $
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Promotion price">
+                                                    <InputNumber min={0} max={1000000} defaultValue={price} step={0.01} onBlur={this.onPriceBlur} />
+                                                    $
+                                                </FormItem>
+                                                <FormItem {...formItemLayout} label="Remark">
+                                                    <Input type="textarea" defaultValue={remark} rows={4} onBlur={this.onRemarkBlur} />
+                                                </FormItem>
+                                                <FormItem {...editorLayout} label="Product Detail">
+                                                    {
+                                                        contents.map(function (content) {
+                                                            return (
+                                                                content.type == 'text' ?
+                                                                    <div key={content.id}>
+                                                                        <Input type="textarea" defaultValue={content.value} rows={4} onBlur={self.onContentTextChange.bind(self, content.id)} />
+                                                                    </div>
+                                                                    :
+                                                                    <div key={content.id}>
+                                                                        <Upload className="image-uploader" name="upFile"
+                                                                            showUploadList={false} action={uploadURL}
+                                                                            beforeUpload={self.onBeforeUpload}
+                                                                            onChange={self.onContentImageChange.bind(self, content.id)}>
+                                                                            {
+                                                                                content.value ?
+                                                                                    <img src={content.value} alt="" className="image" />
+                                                                                    :
+                                                                                    <Icon type="plus" className="image-uploader-trigger" />
+                                                                            }
+                                                                        </Upload>
+                                                                    </div>
+                                                            )
+                                                        })
+                                                    }
+                                                    <div>
+                                                        <Select defaultValue={contentType} style={{ width: 120 }} onChange={this.onContentTypeChange}>
+                                                            <Select.Option value="image">Image</Select.Option>
+                                                            <Select.Option value="text">Text</Select.Option>
+                                                        </Select>
+                                                        <Button onClick={this.onAddContent} type="primary" size="large">Insert</Button>
+                                                    </div>
+                                                </FormItem>
+                                            </Form>
+                                    }
                                 </TabPane>
                                 <TabPane tab="Comodity Inventory" key="2">
                                     <Form>
@@ -618,106 +642,106 @@ class EditProduct extends Component {
                                         </FormItem>
                                         {
                                             hasProperty ?
-                                            properties.map(function(prop) {
-                                                return (
-                                                    <FormItem key={prop.id} {...formItemLayout} label={prop.name}>
+                                                properties.map(function (prop) {
+                                                    return (
+                                                        <FormItem key={prop.id} {...formItemLayout} label={prop.name}>
+                                                            {
+                                                                prop.values.map(function (value) {
+                                                                    return (
+                                                                        <span key={value.id} className="product-prop-value">{value.name}</span>
+                                                                    )
+                                                                })
+                                                            }
+                                                            <Popover content={
+                                                                <div>
+                                                                    <Input value={propValueTemp} onChange={self.onPropValueInput.bind(self, prop.id)} className="product-prop-value-add-input" />
+                                                                    <Button onClick={self.addPropValue.bind(self, prop.id)} type="primary" className="product-prop-value-add-confirm">Confirm</Button>
+                                                                    <Button onClick={self.cancelAddPropValue.bind(self, prop.id)}>Cancel</Button>
+                                                                </div>}
+                                                                onVisibleChange={self.onPropValueVisibleChange.bind(self, prop.id)}
+                                                                visible={propValueVisibleMap[prop.id]}
+                                                                title={'Insert' + prop.name} trigger="click" >
+                                                                <Icon type="plus-circle" className="product-prop-value-add" />
+                                                            </Popover>
+                                                        </FormItem>
+                                                    );
+                                                })
+                                                : ''
+                                        }
+                                        {
+                                            hasProperty ?
+                                                <FormItem className="product-prop-add" {...formItemLayout} label={' '}>
+                                                    <Popover content={
+                                                        <div>
+                                                            <Input value={propTemp} onChange={self.onPropInput} className="product-prop-add-input" />
+                                                            <Button onClick={self.addProp} type="primary" className="product-prop-add-confirm">Confirm</Button>
+                                                            <Button onClick={self.cancelAddProp}>Cancel</Button>
+                                                        </div>}
+                                                        onVisibleChange={self.onPropVisibleChange}
+                                                        visible={propPopupVisible}
+                                                        title={' Insert Property'} trigger="click" >
+                                                        <Button type="primary">Insert Property</Button>
+                                                    </Popover>
+                                                </FormItem>
+                                                : ''
+                                        }
+                                        {
+                                            hasProperty && hasPropertyValue ?
+                                                <FormItem {...formItemLayout} label="Inventory">
                                                     {
-                                                        prop.values.map(function(value) {
+                                                        inventories.map(function (inv) {
+                                                            var str = '';
+                                                            for (var i = 0; i < inv.propertyValues.length; i++) {
+                                                                str += inv.propertyValues[i].name
+                                                                if (i < inv.propertyValues.length - 1) {
+                                                                    str += '&nbsp;&nbsp;&nbsp;';
+                                                                }
+                                                            }
                                                             return (
-                                                                <span key={value.id} className="product-prop-value">{value.name}</span>
+                                                                <div key={inv.id} className="product-inventory-item">
+                                                                    <span className="product-inventory-label" dangerouslySetInnerHTML={{ __html: str }} />
+                                                                    <span className="product-inventory-unit">unit</span>
+                                                                    <InputNumber onChange={self.onInventoryChange.bind(self, inv.id)} min={0} max={10000000000} defaultValue={inv.count} />
+                                                                </div>
                                                             )
                                                         })
                                                     }
-                                                        <Popover content={
-                                                            <div>
-                                                                <Input value={propValueTemp} onChange={self.onPropValueInput.bind(self, prop.id)} className="product-prop-value-add-input"/>
-                                                                <Button onClick={self.addPropValue.bind(self, prop.id)} type="primary" className="product-prop-value-add-confirm">Confirm</Button>
-                                                                <Button onClick={self.cancelAddPropValue.bind(self, prop.id)}>Cancel</Button>
-                                                            </div>} 
-                                                            onVisibleChange={self.onPropValueVisibleChange.bind(self, prop.id)}
-                                                            visible={propValueVisibleMap[prop.id]}
-                                                            title={'Insert' + prop.name} trigger="click" >
-                                                            <Icon type="plus-circle" className="product-prop-value-add"/>
-                                                        </Popover>
-                                                    </FormItem>
-                                                );
-                                            })
-                                            : ''
-                                        }
-                                        {
-                                        hasProperty ?
-                                        <FormItem className="product-prop-add" {...formItemLayout} label={' '}>
-                                            <Popover content={
-                                                <div>
-                                                    <Input value={propTemp} onChange={self.onPropInput} className="product-prop-add-input"/>
-                                                    <Button onClick={self.addProp} type="primary" className="product-prop-add-confirm">Confirm</Button>
-                                                    <Button onClick={self.cancelAddProp}>Cancel</Button>
-                                                </div>} 
-                                                onVisibleChange={self.onPropVisibleChange}
-                                                visible={propPopupVisible}
-                                                title={' Insert Property'} trigger="click" >
-                                                <Button type="primary">Insert Property</Button>
-                                            </Popover>
-                                        </FormItem>
-                                        : ''
-                                        }
-                                        { 
-                                        hasProperty && hasPropertyValue ? 
-                                        <FormItem {...formItemLayout} label="Inventory">
-                                        {
-                                            inventories.map(function(inv) {
-                                                var str = '';
-                                                for (var i = 0; i < inv.propertyValues.length; i++) {
-                                                    str += inv.propertyValues[i].name
-                                                    if (i < inv.propertyValues.length - 1) {
-                                                        str += '&nbsp;&nbsp;&nbsp;';
-                                                    }
-                                                }
-                                                return (
-                                                    <div key={inv.id} className="product-inventory-item">
-                                                        <span className="product-inventory-label" dangerouslySetInnerHTML={{__html: str}}/>
-                                                        <span className="product-inventory-unit">unit</span>
-                                                        <InputNumber onChange={self.onInventoryChange.bind(self, inv.id)} min={0} max={10000000000} defaultValue={inv.count} />
+                                                    <div className="inventory-total">
+                                                        <span className="inventory-total-label">Total</span>
+                                                        {totalInventory}
+                                                        <span className="inventory-total-unit">unit</span>
                                                     </div>
-                                                )
-                                            })
-                                        }
-                                            <div className="inventory-total">
-                                                <span className="inventory-total-label">Total</span>
-                                                {totalInventory}
-                                                <span className="inventory-total-unit">unit</span>
-                                            </div>
-                                            <div className="inventory-save">
-                                                <Button onClick={self.onSaveInventory} type="primary" size="large">Save Inventory</Button>
-                                            </div>
-                                        </FormItem>
-                                        : ''
+                                                    <div className="inventory-save">
+                                                        <Button onClick={self.onSaveInventory} type="primary" size="large">Save Inventory</Button>
+                                                    </div>
+                                                </FormItem>
+                                                : ''
                                         }
                                         {
-                                        !hasProperty ?
-                                        <FormItem {...formItemLayout} label="Total Inventories">
-                                            <InputNumber className="inventory-total-input" min={0} max={10000000000} 
-                                                onChange={self.onTotalInventoryChange}
-                                                defaultValue={totalInventory} />
-                                            <span></span>
-                                        </FormItem>
-                                        : ''
+                                            !hasProperty ?
+                                                <FormItem {...formItemLayout} label="Total Inventories">
+                                                    <InputNumber className="inventory-total-input" min={0} max={10000000000}
+                                                        onChange={self.onTotalInventoryChange}
+                                                        defaultValue={totalInventory} />
+                                                    <span></span>
+                                                </FormItem>
+                                                : ''
                                         }
                                         {
-                                        !hasProperty ?
-                                        <FormItem {...formItemLayout} label=" ">
-                                            <Button onClick={self.onSaveTotalInventory} type="primary" size="large">Save Inventory</Button>
-                                        </FormItem>
-                                        : ''
+                                            !hasProperty ?
+                                                <FormItem {...formItemLayout} label=" ">
+                                                    <Button onClick={self.onSaveTotalInventory} type="primary" size="large">Save Inventory</Button>
+                                                </FormItem>
+                                                : ''
                                         }
                                     </Form>
                                 </TabPane>
                             </Tabs>
                         </div>
                     </Col>
-                    <Col span={24} className="submit-box" style={{display: activeTabKey == '1' ? '' : 'none'}}>
+                    <Col span={24} className="submit-box" style={{ display: activeTabKey == '1' ? '' : 'none' }}>
                         <Button onClick={this.onSubmit} type="primary" size="large">Save</Button>
-                        <Button className="submit-cancel-btn" size="large">Cancel</Button>
+                        <Button onClick={this.onCancel} className="submit-cancel-btn" size="large">Cancel</Button>
                     </Col>
                 </Row>
                 <Software />

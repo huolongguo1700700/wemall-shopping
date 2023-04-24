@@ -3,3 +3,5 @@ RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf /etc/nginx/mime.type
 COPY ./nginx/conf/nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/conf /etc/nginx
 COPY ./nginx/WWW /root/WWW
+
+COPY ./webmall/build /var/www/html

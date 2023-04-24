@@ -125,7 +125,8 @@ export default (state = initState, action) => {
 		}
 		case REQUEST_UPDATE_TOTAL_INVENTORY_TEMP: {
 			let product = state.product;
-			product.totalInventory = action.totalInventory;
+			// 数据库与golang项目数据结构不一致不一致导致
+			// product.totalInventory = action.totalInventory;
 			return {
 				...state,
 				product: product
@@ -133,8 +134,9 @@ export default (state = initState, action) => {
 		}
 		case REQUEST_UPDATE_HAS_PROPERTY_SUCCESS: {
 			let product = state.product;
-			product.hasProperty    = action.hasProperty;
-			product.properties     = [];
+			// 数据库与golang项目数据结构不一致不一致导致
+			// product.hasProperty    = action.hasProperty;
+			// product.properties     = [];
 			product.inventories    = [];
 			product.totalInventory = 0;
 			return {

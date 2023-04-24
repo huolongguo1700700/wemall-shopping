@@ -4,6 +4,7 @@ WORKDIR /usr/src/wemall/webmall
 COPY ./webmall /usr/src/wemall/webmall
 # ==== BUILD =====
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
+RUN npm install pm2 -g
 RUN npm ci 
 # Build the app
 RUN npm run build

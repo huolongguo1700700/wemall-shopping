@@ -32,6 +32,7 @@ class EitCategory extends Component {
         this.onStatusChange    = this.onStatusChange.bind(this);
         this.onOrderChange     = this.onOrderChange.bind(this);
         this.onSubmit          = this.onSubmit.bind(this);
+        this.onCancel          = this.onCancel.bind(this);
 
         this.state = {
             categoryId : this.props.routeParams.id,
@@ -95,6 +96,9 @@ class EitCategory extends Component {
             sequence: value
         });
     }
+    onCancel() {
+        this.props.router.push("category/manage");
+    }
     onSubmit() {
         var parentId = parseInt(this.state.parentId);
         if (parentId == this.state.categoryId) {
@@ -110,6 +114,7 @@ class EitCategory extends Component {
             status   : this.state.status,
             sequence : this.state.sequence
         }));
+        this.props.router.push("category/manage");
     }
     render() {
         let { data }  = this.props;
@@ -175,7 +180,7 @@ class EitCategory extends Component {
                     <Col span={24}>
                         <Col span={15} className="submit-box">
                             <Button onClick={this.onSubmit} type="primary" size="large">Save</Button>
-                            <Button className="submit-cancel-btn" size="large">Cancel</Button>
+                            <Button onClick={this.onCancel} className="submit-cancel-btn" size="large">Cancel</Button>
                         </Col>
                     </Col>
                 </Row>

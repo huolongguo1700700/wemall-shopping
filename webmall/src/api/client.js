@@ -7,7 +7,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setCheckoutStatus } from '../stores/cart/cartSlice'
-import { setOrderID } from '../stores/orders/oderSlice'
+import { setOrderID } from '../stores/orders/orderSlice'
 
 const URL = process.env.REACT_APP_API_URL
 const ADMIN_URL = process.env.REACT_APP_ADMIN_URL
@@ -59,9 +59,7 @@ export  const fetchUserOrders = createAsyncThunk (
     'orders/fetchUserOrders',
     async (userId) => {
         return await  axios.get(`${URL}/orders/${userId}`)
-        .then((res)=> {
-            return res.data
-        })
+        .then((res)=> res.data)
         .catch(e => {
             throw new Error(e.message)
         })
@@ -77,6 +75,18 @@ export async function fetchSingleOrder(orderId) {
         throw new Error(e.message)
     })
 }
+
+// Delete order
+export  const deleteOrder = createAsyncThunk (
+    'orders/deleteOrder',
+    async (orderId) => {
+        return await  axios.get(`${URL}/delete-order/${orderId}`)
+        .then((res)=> res.data)
+        .catch(e => {
+            throw new Error(e.message)
+        })
+    }
+)
 
 // Post order
 export const postProductsToCart = createAsyncThunk (

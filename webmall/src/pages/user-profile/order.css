@@ -1,0 +1,7 @@
+.disabled-button {
+    @apply bg-transparent text-gray-400;
+}
+
+.disabled-button:hover {
+    @apply bg-transparent text-gray-500 dark:text-gray-300;
+}

@@ -48,8 +48,7 @@ export const Categories = () => {
         navigate(`/Error`)
     }
     
-    return (
-        categories &&
+    return categories &&
         <ContainerStyles className={`${isOpen && "lg-max:left-0"}`}>
             <MiddleContainerStyles>
                 <div className="w-1/5 h-full  lg-max:hidden flex flex-row justify-center items-center">
@@ -73,7 +72,6 @@ export const Categories = () => {
                 </ItemContainerStyles>
             </MiddleContainerStyles>
         </ContainerStyles>
-    )
 }
 const ContainerStyles = tw.div`
     lg:h-12

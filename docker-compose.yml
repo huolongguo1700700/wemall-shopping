@@ -47,7 +47,7 @@ services:
     privileged: true
     volumes:
       - ./webmall/:/usr/src/wemall/webmall
-    command: "pm2-runtime src/App.js"
+    command: "npm start"
     ports:
       - "3000:3000"
     container_name: wemall_nodejs_webmall

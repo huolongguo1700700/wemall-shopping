@@ -80,7 +80,7 @@ const Sidebar = ({totalPrice, deviceHidden}) => {
             setIsModalOpen(true)
             setMessage("Please Login first!")
         }
-    }, [isLogin, user, dispatch, navigate])
+    }, [isLogin, user, dispatch])
     
     return (
         <Fragment>

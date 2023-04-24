@@ -632,7 +632,7 @@ class EditProduct extends Component {
                                                             <div>
                                                                 <Input value={propValueTemp} onChange={self.onPropValueInput.bind(self, prop.id)} className="product-prop-value-add-input"/>
                                                                 <Button onClick={self.addPropValue.bind(self, prop.id)} type="primary" className="product-prop-value-add-confirm">Confirm</Button>
-                                                                <Button onClick={self.cancelAddPropValue.bind(self, prop.id)}>取消</Button>
+                                                                <Button onClick={self.cancelAddPropValue.bind(self, prop.id)}>Cancel</Button>
                                                             </div>} 
                                                             onVisibleChange={self.onPropValueVisibleChange.bind(self, prop.id)}
                                                             visible={propValueVisibleMap[prop.id]}
@@ -651,7 +651,7 @@ class EditProduct extends Component {
                                                 <div>
                                                     <Input value={propTemp} onChange={self.onPropInput} className="product-prop-add-input"/>
                                                     <Button onClick={self.addProp} type="primary" className="product-prop-add-confirm">Confirm</Button>
-                                                    <Button onClick={self.cancelAddProp}>取消</Button>
+                                                    <Button onClick={self.cancelAddProp}>Cancel</Button>
                                                 </div>} 
                                                 onVisibleChange={self.onPropVisibleChange}
                                                 visible={propPopupVisible}
@@ -699,7 +699,7 @@ class EditProduct extends Component {
                                             <InputNumber className="inventory-total-input" min={0} max={10000000000} 
                                                 onChange={self.onTotalInventoryChange}
                                                 defaultValue={totalInventory} />
-                                            <span>件</span>
+                                            <span></span>
                                         </FormItem>
                                         : ''
                                         }

@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTop } from '../../hooks'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { selectUserIsLogin, selectUserStatus } from '../../stores/user/userSelectors'
+import { selectUserStatus } from '../../stores/user/userSelectors'
 
 const Login = () => {
     const [activeTab, setActiveTab] = useState('login')

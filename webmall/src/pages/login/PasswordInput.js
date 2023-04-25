@@ -28,7 +28,6 @@ const PasswordInput = ({ isSingle, password, setPassword, isPwdEmpty, confirmPas
                     placeholder="password"
                     value={password}
                     onChange={handlePasswordChange}
-                    required={true}
                 />
                 {isPwdEmpty && (
                     <span className="absolute left-0 bottom-[-1.5rem] text-red-500 text-sm">
@@ -44,7 +43,6 @@ const PasswordInput = ({ isSingle, password, setPassword, isPwdEmpty, confirmPas
                         value={confirmPassword}
                         onChange={handleConfirmPasswordChange}
                         className={`${passwordError ? 'border-red-500' : 'border-slate-400'} focus:cursor-text mt-4`}
-                        required={true}
                     />
                     {passwordError && (
                         <span className="absolute left-0 bottom-[-1.5rem] text-red-500 text-sm">

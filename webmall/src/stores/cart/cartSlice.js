@@ -52,7 +52,6 @@ const cartSlice = createSlice({
             state.status = "processing"
         })
         builder.addCase(postProductsToCart.fulfilled, (state, action) => {
-            console.log()
             if(action.payload.errNo===0) {
                 state.status = "succeeded"
                 state.cart = []

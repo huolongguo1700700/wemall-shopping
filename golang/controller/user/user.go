@@ -31,6 +31,14 @@ func SignUpUser(ctx iris.Context) {
 		return
 	}
 	
+	// Check if email already exists
+	var existingUser model.User
+	model.DB.Where("email = ?", strings.ToLower(user.Email)).First(&existingUser)
+	if existingUser.ID != 0 {
+		SendErrJSON("Email already registered", ctx)
+		return
+	}
+	
 	now := time.Now()
 	newUser := model.User{
 		Name:      strings.ToLower(user.Email),

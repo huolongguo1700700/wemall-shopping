@@ -26,7 +26,7 @@ const OrderDisplay = ({order, isBriefly}) => {
         return `${day}/${month}/${year}`
     }
     
-    const timestamp = new Date(order.createdAt).getTime()
+    const timestamp = new Date(order.createdAt).getTime()/1000
     
     /* Modal variables */
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -65,17 +65,17 @@ const OrderDisplay = ({order, isBriefly}) => {
                     description={"Are you sure you want to delete this order?"}
                 />
             }
-            <div className={`max-w-5xl w-full h-full p-5 border mb-8 ${order.isDeleted ? "bg-gray-100 text-gray-400 dark:bg-green-900 border-gray-200" : "border-gray-300"}`}>
+            <div className={`max-w-5xl flex flex-col justify-center items-center w-full h-full p-5 border mb-8 ${order.isDeleted ? "bg-gray-100 text-gray-400 dark:bg-green-900 border-gray-200" : "border-gray-300"}`}>
                 {/* Order Details */}
                 <div className="flex flex-col w-full h-full lg:flex-row justify-between border-b border-gray-300 pb-3">
                     {/* Order Number */}
-                    <div className="flex w-full gap-1 font-medium text-lg">
-                        <span>Order</span>
-                        <span>Number</span>
-                        <span>:</span>
+                    <div className="flex w-full gap-1 font-medium text-lg items-center">
+                        <span className="font-semibold">Order</span>
+                        <span className="font-semibold">Number</span>
+                        <span className="font-semibold">:</span>
                         <span>{`${timestamp}${order.orderId}`}</span>
                     </div>
-                    <div className="flex flex-col w-full lg:flex-row gap-1 lg:gap-3 text-sm lg:text-md lg:justify-end">
+                    <div className="flex flex-col w-full lg:flex-row gap-1 lg:gap-3 text-sm lg:text-md lg:items-center font-light">
                         {/* Order Status */}
                         <div className="flex gap-1">
                             <span>Order</span>
@@ -126,8 +126,8 @@ const OrderDisplay = ({order, isBriefly}) => {
                                         <span className="">{p.name}</span>
                                         <span>€{p.price}</span>
                                     </div>
-                                    <div className="flex gap-1 text-xs lg:text-sm text-gray-500 dark:text-gray-300">
-                                        <span>Quantity:</span>
+                                    <div className="flex gap-1 text-xs lg:text-sm text-gray-500 dark:text-gray-300 font-light">
+                                        <span className="italic">Quantity:</span>
                                         <span>{p.count}</span>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@ const OrderDisplay = ({order, isBriefly}) => {
                     })}
                 </div>
                 {/* Order operation buttons */}
-                <div className="bg-transparent flex justify-between items-center ">
+                <div className="w-full h-full bg-transparent flex justify-between items-center ">
                     {isBriefly &&
                         <Link className={`${LinkStyles} ${order.isDeleted && "disabled-button"}`} to={`/profile/order`} onClick={() => dispatch( setOrderID(order.orderId))}>
                             <span>View</span>

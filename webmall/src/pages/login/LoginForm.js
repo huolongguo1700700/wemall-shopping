@@ -47,6 +47,7 @@ const LoginForm = () => {
             <InputContainerStyles>
                 <div className="relative my-3">
                     <EmailValidation
+                        isSingle={true}
                         email={email}
                         setEmail={setEmail}
                         isEmailEmpty={isEmailEmpty}

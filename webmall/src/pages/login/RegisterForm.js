@@ -50,6 +50,7 @@ const RegisterForm = () => {
             <InputContainerStyles>
                 <div className="relative my-3">
                     <EmailValidation
+                        isSingle={false}
                         email={email}
                         setEmail={setEmail}
                         isEmailEmpty={isEmailEmpty}

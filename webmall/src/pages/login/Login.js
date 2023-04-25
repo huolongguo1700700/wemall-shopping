@@ -10,12 +10,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTop } from '../../hooks'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { selectUserIsLogin } from '../../stores/user/userSelectors'
+import { selectUserIsLogin, selectUserStatus } from '../../stores/user/userSelectors'
 
 const Login = () => {
     const [activeTab, setActiveTab] = useState('login')
     
-    const isLogin = useSelector(selectUserIsLogin)
+    const loginStatus = useSelector(selectUserStatus)
     
     const navigate = useNavigate()
     const location = useLocation()
@@ -23,7 +23,7 @@ const Login = () => {
     useScrollTop()
     
     useEffect(() => {
-        if (isLogin) {
+        if (loginStatus === "login succeeded") {
             const returnUrl = location.state?.returnUrl || '/profile'
             const timer = setTimeout(() => {
                 navigate(returnUrl)
@@ -32,7 +32,10 @@ const Login = () => {
             // Clean up timer when component unmounts or when isLogin changes
             return () => clearTimeout(timer)
         }
-    }, [location.state?.returnUrl, isLogin, navigate])
+        else if(loginStatus === "login failed") {
+        
+        }
+    }, [location.state?.returnUrl, loginStatus, navigate])
     
     return (
         <div className="flex min-h-[calc(100vh-3rem)] min-w-[320px] w-full h-full justify-center items-center">
@@ -56,7 +59,6 @@ const Login = () => {
                     </button>
                 </div>
                 {activeTab === 'login' ? <LoginForm /> : <RegisterForm />}
-                
             </div>
         </div>
     )

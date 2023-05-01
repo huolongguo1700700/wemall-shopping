@@ -40,7 +40,7 @@ class OrderAnalyze extends Component {
                     <Col span={6}>
                         <div className="order-analyze" style={{backgroundColor: '#e7505a'}}>
                             <div className="order-analyze-numberwrap">
-                                <p className="order-analyze-number"><span>¥</span>{data.todayTotalSale}</p>
+                                <p className="order-analyze-number"><span>€</span>{data.todayTotalSale}</p>
                                 <p className="order-analyze-desc">Sales amount of the day</p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@ class OrderAnalyze extends Component {
                     <Col span={6}>
                         <div className="order-analyze" style={{backgroundColor: '#8E44AD'}}>
                             <div className="order-analyze-numberwrap">
-                                <p className="order-analyze-number"><span>¥</span>{data.yesterdayTotalSale}</p>
+                                <p className="order-analyze-number"><span>€</span>{data.yesterdayTotalSale}</p>
                                 <p className="order-analyze-desc">Sales of last day</p>
                             </div>
                         </div>

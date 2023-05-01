@@ -50,7 +50,7 @@ class Index extends Component {
                     <Col span={6}>
                         <div className="index-overview" style={{backgroundColor: '#e7505a'}}>
                             <div className="index-overview-numberwrap">
-                                <p className="index-overview-number"><span>¥</span>{data.todayTotalSale}</p>
+                                <p className="index-overview-number"><span>€</span>{data.todayTotalSale}</p>
                                 <p className="index-overview-desc">Sales amount of the day</p>
                             </div>
                         </div>
@@ -66,7 +66,7 @@ class Index extends Component {
                     <Col span={6}>
                         <div className="index-overview" style={{backgroundColor: '#8E44AD'}}>
                             <div className="index-overview-numberwrap">
-                                <p className="index-overview-number"><span>¥</span>{data.totalSale}</p>
+                                <p className="index-overview-number"><span>€</span>{data.totalSale}</p>
                                 <p className="index-overview-desc">Total amount of sales</p>
                             </div>
                         </div>

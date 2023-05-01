@@ -26,7 +26,7 @@ const userSlice = createSlice({
                 localStorage.setItem('user', JSON.stringify(state))
             } else if(action.payload.errNo===1) {
                 state.isAuthenticated = false
-                state.status = action.payload.msg==="Email already registered" ? "register failed" : "email registered"
+                state.status = action.payload.msg==="Email already registered" ? "email registered" : "register failed"
                 state.error = action.payload.msg
                 localStorage.setItem('user', JSON.stringify(state))
             }

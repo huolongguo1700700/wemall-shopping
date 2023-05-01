@@ -19,11 +19,12 @@ const EmailValidation = ({ isSingle, email, setEmail, isEmailEmpty, emailError, 
         <>
             {loginStatus==="login failed" ?
                 <span className="absolute left-0 top-[-1.5rem] text-red-500 text-sm">Email or password incorrect.</span>
-                : !isSingle &&
-                    loginStatus==="register failed"  ?
+                :
+                !isSingle && loginStatus==="register failed"  ?
                     <span className="absolute left-0 top-[-1.5rem] text-red-500 text-sm">Register failed, contact support.</span>
                     :
-                    !isSingle && loginStatus==="email registered" && <span className="absolute left-0 top-[-1.5rem] text-red-500 text-sm">Email already register.</span>
+                !isSingle && loginStatus==="email registered" &&
+                    <span className="absolute left-0 top-[-1.5rem] text-red-500 text-sm">Email already register.</span>
             }
             <InputStyles
                 type="text"

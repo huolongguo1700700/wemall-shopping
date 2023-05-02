@@ -3,6 +3,7 @@ package model
 import (
 	"strings"
 	"time"
+	"math"
 )
 
 // Order 订单
@@ -58,7 +59,7 @@ func (order Order) TotalSale() float64 {
 	if err != nil {
 		return 0
 	}
-	return result.TotalSale
+	return math.Floor(result.TotalSale * 100 / 100)
 }
 
 // CountByDate 指定日期的订单数
@@ -98,7 +99,7 @@ func (order Order) TotalSaleByDate(date time.Time) float64 {
 	if err != nil {
 		return 0
 	}
-	return result.TotalPay
+	return math.Floor(result.TotalPay * 100 / 100)
 }
 
 const (

@@ -169,6 +169,7 @@ func save(ctx iris.Context, isEdit bool) {
 		if product.Status != model.ProductUpShelf && product.Status != model.ProductDownShelf && product.Status != model.ProductPending {
 			product.Status = model.ProductPending
 		}
+		product.CategoryID = queryProduct.CategoryID
 	}
 
 	product.Name = strings.TrimSpace(product.Name)
@@ -214,15 +215,16 @@ func save(ctx iris.Context, isEdit bool) {
 	}
 
 	if product.Categories == nil || len(product.Categories) <= 0 {
-		SendErrJSON("Product category should more than one.", ctx)
-		return
+		product.CategoryID = queryProduct.CategoryID
+	} else {
+		product.CategoryID = int(product.Categories[0].ID)
 	}
 
-	if len(product.Categories) > config.ServerConfig.MaxProductCateCount {
-		msg := "Maximum product categories number should be " + strconv.Itoa(config.ServerConfig.MaxProductCateCount) + "."
-		SendErrJSON(msg, ctx)
-		return
-	}
+	// if len(product.Categories) > config.ServerConfig.MaxProductCateCount {
+	// 	msg := "Maximum product categories number should be " + strconv.Itoa(config.ServerConfig.MaxProductCateCount) + "."
+	// 	SendErrJSON(msg, ctx)
+	// 	return
+	// }
 
 	if product.Price < 0 {
 		SendErrJSON("Invalid product selling price.", ctx)
@@ -251,15 +253,15 @@ func save(ctx iris.Context, isEdit bool) {
 		return
 	}
 
-	for i := 0; i < len(product.Categories); i++ {
-		var category model.Category
-		queryErr := model.DB.First(&category, product.Categories[i].ID).Error
-		if queryErr != nil {
-			SendErrJSON("Invalid category Id.", ctx)
-			return
-		}
-		product.Categories[i] = category
-	}
+	// for i := 0; i < len(product.Categories); i++ {
+	// 	var category model.Category
+	// 	queryErr := model.DB.First(&category, product.Categories[i].ID).Error
+	// 	if queryErr != nil {
+	// 		SendErrJSON("Invalid category Id.", ctx)
+	// 		return
+	// 	}
+	// 	product.Categories[i] = category
+	// }
 
 	if isEdit {
 		var sql = "DELETE FROM product_category WHERE product_id = ?"

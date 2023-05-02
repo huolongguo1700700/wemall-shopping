@@ -107,6 +107,7 @@ export function requestSaveProduct(product) {
         if (product.id) {
             reqData.id = product.id;
         }
+        console.log(JSON.stringify(reqData))
         return fetch(url, {
                 method: 'POST',
                 headers: {

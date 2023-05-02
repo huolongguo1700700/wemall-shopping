@@ -128,7 +128,8 @@ create table if not exists products
     created_at     datetime                 null,
     updated_at     datetime                 null,
     deleted_at     datetime                 null,
-    browse_count   int           default 0  null
+    browse_count   int           default 0  null,
+    total_inventory varchar(200) null
 )
     charset = utf8mb3;
 
